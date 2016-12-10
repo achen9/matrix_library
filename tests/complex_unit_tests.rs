@@ -137,19 +137,21 @@ fn angle_method_test() {
   let c2: Complex = complex(-2.34,-6.98);
   assert!(TOLERANCE > (c1.angle() - 0.927295).abs());
   assert!(TOLERANCE > (c2.angle() + 1.89427).abs());
-}/*
-// Raising to a Power Test: Test if (2/-4)^3 = -1/8
-#[test]
-fn power_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(2,-4);
-  let c2: Complex = c1.pow(3);
-  assert!(-1 == c2.re());
-  assert!(8 == c2.im());
-  let c3: Complex = c1.pow(-3);
-  assert!(-8 == c3.re());
-  assert!(1 == c3.im());
 }
+// Raising to a Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
+#[test]
+fn power_test1() {
+  use matrix_lib::complex::{Complex, complex};
+  let c1: Complex = complex(3.0,4.0);
+  let c2: Complex = complex(1.0,1.0);
+  let c = c1.pow(5);
+  let c3 = c2.pow(-2);
+  assert!(TOLERANCE > (c.re() + 237.0).abs());
+  assert!(TOLERANCE > (c.im() + 3116.0).abs());
+  assert!(TOLERANCE > (c3.re() - 0.0).abs());
+  assert!(TOLERANCE > (c3.im() + 0.5).abs());
+}
+/*
 // Printing complex to terminal
 #[test]
 fn print_test() {

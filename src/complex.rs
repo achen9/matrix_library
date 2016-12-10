@@ -61,6 +61,13 @@ impl Complex {
     self.im().atan2(self.re())
   }
 
+   // Raising complex number to a power method
+  pub fn pow(&self, exp: i32) -> Complex {
+    // Apply de Moivre's Formula: (r(cos(x) + isin(x)))^n = r^n(cos(nx) + isin(nx))
+    Complex {real: self.mag().powi(exp) * ((exp as f64)*self.angle()).cos(), 
+             imag: self.mag().powi(exp) * ((exp as f64)*self.angle()).sin()}
+  }
+
   // Utility methods
   // Removes negative zero from complex number representation
   fn delnegzero(&self) -> Complex {
@@ -78,24 +85,7 @@ impl Complex {
   fn isreal(&self) -> bool {
     COMPLEX_TOL > self.im().abs()
   }
-  
 }
-  /*
-  // Raising fraction to a power method
-  pub fn pow(&self, exp: isize) -> Complex {
-    
-    if 0 > exp {
-      // Negative exponents flip the fraction
-      let exp_u32 = -exp as u32;
-      let f = Complex {real: self.den().pow(exp_u32), imag: self.num().pow(exp_u32)};
-      f.reduce()
-    } else {
-      let exp_u32 = exp as u32;
-      let f = Complex {real: self.num().pow(exp_u32), imag: self.den().pow(exp_u32)};
-      f.reduce()
-    }
-  }
-}*/
 
 // Arithmetic operations & operator overload
 impl ::std::ops::Add for Complex {
