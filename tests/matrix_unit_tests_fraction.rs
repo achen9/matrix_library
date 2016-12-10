@@ -21,33 +21,43 @@
 //!
 extern crate matrix_lib;
 
-// Constructor Test: Test if 2/3 can be assigned to a complex 
+// Constructor Test: Test if 2x2 matrix can be created and values assigned
 #[test]
 fn constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
+  let mut m: Matrix<Fraction> = matrix(2, 2);
   use matrix_lib::fraction::{Fraction, fraction};
   let f1 = fraction(1, 3); let f2 = fraction(-2, 3);
   let f3 = fraction(3, 2); let f4 = fraction(-9, 5);
-  let mut m: Matrix<Fraction> = matrix(2, 2);
   m.set(0, 0, f1); m.set(0, 1, f2);
   m.set(1, 0, f3); m.set(1, 1, f4);
+  assert!(2 == m.rows());
+  assert!(2 == m.columns());
   assert!(f1 == m.get(0, 0));
   assert!(f2 == m.get(0, 1));
   assert!(f3 == m.get(1, 0));
   assert!(f4 == m.get(1, 1));
-}/*
-// Copy Constructor Test: Test if matrix<isize> -3/4 can be copied to another variable
+}
+// Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(-3.95,4.12);
-  let mut m2: Matrix<isize> = m1.clone();
-  assert!(TOLERANCE > (m2.re() + 3.95).abs());
-  assert!(TOLERANCE > (m2.im() - 4.12).abs());
-  m2.set_re(5.23);
-  assert!(TOLERANCE > (m2.re() - 5.23).abs());
-  assert!(TOLERANCE > (m1.re() + 3.95).abs());
-}
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 2);
+  let f1 = fraction(1, 3); let f2 = fraction(-2, 3);
+  let f3 = fraction(3, 2); let f4 = fraction(-9, 5);
+  m1.set(0, 0, f1); m1.set(0, 1, f2);
+  m1.set(1, 0, f3); m1.set(1, 1, f4);
+  let mut m: Matrix<Fraction> = m1.clone();
+  assert!(f1 == m.get(0, 0));
+  assert!(f2 == m.get(0, 1));
+  assert!(f3 == m.get(1, 0));
+  assert!(f4 == m.get(1, 1));
+  let f5 = fraction(1, 2);
+  m.set(1, 0, f5);
+  assert!(f5 == m.get(1, 0));
+  assert!(f3 == m1.get(1, 0));
+}/*
 // Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
 #[test]
 fn conjugate_method_test() {

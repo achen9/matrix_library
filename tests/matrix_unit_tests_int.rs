@@ -21,7 +21,7 @@
 //!
 extern crate matrix_lib;
 
-// Constructor Test: Test if 2/3 can be assigned to a complex 
+// Constructor Test: Test if 2x2 matrix can be created and values assigned 
 #[test]
 fn constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -34,19 +34,23 @@ fn constructor_test() {
   assert!(2 == m.get(0, 1));
   assert!(3 == m.get(1, 0));
   assert!(4 == m.get(1, 1));
-}/*
-// Copy Constructor Test: Test if matrix<isize> -3/4 can be copied to another variable
+}
+// Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(-3.95,4.12);
-  let mut m2: Matrix<isize> = m1.clone();
-  assert!(TOLERANCE > (m2.re() + 3.95).abs());
-  assert!(TOLERANCE > (m2.im() - 4.12).abs());
-  m2.set_re(5.23);
-  assert!(TOLERANCE > (m2.re() - 5.23).abs());
-  assert!(TOLERANCE > (m1.re() + 3.95).abs());
-}
+  let mut m1: Matrix<isize> = matrix(2, 2);
+  m1.set(0, 0, 1); m1.set(0, 1, 2);
+  m1.set(1, 0, 3); m1.set(1, 1, 4);
+  let mut m: Matrix<isize> = m1.clone();
+  assert!(1 == m.get(0, 0));
+  assert!(2 == m.get(0, 1));
+  assert!(3 == m.get(1, 0));
+  assert!(4 == m.get(1, 1));
+  m.set(1, 0, 5);
+  assert!(5 == m.get(1, 0));
+  assert!(3 == m1.get(1, 0));
+}/*
 // Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
 #[test]
 fn conjugate_method_test() {

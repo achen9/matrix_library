@@ -39,19 +39,23 @@ fn constructor_test() {
   assert!(TOLERANCE > (m.get(0, 1) - 2.3).abs());
   assert!(TOLERANCE > (m.get(1, 0) - 3.2).abs());
   assert!(TOLERANCE > (m.get(1, 1) - 4.1).abs());
-}/*
-// Copy Constructor Test: Test if complex -3/4 can be copied to another variable
+}
+// Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(-3.95,4.12);
-  let mut c2: Complex = c1.clone();
-  assert!(TOLERANCE > (c2.re() + 3.95).abs());
-  assert!(TOLERANCE > (c2.im() - 4.12).abs());
-  c2.set_re(5.23);
-  assert!(TOLERANCE > (c2.re() - 5.23).abs());
-  assert!(TOLERANCE > (c1.re() + 3.95).abs());
-}
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 2);
+  m1.set(0, 0, 1.6); m1.set(0, 1, 2.3);
+  m1.set(1, 0, 3.2); m1.set(1, 1, 4.1);
+  let mut m: Matrix<f64> = m1.clone();
+  assert!(TOLERANCE > (m.get(0, 0) - 1.6).abs());
+  assert!(TOLERANCE > (m.get(0, 1) - 2.3).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 3.2).abs());
+  assert!(TOLERANCE > (m.get(1, 1) - 4.1).abs());
+  m.set(1, 0, 5.23);
+  assert!(TOLERANCE > (m.get(1, 0) - 5.23).abs());
+  assert!(TOLERANCE > (m1.get(1, 0) - 3.2).abs());
+}/*
 // Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
 #[test]
 fn conjugate_method_test() {

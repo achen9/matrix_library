@@ -40,19 +40,27 @@ fn constructor_test() {
   assert!(TOLERANCE > (m.get(0, 1).re() - c2.re()).abs() && TOLERANCE > (m.get(0, 1).im() - c2.im()).abs());
   assert!(TOLERANCE > (m.get(1, 0).re() - c3.re()).abs() && TOLERANCE > (m.get(1, 0).im() - c3.im()).abs());
   assert!(TOLERANCE > (m.get(1, 1).re() - c4.re()).abs() && TOLERANCE > (m.get(1, 1).im() - c4.im()).abs());
-}/*
-// Copy Constructor Test: Test if matrix<isize> -3/4 can be copied to another variable
+}
+// Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(-3.95,4.12);
-  let mut m2: Matrix<isize> = m1.clone();
-  assert!(TOLERANCE > (m2.re() + 3.95).abs());
-  assert!(TOLERANCE > (m2.im() - 4.12).abs());
-  m2.set_re(5.23);
-  assert!(TOLERANCE > (m2.re() - 5.23).abs());
-  assert!(TOLERANCE > (m1.re() + 3.95).abs());
-}
+  use matrix_lib::complex::{Complex, complex};
+  let mut m1: Matrix<Complex> = matrix(2, 2);
+  let c1 = complex(1.2, 3.1); let c2 = complex(-2.4, 3.9);
+  let c3 = complex(3.6, 4.0); let c4 = complex(-9.7, 5.4);
+  m1.set(0, 0, c1); m1.set(0, 1, c2);
+  m1.set(1, 0, c3); m1.set(1, 1, c4);
+  let mut m: Matrix<Complex> = m1.clone();
+  assert!(TOLERANCE > (m.get(0, 0).re() - c1.re()).abs() && TOLERANCE > (m.get(0, 0).im() - c1.im()).abs());
+  assert!(TOLERANCE > (m.get(0, 1).re() - c2.re()).abs() && TOLERANCE > (m.get(0, 1).im() - c2.im()).abs());
+  assert!(TOLERANCE > (m.get(1, 0).re() - c3.re()).abs() && TOLERANCE > (m.get(1, 0).im() - c3.im()).abs());
+  assert!(TOLERANCE > (m.get(1, 1).re() - c4.re()).abs() && TOLERANCE > (m.get(1, 1).im() - c4.im()).abs());
+  let c5 = complex(3.66, -9.55);
+  m.set(1, 0, c5);
+  assert!(TOLERANCE > (m.get(1, 0).re() - c5.re()).abs() && TOLERANCE > (m.get(1, 0).im() - c5.im()).abs());
+  assert!(TOLERANCE > (m1.get(1, 0).re() - c3.re()).abs() && TOLERANCE > (m1.get(1, 0).im() - c3.im()).abs());
+}/*
 // Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
 #[test]
 fn conjugate_method_test() {
