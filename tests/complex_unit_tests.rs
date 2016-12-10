@@ -45,18 +45,18 @@ fn copy_constructor_test() {
   c2.set_re(5.23);
   assert!(TOLERANCE > (c2.re() - 5.23).abs());
   assert!(TOLERANCE > (c1.re() + 3.95).abs());
-}/*
-// Reduce method Test: Test if complex 8/-32 can be reduced to -1/4
-#[test]
-fn reduce_method_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(8,-32);
-  let c2: Complex = c1.reduce();
-  assert!(-1 == c2.re());
-  assert!(4 == c2.im());
-  assert!(8 == c1.re());
-  assert!(-32 == c1.im());
 }
+// Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
+#[test]
+fn conjugate_method_test() {
+  use matrix_lib::complex::{Complex, complex};
+  let c1: Complex = complex(1.22,-2.34);
+  let c2: Complex = c1.conjugate();
+  assert!(TOLERANCE > (c1.re() - 1.22).abs());
+  assert!(TOLERANCE > (c1.im() + 2.34).abs());
+  assert!(TOLERANCE > (c2.re() - 1.22).abs());
+  assert!(TOLERANCE > (c2.im() - 2.34).abs());
+}/*
 // Arithmetic Operation Overload Test 1: Test if 3/4 + 2/-3 = 1/12
 #[test]
 fn addition_test() {

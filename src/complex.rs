@@ -26,47 +26,30 @@
 // Data definition
 pub struct Complex {
   real: f64,
-  imaginary: f64,
+  imag: f64,
 }
 
 // Constructors
 pub fn complex(r: f64, i: f64) -> Complex {
-  Complex {real: r, imaginary: i}
+  Complex {real: r, imag: i}
 }
 
 // Methods
 impl Complex {
   // Getters
   pub fn re(&self) -> f64 { self.real }
-  pub fn im(&self) -> f64 { self.imaginary }
+  pub fn im(&self) -> f64 { self.imag }
 
   // Setters
   pub fn set_re(&mut self, r: f64) { self.real = r; }
-  pub fn set_im(&mut self, i: f64) { self.imaginary = i; }
-}
- /*
-  // Reduce method
-  pub fn reduce(&self) -> Complex {
-    let mut abs_num = self.num().abs();
-    let mut abs_den = self.den().abs();
-    let mut gcd = 1;
-    // Modified Euclidean algorithm to find greatest common divisor (GCD)
-    while (0 != abs_num) && (0 != abs_den) {
-      if abs_num > abs_den {
-        gcd = abs_den;
-        abs_num %= abs_den;
-      } else {
-        gcd = abs_num;
-        abs_den %= abs_num;
-      }
-    }
-    // Eliminate double negatives or move negative to real
-    if 0 > self.den() {
-        gcd *= -1;
-      }
-    Complex {real: self.num()/gcd, imag: self.den()/gcd}
-  }
+  pub fn set_im(&mut self, i: f64) { self.imag = i; }
 
+  // Conjugate method
+  pub fn conjugate(&self) -> Complex {
+    Complex {real: self.re(), imag: -self.im()}
+  }
+}
+  /*
   // Raising fraction to a power method
   pub fn pow(&self, exp: isize) -> Complex {
     
