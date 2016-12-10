@@ -123,3 +123,51 @@ fn negate_test() {
   assert!(7 == f.den());
   assert!(-5 == f1.num()); // Check f1 still exists and can be used
 }
+// Comparison Operator Overload Test 1: Test if 3/-4 == -12/16 => true
+#[test]
+fn equals_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(3,-4);
+  let f2: Fraction = fraction(-12,16);
+  assert!(f1 == f2);
+}
+// Comparison Operator Overload Test 2: Test if 3/-4 != -11/16 => true
+#[test]
+fn not_equals_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(3,-4);
+  let f2: Fraction = fraction(-11,16);
+  assert!(f1 != f2);
+}
+// Comparison Operator Overload Test 3: Test if 3/-4 < 1/2 => true
+#[test]
+fn less_than_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(3,-4);
+  let f2: Fraction = fraction(1,2);
+  assert!(f1 < f2);
+}
+// Comparison Operator Overload Test 4: Test if 1/3 > 3/-4 => true
+#[test]
+fn greater_than_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(3,-4);
+  let f2: Fraction = fraction(1,3);
+  assert!(f2 > f1);
+}
+// Comparison Operator Overload Test 5: Test if 1/3 <= 2/6 => true
+#[test]
+fn less_than_equals_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(1,3);
+  let f2: Fraction = fraction(2,6);
+  assert!(f1 <= f2);
+}
+// Comparison Operator Overload Test 6: Test if 1/-8 >= -4/32 => true
+#[test]
+fn greater_than_equals_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(1,-8);
+  let f2: Fraction = fraction(-4,32);
+  assert!(f1 >= f2);
+}

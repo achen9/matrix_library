@@ -112,3 +112,27 @@ impl ::std::ops::Neg for Fraction {
     f.reduce()
   }
 }
+use ::std::cmp::Ordering;
+// Comparison operator overloads
+impl ::std::cmp::PartialEq for Fraction {
+  fn eq(&self, other: &Fraction) -> bool {
+    self.num() * other.den() == self.den() * other.num()
+  }
+}
+impl ::std::cmp::Eq for Fraction {}
+impl ::std::cmp::PartialOrd for Fraction {
+  fn partial_cmp(&self, other: &Fraction) -> Option<Ordering> {
+    Some(self.cmp(other))
+  }
+}
+impl Ord for Fraction {
+  fn cmp(&self, other: &Fraction) -> Ordering {
+    if (0 > self.den()) ||(0 > other.den()) {
+      // Need to add negative sign to num() and f.num() because 
+      // negative in denominator causes comparison to be flipped
+      (-self.num() * other.den()).cmp(&(-other.num() * self.den()))
+    } else {
+      (self.num() * other.den()).cmp(&(other.num() * self.den()))
+    }
+  }
+}
