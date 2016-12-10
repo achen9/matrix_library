@@ -31,7 +31,6 @@ const TOLERANCE: f64 = 0.00001;
 fn constructor_test() {
   use matrix_lib::complex::{Complex, complex};
   let c: Complex = complex(2.6,3.8);
-  println!("C real: {:.5} imag: {:.5}",c.re(),c.im());
   assert!(TOLERANCE > (c.re() - 2.6).abs());
   assert!(TOLERANCE > (c.im() - 3.8).abs());
 }
@@ -41,7 +40,6 @@ fn copy_constructor_test() {
   use matrix_lib::complex::{Complex, complex};
   let c1: Complex = complex(-3.95,4.12);
   let mut c2: Complex = c1.clone();
-  println!("C1 real: {:.5} imag: {:.5}",c1.re(),c1.im());
   assert!(TOLERANCE > (c2.re() + 3.95).abs());
   assert!(TOLERANCE > (c2.im() - 4.12).abs());
   c2.set_re(5.23);
