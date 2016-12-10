@@ -162,6 +162,8 @@ fn less_than_equals_test() {
   let f1: Fraction = fraction(1,3);
   let f2: Fraction = fraction(2,6);
   assert!(f1 <= f2);
+  let f3: Fraction = fraction(-5,1);
+  assert!(f3 <= f1);
 }
 // Comparison Operator Overload Test 6: Test if 1/-8 >= -4/32 => true
 #[test]
@@ -170,13 +172,18 @@ fn greater_than_equals_test() {
   let f1: Fraction = fraction(1,-8);
   let f2: Fraction = fraction(-4,32);
   assert!(f1 >= f2);
+  let f3: Fraction = fraction(1,2);
+  assert!(f3 >= f1);
 }
-// Raising to a Power Test: Test if (1/-2)^5 = -1/32
+// Raising to a Power Test: Test if (2/-4)^3 = -1/8
 #[test]
 fn power_test() {
   use matrix_lib::fraction::{Fraction, fraction};
-  let f1: Fraction = fraction(1,-2);
-  let f2: Fraction = f1.pow(5);
+  let f1: Fraction = fraction(2,-4);
+  let f2: Fraction = f1.pow(3);
   assert!(-1 == f2.num());
-  assert!(32 == f2.den());
+  assert!(8 == f2.den());
+  let f3: Fraction = f1.pow(-3);
+  assert!(-8 == f3.num());
+  assert!(1 == f3.den());
 }
