@@ -51,6 +51,16 @@ impl Complex {
     Complex {real: self.re(), imag: -self.im()}
   }
 
+  // Magnitude method
+  pub fn mag(&self) -> f64 {
+    (self.re().powi(2) + self.im().powi(2)).sqrt()
+  }
+
+  // Angle method
+  pub fn angle(&self) -> f64 {
+    self.im().atan2(self.re())
+  }
+
   // Utility methods
   // Removes negative zero from complex number representation
   fn delnegzero(&self) -> Complex {
@@ -68,6 +78,7 @@ impl Complex {
   fn isreal(&self) -> bool {
     COMPLEX_TOL > self.im().abs()
   }
+  
 }
   /*
   // Raising fraction to a power method
@@ -136,31 +147,6 @@ impl ::std::ops::Neg for Complex {
   }
 }
 /*
-// Comparison operator overloads
-use ::std::cmp::Ordering;
-impl ::std::cmp::PartialEq for Complex {
-  fn eq(&self, other: &Complex) -> bool {
-    self.num() * other.den() == self.den() * other.num()
-  }
-}
-impl ::std::cmp::Eq for Complex {}
-impl ::std::cmp::PartialOrd for Complex {
-  fn partial_cmp(&self, other: &Complex) -> Option<Ordering> {
-    Some(self.cmp(other))
-  }
-}
-impl Ord for Complex {
-  fn cmp(&self, other: &Complex) -> Ordering {
-    if (0 > self.den()) ||(0 > other.den()) {
-      // Need to add negative sign to num() and f.num() because 
-      // negative in imag causes comparison to be flipped
-      (-self.num() * other.den()).cmp(&(-other.num() * self.den()))
-    } else {
-      (self.num() * other.den()).cmp(&(other.num() * self.den()))
-    }
-  }
-}
-
 // Print formatting
 impl ::std::fmt::Display for Complex {
   fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {

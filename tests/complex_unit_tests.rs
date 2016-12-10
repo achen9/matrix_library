@@ -119,59 +119,25 @@ fn negate_test() {
   assert!(TOLERANCE > (c.re() + 3.22).abs()); 
   assert!(TOLERANCE > (c.im() + 4.11).abs());
   assert!(TOLERANCE > (c1.re() - 3.22).abs()); // Check c1 still exists and can be used
+}
+// Magnitude Method Test
+#[test]
+fn magnitude_method_test() {
+  use matrix_lib::complex::{Complex, complex};
+  let c1: Complex = complex(3.0,4.0);
+  let c2: Complex = complex(-2.34,-6.98);
+  assert!(TOLERANCE > (c1.mag() - 5.0).abs());
+  assert!(TOLERANCE > (c2.mag() - 7.36179).abs());
+}
+// Angle Method Test
+#[test]
+fn angle_method_test() {
+  use matrix_lib::complex::{Complex, complex};
+  let c1: Complex = complex(3.0,4.0);
+  let c2: Complex = complex(-2.34,-6.98);
+  assert!(TOLERANCE > (c1.angle() - 0.927295).abs());
+  assert!(TOLERANCE > (c2.angle() + 1.89427).abs());
 }/*
-// Comparison Operator Overload Test 1: Test if 3/-4 == -12/16 => true
-#[test]
-fn equals_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(3,-4);
-  let c2: Complex = complex(-12,16);
-  assert!(c1 == c2);
-}
-// Comparison Operator Overload Test 2: Test if 3/-4 != -11/16 => true
-#[test]
-fn not_equals_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(3,-4);
-  let c2: Complex = complex(-11,16);
-  assert!(c1 != c2);
-}
-// Comparison Operator Overload Test 3: Test if 3/-4 < 1/2 => true
-#[test]
-fn less_than_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(3,-4);
-  let c2: Complex = complex(1,2);
-  assert!(c1 < c2);
-}
-// Comparison Operator Overload Test 4: Test if 1/3 > 3/-4 => true
-#[test]
-fn greater_than_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(3,-4);
-  let c2: Complex = complex(1,3);
-  assert!(c2 > c1);
-}
-// Comparison Operator Overload Test 5: Test if 1/3 <= 2/6 => true
-#[test]
-fn less_than_equals_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(1,3);
-  let c2: Complex = complex(2,6);
-  assert!(c1 <= c2);
-  let c3: Complex = complex(-5,1);
-  assert!(c3 <= c1);
-}
-// Comparison Operator Overload Test 6: Test if 1/-8 >= -4/32 => true
-#[test]
-fn greater_than_equals_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(1,-8);
-  let c2: Complex = complex(-4,32);
-  assert!(c1 >= c2);
-  let c3: Complex = complex(1,2);
-  assert!(c3 >= c1);
-}
 // Raising to a Power Test: Test if (2/-4)^3 = -1/8
 #[test]
 fn power_test() {
