@@ -142,11 +142,10 @@ impl ::std::ops::Neg for Complex {
     c.delnegzero()
   }
 }
-/*
+
 // Print formatting
 impl ::std::fmt::Display for Complex {
   fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-    write!(f, "{}/{}", self.num(), self.den())
+      write!(f, "{:0.*}{:+0.*}j", 5, self.re(), 5, self.im())
   }
 }
-*/

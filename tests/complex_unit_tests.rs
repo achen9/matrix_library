@@ -95,7 +95,6 @@ fn division_test1() {
   let c1: Complex = complex(2.5,3.5);
   let c2: Complex = complex(1.0,-2.0);
   let c = c1 / c2;
-  println!("re: {:.5} im: {:.5}",c.re(),c.im());
   assert!(TOLERANCE > (c1.re() - 2.5).abs()); // Check c1 still exists and can be used
   assert!(TOLERANCE > (c2.re() - 1.0).abs()); // Check c2 still exists and can be used
   assert!(TOLERANCE > (c.re() + 0.9).abs());
@@ -165,12 +164,12 @@ fn exp_test() {
   assert!(TOLERANCE > (c3.re() - 1.0).abs());
   assert!(TOLERANCE > (c3.im() - 0.0).abs());
 }
-/*
+
 // Printing complex to terminal
 #[test]
 fn print_test() {
   use matrix_lib::complex::{Complex, complex};
-  let c: Complex = complex(2,-4);
-  println!("Complex c is {}. c reduced is {}.", c, c.reduce())
+  let c1: Complex = complex(-2.011,-4.644);
+  let c2: Complex = complex(3.15,0.336);
+  println!("C1 is {}. C2 is {}.", c1, c2);
 }
-*/
