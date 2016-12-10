@@ -21,5 +21,5 @@
 //!
 
 pub mod fraction;
-mod complex;
-mod matrix;
+pub mod complex;
+pub mod matrix;
