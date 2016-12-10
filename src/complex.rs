@@ -20,8 +20,7 @@
 //! alexac9@uw.edu
 //!
 // Derivations
-#[derive(Clone)]
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 
 // Data definition
 pub struct Complex {
