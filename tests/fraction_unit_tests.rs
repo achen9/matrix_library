@@ -103,7 +103,7 @@ fn division_test1() {
   assert!(5 == f.num());
   assert!(6 == f.den());
 }
-// Arithmetic Operation Overload Test 4: Test if (-5/7) / (0/2) = panic
+// Arithmetic Operation Overload Test 5: Test if (-5/7) / (0/2) = panic
 #[test]
 #[should_panic]
 fn division_test2() {
