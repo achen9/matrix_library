@@ -1,6 +1,8 @@
 ### To compile hw9 code
 Make sure you have navigated to the /hw9/ folder as the current directory. Make sure a "Cargo.toml" file is in there.
 * Type "cargo build" to compile all code. The compiled code will be placed in the "target" directory.
+* Type "cargo test" to run the unit tests.
+* Type "cargo run" to run the code in the main.rs file. The main.rs file contains a benchmark to test the speed of the matrix library implementation.
 
 ### To run hw9 code
 Make sure you have navigated to the /hw9/ folder as the current directory.
@@ -27,3 +29,5 @@ Alex Chen, 12/15/2016
 * Cannot overload the '=' operator in Rust
 * Overloading functions is hard and tedious. Also, "overloaded" functions cannot accept different number of input arguments.
 
+### Rust testing/debugging
+* cargo test -- --nocapture shows stdout for all tests (even ones that pass)
