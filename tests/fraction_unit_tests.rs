@@ -171,3 +171,12 @@ fn greater_than_equals_test() {
   let f2: Fraction = fraction(-4,32);
   assert!(f1 >= f2);
 }
+// Raising to a Power Test: Test if (1/-2)^5 = -1/32
+#[test]
+fn power_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f1: Fraction = fraction(1,-2);
+  let f2: Fraction = f1.pow(5);
+  assert!(-1 == f2.num());
+  assert!(32 == f2.den());
+}

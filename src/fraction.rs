@@ -20,13 +20,16 @@
 //! alexac9@uw.edu
 //!
 
+// Derivations
 #[derive(Clone)]
 #[derive(Copy)]
+
 // Data definition
 pub struct Fraction {
   numerator: isize,
   denominator: isize,
 }
+
 // Constructors
 pub fn fraction(n: isize, d: isize) -> Fraction {
   if 0 == d {
@@ -34,6 +37,7 @@ pub fn fraction(n: isize, d: isize) -> Fraction {
   } 
   Fraction {numerator: n, denominator: d}
 }
+
 // Methods
 impl Fraction {
   // Getters
@@ -50,11 +54,10 @@ impl Fraction {
   }
 
   // Reduce method
- pub fn reduce(&self) -> Fraction {
+  pub fn reduce(&self) -> Fraction {
     let mut abs_num = self.num().abs();
     let mut abs_den = self.den().abs();
     let mut gcd = 1;
-
     // Modified Euclidean algorithm to find greatest common divisor (GCD)
     while (0 != abs_num) && (0 != abs_den) {
       if abs_num > abs_den {
@@ -71,7 +74,23 @@ impl Fraction {
       }
     Fraction {numerator: self.num()/gcd, denominator: self.den()/gcd}
   }
+
+  // Raising fraction to a power method
+  pub fn pow(&self, exp: isize) -> Fraction {
+    
+    if 0 > exp {
+      // Negative exponents flip the fraction
+      let exp_u32 = -exp as u32;
+      let f = Fraction {numerator: self.den().pow(exp_u32), denominator: self.num().pow(exp_u32)};
+      f.reduce()
+    } else {
+      let exp_u32 = exp as u32;
+      let f = Fraction {numerator: self.num().pow(exp_u32), denominator: self.den().pow(exp_u32)};
+      f.reduce()
+    }
+  }
 }
+
 // Arithmetic operations & operator overload
 impl ::std::ops::Add for Fraction {
   type Output = Fraction;
@@ -104,6 +123,7 @@ impl ::std::ops::Div for Fraction {
     f.reduce()
   }
 }
+
 // Unary operator overload
 impl ::std::ops::Neg for Fraction {
   type Output = Fraction;
@@ -112,8 +132,9 @@ impl ::std::ops::Neg for Fraction {
     f.reduce()
   }
 }
-use ::std::cmp::Ordering;
+
 // Comparison operator overloads
+use ::std::cmp::Ordering;
 impl ::std::cmp::PartialEq for Fraction {
   fn eq(&self, other: &Fraction) -> bool {
     self.num() * other.den() == self.den() * other.num()
