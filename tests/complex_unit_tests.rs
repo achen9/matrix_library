@@ -25,6 +25,7 @@ extern crate matrix_lib;
 // results. Checking the two doubles are within some tolerance is a better
 // method to check for equality.
 const TOLERANCE: f64 = 0.00001;
+const PI: f64 = 3.14159;
 
 // Constructor Test: Test if 2/3 can be assigned to a complex 
 #[test]
@@ -140,7 +141,7 @@ fn angle_method_test() {
 }
 // Raising to a Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
 #[test]
-fn power_test1() {
+fn power_test() {
   use matrix_lib::complex::{Complex, complex};
   let c1: Complex = complex(3.0,4.0);
   let c2: Complex = complex(1.0,1.0);
@@ -150,6 +151,19 @@ fn power_test1() {
   assert!(TOLERANCE > (c.im() + 3116.0).abs());
   assert!(TOLERANCE > (c3.re() - 0.0).abs());
   assert!(TOLERANCE > (c3.im() + 0.5).abs());
+}
+// Raising e to a Complex Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
+#[test]
+fn exp_test() {
+  use matrix_lib::complex::{Complex, complex};
+  let c1: Complex = complex(0.0,PI);
+  let c2: Complex = complex(0.0,0.0);
+  let c = c1.exp();
+  let c3 = c2.exp();
+  assert!(TOLERANCE > (c.re() + 1.0).abs());
+  assert!(TOLERANCE > (c.im() - 0.0).abs());
+  assert!(TOLERANCE > (c3.re() - 1.0).abs());
+  assert!(TOLERANCE > (c3.im() - 0.0).abs());
 }
 /*
 // Printing complex to terminal

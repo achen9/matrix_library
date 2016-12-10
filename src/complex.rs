@@ -68,6 +68,12 @@ impl Complex {
              imag: self.mag().powi(exp) * ((exp as f64)*self.angle()).sin()}
   }
 
+  // Raising e to a complex power
+  pub fn exp(&self) -> Complex {
+    // Apply Euler's formula re^(it) = r(cos(t) + isin(t))
+    Complex {real: self.re().exp()*self.im().cos(), imag: self.re().exp()*self.im().sin()}
+  }
+
   // Utility methods
   // Removes negative zero from complex number representation
   fn delnegzero(&self) -> Complex {
