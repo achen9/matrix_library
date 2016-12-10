@@ -56,59 +56,60 @@ fn conjugate_method_test() {
   assert!(TOLERANCE > (c1.im() + 2.34).abs());
   assert!(TOLERANCE > (c2.re() - 1.22).abs());
   assert!(TOLERANCE > (c2.im() - 2.34).abs());
-}/*
-// Arithmetic Operation Overload Test 1: Test if 3/4 + 2/-3 = 1/12
+}
+// Arithmetic Operation Overload Test 1: Check 3.22+4.11j + -2.99-3.03j ~= 0.23+1.08j
 #[test]
 fn addition_test() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(3,4);
-  let c2: Complex = complex(2,-3);
+  let c1: Complex = complex(3.22,4.11);
+  let c2: Complex = complex(-2.99,-3.03);
   let c = c1 + c2;
-  assert!(1 == c.re());
-  assert!(12 == c.im());
+  assert!(TOLERANCE > (c.re() - 0.23).abs());
+  assert!(TOLERANCE > (c.im() - 1.08).abs());
 }
-// Arithmetic Operation Overload Test 2: Test if 2/4 - 2/3 = -1/6
+// Arithmetic Operation Overload Test 2: Check 4.25-9.28j - -3.21+6.56j ~= 7.46-15.84j
 #[test]
 fn subtraction_test() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(2,4);
-  let c2: Complex = complex(2,3);
+  let c1: Complex = complex(4.25,-9.28);
+  let c2: Complex = complex(-3.21,6.56);
   let c = c1 - c2;
-  assert!(-1 == c.re());
-  assert!(6 == c.im());
+  assert!(TOLERANCE > (c.re() - 7.46).abs());
+  assert!(TOLERANCE > (c.im() + 15.84).abs());
 }
-// Arithmetic Operation Overload Test 3: Test if 4/-5 * 3/4 = -3/5
+// Arithmetic Operation Overload Test 3: Check 2.34-0.0j * 0.0+6.22j ~= 0.0+14.5548
 #[test]
 fn multiplication_test() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(4,-5);
-  let c2: Complex = complex(3,4);
+  let c1: Complex = complex(2.34,-0.0);
+  let c2: Complex = complex(0.0,6.22);
   let c = c1 * c2;
-  assert!(-3 == c.re());
-  assert!(5 == c.im());
+  assert!(TOLERANCE > (c.re() - 0.0).abs());
+  assert!(TOLERANCE > (c.im() - 14.5548).abs());
 }
-// Arithmetic Operation Overload Test 4: Test if (-5/7) / (-6/7) = 5/6
+// Arithmetic Operation Overload Test 4: Check 2.5+3.5j / 1-2j ~= -0.9+1.7j
 #[test]
 fn division_test1() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(-5,7);
-  let c2: Complex = complex(-6,7);
+  let c1: Complex = complex(2.5,3.5);
+  let c2: Complex = complex(1.0,-2.0);
   let c = c1 / c2;
-  assert!(-5 == c1.re()); // Check c1 still exists and can be used
-  assert!(-6 == c2.re()); // Check c2 still exists and can be used
-  assert!(5 == c.re());
-  assert!(6 == c.im());
+  println!("re: {:.5} im: {:.5}",c.re(),c.im());
+  assert!(TOLERANCE > (c1.re() - 2.5).abs()); // Check c1 still exists and can be used
+  assert!(TOLERANCE > (c2.re() - 1.0).abs()); // Check c2 still exists and can be used
+  assert!(TOLERANCE > (c.re() + 0.9).abs());
+  assert!(TOLERANCE > (c.im() - 1.7).abs());
 }
-// Arithmetic Operation Overload Test 4: Test if (-5/7) / (0/2) = panic
+// Arithmetic Operation Overload Test 5: Check 2.5+3.5j / -0-0j => panic
 #[test]
 #[should_panic]
 fn division_test2() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(-5,7);
-  let c2: Complex = complex(0,2);
+  let c1: Complex = complex(2.5,3.5);
+  let c2: Complex = complex(-0.0,-0.0);
   let c = c1 / c2;
   assert!(true); // If assertion passes, something went wrong
-}
+}/*
 // Unary Negate Operator Overload Test : Test if -(-5/-7) = -5/7
 #[test]
 fn negate_test() {
