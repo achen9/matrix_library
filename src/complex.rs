@@ -29,6 +29,8 @@ pub struct Complex {
   imag: f64,
 }
 
+const COMPLEX_TOL: f64 = 0.00001;
+
 // Constructors
 pub fn complex(r: f64, i: f64) -> Complex {
   Complex {real: r, imag: i}
@@ -48,6 +50,24 @@ impl Complex {
   pub fn conjugate(&self) -> Complex {
     Complex {real: self.re(), imag: -self.im()}
   }
+
+  // Utility methods
+  // Removes negative zero from complex number representation
+  fn delnegzero(&self) -> Complex {
+    if (-0.0 == self.re()) && (-0.0 == self.im()) {
+      Complex {real: 0.0, imag: 0.0}
+    } else if -0.0 == self.re() {
+      Complex {real: 0.0, imag: self.im()}
+    } else if -0.0 == self.im() {
+      Complex {real: self.re(), imag: 0.0}
+    } else {
+      Complex {real: self.re(), imag: self.im()}
+    }
+  }
+  // Checks if complex number is purely real
+  fn isreal(&self) -> bool {
+    COMPLEX_TOL > self.im().abs()
+  }
 }
   /*
   // Raising fraction to a power method
@@ -64,41 +84,49 @@ impl Complex {
       f.reduce()
     }
   }
-}
+}*/
 
 // Arithmetic operations & operator overload
 impl ::std::ops::Add for Complex {
   type Output = Complex;
   fn add(self, other: Complex) -> Complex {
-    let f = Complex {real: self.num() * other.den() + self.den() * other.num(), imag: self.den() * other.den()};
-    f.reduce()
+    let c = Complex {real: self.re() + other.re(), imag: self.im() + other.im()};
+    c.delnegzero()
   }
 }
 impl ::std::ops::Sub for Complex {
   type Output = Complex;
   fn sub(self, other: Complex) -> Complex {
-    let f = Complex {real: self.num() * other.den() - self.den() * other.num(), imag: self.den() * other.den()};
-    f.reduce()
+    let c = Complex {real: self.re() - other.re(), imag: self.im() - other.im()};
+    c.delnegzero()
   }
 }
 impl ::std::ops::Mul for Complex {
   type Output = Complex;
   fn mul(self, other:Complex) -> Complex {
-    let f = Complex {real: self.num() * other.num(), imag: self.den() * other.den()};
-    f.reduce()
+    let c = Complex {real: self.re()*other.re() - self.im()*other.im(), 
+                     imag: self.im()*other.re() + self.re()*other.im()};
+    c.delnegzero()
   }
 }
 impl ::std::ops::Div for Complex {
   type Output = Complex;
   fn div(self, other:Complex) -> Complex {
-    if 0 == other.num() {
+    let mut num = self * other.conjugate();
+    let mut den = other * other.conjugate();
+    num = num.delnegzero();
+    den = den.delnegzero();
+    if 0.0 == den.re() {
       panic!("Attempted to divide by zero.");
+    } else if !den.isreal() {
+      panic!("Complex conjugate did not produce real number in denominator.");
+    } else {
+      let c = Complex {real: num.re() / den.re(), imag: num.im() / den.re()};
+      c.delnegzero()
     }
-    let f = Complex {real: self.num() * other.den(), imag: self.den() * other.num()};
-    f.reduce()
   }
 }
-
+/*
 // Unary operator overload
 impl ::std::ops::Neg for Complex {
   type Output = Complex;
