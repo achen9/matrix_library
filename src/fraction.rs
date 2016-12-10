@@ -157,3 +157,10 @@ impl Ord for Fraction {
     }
   }
 }
+
+// Print formatting
+impl ::std::fmt::Display for Fraction {
+  fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+    write!(f, "{}/{}", self.num(), self.den())
+  }
+}

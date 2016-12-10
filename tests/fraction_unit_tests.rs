@@ -187,3 +187,10 @@ fn power_test() {
   assert!(-8 == f3.num());
   assert!(1 == f3.den());
 }
+// Printing fraction to terminal
+#[test]
+fn print_test() {
+  use matrix_lib::fraction::{Fraction, fraction};
+  let f: Fraction = fraction(2,-4);
+  println!("Fraction f is {}. f reduced is {}.", f, f.reduce())
+}
