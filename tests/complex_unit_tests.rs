@@ -109,17 +109,17 @@ fn division_test2() {
   let c2: Complex = complex(-0.0,-0.0);
   let c = c1 / c2;
   assert!(true); // If assertion passes, something went wrong
-}/*
-// Unary Negate Operator Overload Test : Test if -(-5/-7) = -5/7
+}
+// Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
 #[test]
 fn negate_test() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(-5,-7);
+  let c1: Complex = complex(3.22,4.11);
   let c = -c1;
-  assert!(-5 == c.re()); 
-  assert!(7 == c.im());
-  assert!(-5 == c1.re()); // Check c1 still exists and can be used
-}
+  assert!(TOLERANCE > (c.re() + 3.22).abs()); 
+  assert!(TOLERANCE > (c.im() + 4.11).abs());
+  assert!(TOLERANCE > (c1.re() - 3.22).abs()); // Check c1 still exists and can be used
+}/*
 // Comparison Operator Overload Test 1: Test if 3/-4 == -12/16 => true
 #[test]
 fn equals_test() {

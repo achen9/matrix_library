@@ -126,16 +126,16 @@ impl ::std::ops::Div for Complex {
     }
   }
 }
-/*
+
 // Unary operator overload
 impl ::std::ops::Neg for Complex {
   type Output = Complex;
   fn neg(self) -> Complex {
-    let f = Complex {real: -self.num(), imag: self.den()};
-    f.reduce()
+    let c = Complex {real: -self.re(), imag: -self.im()};
+    c.delnegzero()
   }
 }
-
+/*
 // Comparison operator overloads
 use ::std::cmp::Ordering;
 impl ::std::cmp::PartialEq for Complex {
