@@ -1,5 +1,5 @@
 //! NAME
-//!  fraction_tests.rs
+//!  fraction_unit_tests.rs
 //!
 //! DESCRIPTION
 //!  Unit test file for fraction class methods
