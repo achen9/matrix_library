@@ -57,70 +57,132 @@ fn copy_constructor_test() {
   m.set(1, 0, f5);
   assert!(f5 == m.get(1, 0));
   assert!(f3 == m1.get(1, 0));
-}/*
-// Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
-#[test]
-fn conjugate_method_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(1.22,-2.34);
-  let m2: Matrix<isize> = m1.conjugate();
-  assert!(TOLERANCE > (m1.re() - 1.22).abs());
-  assert!(TOLERANCE > (m1.im() + 2.34).abs());
-  assert!(TOLERANCE > (m2.re() - 1.22).abs());
-  assert!(TOLERANCE > (m2.im() - 2.34).abs());
 }
-// Arithmetic Operation Overload Test 1: Check 3.22+4.11j + -2.99-3.03j ~= 0.23+1.08j
+// Arithmetic Operation Overload Test 1:
+// Check [1/2 -2/3  + [1/3 -2/5   =  [5/6 -16/15
+//        3/5 -9/6]    3/9 -9/3]      14/15 -9/2]
 #[test]
 fn addition_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.22,4.11);
-  let m2: Matrix<isize> = matrix<isize>(-2.99,-3.03);
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 2);
+  let m11 = fraction(1, 2); let m12 = fraction(-2, 3);
+  let m13 = fraction(3, 5); let m14 = fraction(-9, 6);
+  m1.set(0, 0, m11); m1.set(0, 1, m12);
+  m1.set(1, 0, m13); m1.set(1, 1, m14);
+  let mut m2: Matrix<Fraction> = matrix(2, 2);
+  let m21 = fraction(1, 3); let m22 = fraction(-2, 5);
+  let m23 = fraction(3, 9); let m24 = fraction(-9, 3);
+  m2.set(0, 0, m21); m2.set(0, 1, m22);
+  m2.set(1, 0, m23); m2.set(1, 1, m24);
   let m = m1 + m2;
-  assert!(TOLERANCE > (m.re() - 0.23).abs());
-  assert!(TOLERANCE > (m.im() - 1.08).abs());
+  let ma = fraction(5, 6); let mb = fraction(-16, 15);
+  let mc = fraction(14, 15); let md = fraction(-9, 2);
+  assert!(ma == m.get(0, 0));
+  assert!(mb == m.get(0, 1));
+  assert!(mc == m.get(1, 0));
+  assert!(md == m.get(1, 1));
 }
-// Arithmetic Operation Overload Test 2: Check 4.25-9.28j - -3.21+6.56j ~= 7.46-15.84j
+// Arithmetic Operation Overload Test 2: Check 2x2 matrix + 2x3 matrix => panics
+#[test]
+#[should_panic]
+fn addition_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 2);
+  let m11 = fraction(1, 2); let m12 = fraction(-2, 3);
+  let m13 = fraction(3, 5); let m14 = fraction(-9, 6);
+  m1.set(0, 0, m11); m1.set(0, 1, m12);
+  m1.set(1, 0, m13); m1.set(1, 1, m14);
+  let mut m2: Matrix<Fraction> = matrix(2, 3);
+  let m21 = fraction(1, 3); let m22 = fraction(-2, 5); let m23 = fraction(2, 3);
+  let m24 = fraction(3, 9); let m25 = fraction(-9, 3); let m26 = fraction(1, 3);
+  m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
+  m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
+  let m = m1 + m2;
+  assert!(true); // Something went wrong if this assertion passes
+}
+// Arithmetic Operation Overload Test 3: 
+// Check [1/2 -2/3  - [1/3 -2/5   =  [1/6 -4/15
+//        3/5 -9/6]    3/9 -9/3]      4/15 3/2]
 #[test]
 fn subtraction_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(4.25,-9.28);
-  let m2: Matrix<isize> = matrix<isize>(-3.21,6.56);
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 2);
+  let m11 = fraction(1, 2); let m12 = fraction(-2, 3);
+  let m13 = fraction(3, 5); let m14 = fraction(-9, 6);
+  m1.set(0, 0, m11); m1.set(0, 1, m12);
+  m1.set(1, 0, m13); m1.set(1, 1, m14);
+  let mut m2: Matrix<Fraction> = matrix(2, 2);
+  let m21 = fraction(1, 3); let m22 = fraction(-2, 5);
+  let m23 = fraction(3, 9); let m24 = fraction(-9, 3);
+  m2.set(0, 0, m21); m2.set(0, 1, m22);
+  m2.set(1, 0, m23); m2.set(1, 1, m24);
   let m = m1 - m2;
-  assert!(TOLERANCE > (m.re() - 7.46).abs());
-  assert!(TOLERANCE > (m.im() + 15.84).abs());
+  let ma = fraction(1, 6); let mb = fraction(-4, 15);
+  let mc = fraction(4, 15); let md = fraction(3, 2);
+  assert!(ma == m.get(0, 0));
+  assert!(mb == m.get(0, 1));
+  assert!(mc == m.get(1, 0));
+  assert!(md == m.get(1, 1));
 }
-// Arithmetic Operation Overload Test 3: Check 2.34-0.0j * 0.0+6.22j ~= 0.0+14.5548
+// Arithmetic Operation Overload Test 4: Check 2x2 matrix - 2x3 matrix => panics
+#[test]
+#[should_panic]
+fn subtraction_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 2);
+  let m11 = fraction(1, 2); let m12 = fraction(-2, 3);
+  let m13 = fraction(3, 5); let m14 = fraction(-9, 6);
+  m1.set(0, 0, m11); m1.set(0, 1, m12);
+  m1.set(1, 0, m13); m1.set(1, 1, m14);
+  let mut m2: Matrix<Fraction> = matrix(2, 3);
+  let m21 = fraction(1, 3); let m22 = fraction(-2, 5); let m23 = fraction(2, 3);
+  let m24 = fraction(3, 9); let m25 = fraction(-9, 3); let m26 = fraction(1, 3);
+  m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
+  m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
+  let m = m1 - m2;
+  assert!(true); // Something went wrong if this assertion passes
+}
+// Arithmetic Operation Overload Test 5:
+// Check [1/2  - [1/3 -2/5]   =  [1/6 -1/5
+//        3/5]                    1/5 -6/25]
 #[test]
 fn multiplication_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(2.34,-0.0);
-  let m2: Matrix<isize> = matrix<isize>(0.0,6.22);
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 1);
+  let m11 = fraction(1, 2); let m12 = fraction(3, 5);
+  m1.set(0, 0, m11); m1.set(1, 0, m12);
+  let mut m2: Matrix<Fraction> = matrix(1, 2);
+  let m21 = fraction(1, 3); let m22 = fraction(-2, 5);
+  m2.set(0, 0, m21); m2.set(0, 1, m22);
   let m = m1 * m2;
-  assert!(TOLERANCE > (m.re() - 0.0).abs());
-  assert!(TOLERANCE > (m.im() - 14.5548).abs());
+  let ma = fraction(1, 6); let mb = fraction(-1, 5);
+  let mc = fraction(1, 5); let md = fraction(-6, 25);
+  assert!(ma == m.get(0, 0));
+  assert!(mb == m.get(0, 1));
+  assert!(mc == m.get(1, 0));
+  assert!(md == m.get(1, 1));
 }
-// Arithmetic Operation Overload Test 4: Check 2.5+3.5j / 1-2j ~= -0.9+1.7j
-#[test]
-fn division_test1() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(2.5,3.5);
-  let m2: Matrix<isize> = matrix<isize>(1.0,-2.0);
-  let m = m1 / m2;
-  assert!(TOLERANCE > (m1.re() - 2.5).abs()); // Check c1 still exists and can be used
-  assert!(TOLERANCE > (m2.re() - 1.0).abs()); // Check c2 still exists and can be used
-  assert!(TOLERANCE > (m.re() + 0.9).abs());
-  assert!(TOLERANCE > (m.im() - 1.7).abs());
-}
-// Arithmetic Operation Overload Test 5: Check 2.5+3.5j / -0-0j => panic
+// Arithmetic Operation Overload Test 6: Check 2x1 matrix * 2x1 matrix => panics
 #[test]
 #[should_panic]
-fn division_test2() {
+fn multiplication_error_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(2.5,3.5);
-  let m2: Matrix<isize> = matrix<isize>(-0.0,-0.0);
-  let m = m1 / m2;
-  assert!(true); // If assertion passes, something went wrong
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 1);
+  let m11 = fraction(1, 2); let m12 = fraction(-2, 3);
+  m1.set(0, 0, m11); m1.set(1, 0, m12);
+  let mut m2: Matrix<Fraction> = matrix(2, 1);
+  let m21 = fraction(1, 3); let m22 = fraction(-2, 5);
+  m2.set(0, 0, m21); m2.set(1, 0, m22);
+  let m = m1 * m2;
+  assert!(true); // Something went wrong if this assertion passes
 }
+/*
 // Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
 #[test]
 fn negate_test() {

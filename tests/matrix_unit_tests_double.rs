@@ -55,70 +55,100 @@ fn copy_constructor_test() {
   m.set(1, 0, 5.23);
   assert!(TOLERANCE > (m.get(1, 0) - 5.23).abs());
   assert!(TOLERANCE > (m1.get(1, 0) - 3.2).abs());
-}/*
-// Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
-#[test]
-fn conjugate_method_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(1.22,-2.34);
-  let c2: Complex = c1.conjugate();
-  assert!(TOLERANCE > (c1.re() - 1.22).abs());
-  assert!(TOLERANCE > (c1.im() + 2.34).abs());
-  assert!(TOLERANCE > (c2.re() - 1.22).abs());
-  assert!(TOLERANCE > (c2.im() - 2.34).abs());
 }
-// Arithmetic Operation Overload Test 1: Check 3.22+4.11j + -2.99-3.03j ~= 0.23+1.08j
+// Arithmetic Operation Overload Test 1: 
+// Check [1.2 -2.4 + [1.3 -2.4   =  [2.5 -4.8
+//        3.6 -9.7]   3.5 -9.6]      7.1 -19.3]
 #[test]
 fn addition_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(3.22,4.11);
-  let c2: Complex = complex(-2.99,-3.03);
-  let c = c1 + c2;
-  assert!(TOLERANCE > (c.re() - 0.23).abs());
-  assert!(TOLERANCE > (c.im() - 1.08).abs());
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 2);
+  m1.set(0, 0, 1.2); m1.set(0, 1, -2.4);
+  m1.set(1, 0, 3.6); m1.set(1, 1, -9.7);
+  let mut m2: Matrix<f64> = matrix(2, 2);
+  m2.set(0, 0, 1.3); m2.set(0, 1, -2.4);
+  m2.set(1, 0, 3.5); m2.set(1, 1, -9.6);
+  let m = m1 + m2;
+  assert!(TOLERANCE > (m.get(0, 0) - 2.5).abs());
+  assert!(TOLERANCE > (m.get(0, 1) + 4.8).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 7.1).abs());
+  assert!(TOLERANCE > (m.get(1, 1) + 19.3).abs());
 }
-// Arithmetic Operation Overload Test 2: Check 4.25-9.28j - -3.21+6.56j ~= 7.46-15.84j
-#[test]
-fn subtraction_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(4.25,-9.28);
-  let c2: Complex = complex(-3.21,6.56);
-  let c = c1 - c2;
-  assert!(TOLERANCE > (c.re() - 7.46).abs());
-  assert!(TOLERANCE > (c.im() + 15.84).abs());
-}
-// Arithmetic Operation Overload Test 3: Check 2.34-0.0j * 0.0+6.22j ~= 0.0+14.5548
-#[test]
-fn multiplication_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(2.34,-0.0);
-  let c2: Complex = complex(0.0,6.22);
-  let c = c1 * c2;
-  assert!(TOLERANCE > (c.re() - 0.0).abs());
-  assert!(TOLERANCE > (c.im() - 14.5548).abs());
-}
-// Arithmetic Operation Overload Test 4: Check 2.5+3.5j / 1-2j ~= -0.9+1.7j
-#[test]
-fn division_test1() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(2.5,3.5);
-  let c2: Complex = complex(1.0,-2.0);
-  let c = c1 / c2;
-  assert!(TOLERANCE > (c1.re() - 2.5).abs()); // Check c1 still exists and can be used
-  assert!(TOLERANCE > (c2.re() - 1.0).abs()); // Check c2 still exists and can be used
-  assert!(TOLERANCE > (c.re() + 0.9).abs());
-  assert!(TOLERANCE > (c.im() - 1.7).abs());
-}
-// Arithmetic Operation Overload Test 5: Check 2.5+3.5j / -0-0j => panic
+// Arithmetic Operation Overload Test 2: Check 2x2 matrix + 2x3 matrix => panics
 #[test]
 #[should_panic]
-fn division_test2() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(2.5,3.5);
-  let c2: Complex = complex(-0.0,-0.0);
-  let c = c1 / c2;
-  assert!(true); // If assertion passes, something went wrong
+fn addition_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+ let mut m1: Matrix<f64> = matrix(2, 2);
+  m1.set(0, 0, 1.2); m1.set(0, 1, -2.4);
+  m1.set(1, 0, 3.6); m1.set(1, 1, -9.7);
+  let mut m2: Matrix<f64> = matrix(2, 3);
+  m2.set(0, 0, 1.3); m2.set(0, 1, -2.4); m2.set(0, 2, 5.6);
+  m2.set(1, 0, 3.5); m2.set(1, 1, -9.6); m2.set(1, 2, -4.5);
+  let m = m1 + m2;
+  assert!(true); // Something went wrong if this assertion passes
 }
+// Arithmetic Operation Overload Test 3: 
+// Check [1.2 -2.4 - [1.3 -2.4   =  [-0.1 0.0
+//        3.6 -9.7]   3.5 -9.6]      0.1 -0.1]
+#[test]
+fn subtraction_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 2);
+  m1.set(0, 0, 1.2); m1.set(0, 1, -2.4);
+  m1.set(1, 0, 3.6); m1.set(1, 1, -9.7);
+  let mut m2: Matrix<f64> = matrix(2, 2);
+  m2.set(0, 0, 1.3); m2.set(0, 1, -2.4);
+  m2.set(1, 0, 3.5); m2.set(1, 1, -9.6);
+  let m = m1 - m2;
+  assert!(TOLERANCE > (m.get(0, 0) + 0.1).abs());
+  assert!(TOLERANCE > (m.get(0, 1) - 0.0).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 0.1).abs());
+  assert!(TOLERANCE > (m.get(1, 1) + 0.1).abs());
+}
+// Arithmetic Operation Overload Test 4: Check 2x2 matrix - 2x3 matrix => panics
+#[test]
+#[should_panic]
+fn subtraction_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 2);
+  m1.set(0, 0, 1.2); m1.set(0, 1, -2.4);
+  m1.set(1, 0, 3.6); m1.set(1, 1, -9.7);
+  let mut m2: Matrix<f64> = matrix(2, 3);
+  m2.set(0, 0, 1.3); m2.set(0, 1, -2.4); m2.set(0, 2, 5.6);
+  m2.set(1, 0, 3.5); m2.set(1, 1, -9.6); m2.set(1, 2, -4.5);
+  let m = m1 - m2;
+  assert!(true); // Something went wrong if this assertion passes
+}
+// Arithmetic Operation Overload Test 5:
+// Check [1.2  * [1.3 -2.4]   =  [1.56 -2.88
+//        3.6]                    4.68 -8.64]
+#[test]
+fn multiplication_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 1);
+  m1.set(0, 0, 1.2); m1.set(1, 0, 3.6);
+  let mut m2: Matrix<f64> = matrix(1, 2);
+  m2.set(0, 0, 1.3); m2.set(0, 1, -2.4);
+  let m = m1 * m2;
+  assert!(TOLERANCE > (m.get(0, 0) - 1.56).abs());
+  assert!(TOLERANCE > (m.get(0, 1) + 2.88).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 4.68).abs());
+  assert!(TOLERANCE > (m.get(1, 1) + 8.64).abs());
+}
+// Arithmetic Operation Overload Test 4: Check 2x1 matrix * 2x1 matrix => panics
+#[test]
+#[should_panic]
+fn multiplication_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 1);
+  m1.set(0, 0, 1.2); m1.set(1, 0, -2.4);
+  let mut m2: Matrix<f64> = matrix(2, 1);
+  m2.set(0, 0, 1.3); m2.set(1, 0, -2.4);
+  let m = m1 * m2;
+  assert!(true); // Something went wrong if this assertion passes
+}
+/*
 // Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
 #[test]
 fn negate_test() {

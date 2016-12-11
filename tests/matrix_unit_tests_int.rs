@@ -50,70 +50,100 @@ fn copy_constructor_test() {
   m.set(1, 0, 5);
   assert!(5 == m.get(1, 0));
   assert!(3 == m1.get(1, 0));
-}/*
-// Conjugate method Test: Test if conjugate of 1.22-2.34j => 1.22+2.34j
-#[test]
-fn conjugate_method_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(1.22,-2.34);
-  let m2: Matrix<isize> = m1.conjugate();
-  assert!(TOLERANCE > (m1.re() - 1.22).abs());
-  assert!(TOLERANCE > (m1.im() + 2.34).abs());
-  assert!(TOLERANCE > (m2.re() - 1.22).abs());
-  assert!(TOLERANCE > (m2.im() - 2.34).abs());
 }
-// Arithmetic Operation Overload Test 1: Check 3.22+4.11j + -2.99-3.03j ~= 0.23+1.08j
+// Arithmetic Operation Overload Test 1: 
+// Check [1 -2  + [1 -2   =  [2 -4
+//        3 -9]   3 -9]      6 -18]
 #[test]
 fn addition_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.22,4.11);
-  let m2: Matrix<isize> = matrix<isize>(-2.99,-3.03);
+  let mut m1: Matrix<isize> = matrix(2, 2);
+  m1.set(0, 0, 1); m1.set(0, 1, -2);
+  m1.set(1, 0, 3); m1.set(1, 1, -9);
+  let mut m2: Matrix<isize> = matrix(2, 2);
+  m2.set(0, 0, 1); m2.set(0, 1, -2);
+  m2.set(1, 0, 3); m2.set(1, 1, -9);
   let m = m1 + m2;
-  assert!(TOLERANCE > (m.re() - 0.23).abs());
-  assert!(TOLERANCE > (m.im() - 1.08).abs());
+  assert!(2 == m.get(0, 0));
+  assert!(-4 == m.get(0, 1));
+  assert!(6 == m.get(1, 0));
+  assert!(-18 == m.get(1, 1));
 }
-// Arithmetic Operation Overload Test 2: Check 4.25-9.28j - -3.21+6.56j ~= 7.46-15.84j
+// Arithmetic Operation Overload Test 2: Check 2x2 matrix + 2x3 matrix => panics
+#[test]
+#[should_panic]
+fn addition_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<isize> = matrix(2, 2);
+  m1.set(0, 0, 1); m1.set(0, 1, -2);
+  m1.set(1, 0, 3); m1.set(1, 1, -9);
+  let mut m2: Matrix<isize> = matrix(2, 3);
+  m2.set(0, 0, 1); m2.set(0, 1, -2); m2.set(0, 2, 5);
+  m2.set(1, 0, 3); m2.set(1, 1, -9); m2.set(1, 2, -4);
+  let m = m1 + m2;
+  assert!(true); // Something went wrong if this assertion passes
+}
+// Arithmetic Operation Overload Test 3:
+// Check [1 -3  - [1 -2   =  [0 -1
+//        3 -9]    3 -9]      0 0]
 #[test]
 fn subtraction_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(4.25,-9.28);
-  let m2: Matrix<isize> = matrix<isize>(-3.21,6.56);
+  let mut m1: Matrix<isize> = matrix(2, 2);
+  m1.set(0, 0, 1); m1.set(0, 1, -3);
+  m1.set(1, 0, 3); m1.set(1, 1, -9);
+  let mut m2: Matrix<isize> = matrix(2, 2);
+  m2.set(0, 0, 1); m2.set(0, 1, -2);
+  m2.set(1, 0, 3); m2.set(1, 1, -9);
   let m = m1 - m2;
-  assert!(TOLERANCE > (m.re() - 7.46).abs());
-  assert!(TOLERANCE > (m.im() + 15.84).abs());
+  assert!(0 == m.get(0, 0));
+  assert!(-1 == m.get(0, 1));
+  assert!(0 == m.get(1, 0));
+  assert!(0 == m.get(1, 1));
 }
-// Arithmetic Operation Overload Test 3: Check 2.34-0.0j * 0.0+6.22j ~= 0.0+14.5548
+// Arithmetic Operation Overload Test 4: Check 2x2 matrix - 2x3 matrix => panics
+#[test]
+#[should_panic]
+fn subtraction_error_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<isize> = matrix(2, 2);
+  m1.set(0, 0, 1); m1.set(0, 1, -2);
+  m1.set(1, 0, 3); m1.set(1, 1, -9);
+  let mut m2: Matrix<isize> = matrix(2, 3);
+  m2.set(0, 0, 1); m2.set(0, 1, -2); m2.set(0, 2, 5);
+  m2.set(1, 0, 3); m2.set(1, 1, -9); m2.set(1, 2, -4);
+  let m = m1 - m2;
+  assert!(true); // Something went wrong if this assertion passes
+}
+// Arithmetic Operation Overload Test 5: 
+// Check [1  * [1 -2]   =  [1 -2
+//        3]                3 -6]
 #[test]
 fn multiplication_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(2.34,-0.0);
-  let m2: Matrix<isize> = matrix<isize>(0.0,6.22);
+  let mut m1: Matrix<isize> = matrix(2, 1);
+  m1.set(0, 0, 1); m1.set(1, 0, 3);
+  let mut m2: Matrix<isize> = matrix(1, 2);
+  m2.set(0, 0, 1); m2.set(0, 1, -2);
   let m = m1 * m2;
-  assert!(TOLERANCE > (m.re() - 0.0).abs());
-  assert!(TOLERANCE > (m.im() - 14.5548).abs());
+  assert!(1 == m.get(0, 0));
+  assert!(-2 == m.get(0, 1));
+  assert!(3 == m.get(1, 0));
+  assert!(-6 == m.get(1, 1));
 }
-// Arithmetic Operation Overload Test 4: Check 2.5+3.5j / 1-2j ~= -0.9+1.7j
-#[test]
-fn division_test1() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(2.5,3.5);
-  let m2: Matrix<isize> = matrix<isize>(1.0,-2.0);
-  let m = m1 / m2;
-  assert!(TOLERANCE > (m1.re() - 2.5).abs()); // Check c1 still exists and can be used
-  assert!(TOLERANCE > (m2.re() - 1.0).abs()); // Check c2 still exists and can be used
-  assert!(TOLERANCE > (m.re() + 0.9).abs());
-  assert!(TOLERANCE > (m.im() - 1.7).abs());
-}
-// Arithmetic Operation Overload Test 5: Check 2.5+3.5j / -0-0j => panic
+// Arithmetic Operation Overload Test 4: Check 2x1 matrix * 2x1 matrix => panics
 #[test]
 #[should_panic]
-fn division_test2() {
+fn multiplication_error_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(2.5,3.5);
-  let m2: Matrix<isize> = matrix<isize>(-0.0,-0.0);
-  let m = m1 / m2;
-  assert!(true); // If assertion passes, something went wrong
+  let mut m1: Matrix<isize> = matrix(2, 1);
+  m1.set(0, 0, 1); m1.set(1, 0, -2);
+  let mut m2: Matrix<isize> = matrix(2, 1);
+  m2.set(0, 0, 1); m2.set(1, 0, -2);
+  let m = m1 * m2;
+  assert!(true); // Something went wrong if this assertion passes
 }
+/*
 // Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
 #[test]
 fn negate_test() {
