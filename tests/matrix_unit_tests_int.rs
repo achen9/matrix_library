@@ -174,6 +174,25 @@ fn transpose_method_test() {
   assert!(3 == m.get(0, 1));
 
 }
+// Minor Method Test:
+// Check [1 2 -3  => (1, 1) minor =>  [1 -3
+//        6 -9 8                       3 -9]
+//        3 7 -9]        
+#[test]
+fn minor_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<isize> = matrix(3, 3);
+  m1.set(0, 0, 1); m1.set(0, 1, 2); m1.set(0, 2, -3);
+  m1.set(1, 0, 6); m1.set(1, 1, -9); m1.set(1, 2, 8);
+  m1.set(2, 0, 3); m1.set(2, 1, 7); m1.set(2, 2, -9);
+  let m = m1.minor(1, 1);
+  assert!(2 == m.rows());
+  assert!(2 == m.columns());
+  assert!(1 == m.get(0, 0));
+  assert!(-3 == m.get(0, 1));
+  assert!(3 == m.get(1, 0));
+  assert!(-9 == m.get(1, 1));
+}
 /*
 // Printing complex to terminal
 #[test]

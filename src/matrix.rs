@@ -78,6 +78,27 @@ impl<T: Copy> Matrix<T> {
     }
     m
   }
+  pub fn minor(&self, r: usize, c: usize) -> Matrix<T> {
+    if !self.in_range(r, c) {
+      panic!("Attempted to take minor with out of range indices.");
+    }
+    let mut m: Matrix<T> = matrix(self.rows() - 1, self.columns() - 1);
+    let mut I = 0;
+    let mut J = 0;
+    for i in 0..self.rows() {
+      J = 0;
+      for j in 0..self.columns() {
+        if (i != r) && (j != c) {
+          m.set(I, J, self.get(i, j));
+          J += 1;
+        }
+      }
+      if i != r {
+        I += 1;
+      }
+    }
+    m
+  }
 }
 // Matrix utility methods
 impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Div<Output=T>> Matrix<T> {

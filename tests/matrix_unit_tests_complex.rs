@@ -214,6 +214,29 @@ fn transpose_method_test() {
   assert!(TOLERANCE > (m.get(0, 0).re() - 1.2).abs() && TOLERANCE > (m.get(0, 0).im() - 3.1).abs());
   assert!(TOLERANCE > (m.get(0, 1).re() - 3.6).abs() && TOLERANCE > (m.get(0, 1).im() - 4.0).abs());
 }
+// Minor Method Test:
+// Check [1.2+3.1j 1.3-6.5j -2.4+3.9j  => (1, 1) minor => [1.2+3.1j -2.4+3.9j
+//        2.6+9.5j 2.1-5.1j 3.1+1.5j                       3.6+4.0j -9.7+5.4j]                   
+//        3.6+4.0j 3.2+5.9j -9.7+5.4j]                 
+#[test]
+fn minor_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::complex::{Complex, complex};
+  let mut m1: Matrix<Complex> = matrix(3, 3);
+  let m11 = complex(1.2, 3.1); let m12 = complex(1.3, -6.5); let m13 = complex(-2.4, 3.9);
+  let m14 = complex(2.6, 9.5); let m15 = complex(2.1, -5.1); let m16 = complex(3.1, 1.5);
+  let m17 = complex(3.6, 4.0); let m18 = complex(3.2, 5.9); let m19 = complex(-9.7, 5.4);
+  m1.set(0, 0, m11); m1.set(0, 1, m12); m1.set(0, 2, m13);
+  m1.set(1, 0, m14); m1.set(1, 1, m15); m1.set(1, 2, m16);
+  m1.set(2, 0, m17); m1.set(2, 1, m18); m1.set(2, 2, m19);
+  let m = m1.minor(1, 1);
+  assert!(2 == m.rows());
+  assert!(2 == m.columns());
+  assert!(m11 == m.get(0, 0));
+  assert!(m13 == m.get(0, 1));
+  assert!(m17 == m.get(1, 0));
+  assert!(m19 == m.get(1, 1));
+}
 /*
 // Printing complex to terminal
 #[test]

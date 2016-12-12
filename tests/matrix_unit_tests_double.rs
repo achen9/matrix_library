@@ -177,6 +177,25 @@ fn transpose_method_test() {
   assert!(TOLERANCE > (m.get(0, 0) - 1.2).abs());
   assert!(TOLERANCE > (m.get(0, 1) - 3.6).abs());
 }
+// Minor Method Test:
+// Check [1.2 2.6  -2.4  => (1, 1) minor =>  [1.2 -2.4
+//        3.2 1.9  -2.5                       3.6 -9.7]
+//        3.6 -2.5 -9.7]           
+#[test]
+fn minor_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(3, 3);
+  m1.set(0, 0, 1.2); m1.set(0, 1, 2.6); m1.set(0, 2, -2.4);
+  m1.set(1, 0, 3.2); m1.set(1, 1, 1.9); m1.set(1, 2, -2.5);
+  m1.set(2, 0, 3.6); m1.set(2, 1, -2.5); m1.set(2, 2, -9.7);
+  let m = m1.minor(1, 1);
+  assert!(2 == m.rows());
+  assert!(2 == m.columns());
+  assert!(TOLERANCE > (m.get(0, 0) - 1.2).abs());
+  assert!(TOLERANCE > (m.get(0, 1) + 2.4).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 3.6).abs());
+  assert!(TOLERANCE > (m.get(1, 1) + 9.7).abs());
+}
 /*
 // Printing complex to terminal
 #[test]

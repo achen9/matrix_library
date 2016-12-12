@@ -220,6 +220,27 @@ fn transpose_method_test() {
   assert!(ma == m.get(0, 0));
   assert!(mb == m.get(0, 1));
 }
+// Minor Method Test
+// Check [1/2 1/5  -2/3  => (1, 1) minor => [1/2 -2/3
+//        2/3 1/4  -9/4                      3/5 -9/6]
+//        3/5 -8/9 -9/6]          
+#[test]
+fn minor_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(3, 3);
+  let m11 = fraction(1, 2); let m12 = fraction(1, 5); let m13 = fraction(-2, 3);
+  let m14 = fraction(2, 3); let m15 = fraction(1, 4); let m16 = fraction(-9, 4);
+  let m17 = fraction(3, 5); let m18 = fraction(-8, 9); let m19 = fraction(-9, 6);
+  m1.set(0, 0, m11); m1.set(0, 1, m12); m1.set(0, 2, m13);
+  m1.set(1, 0, m14); m1.set(1, 1, m15); m1.set(1, 2, m16);
+  m1.set(2, 0, m17); m1.set(2, 1, m18); m1.set(2, 2, m19);
+  let m = m1.minor(1, 1);
+  assert!(m11 == m.get(0, 0));
+  assert!(m13 == m.get(0, 1));
+  assert!(m17 == m.get(1, 0));
+  assert!(m19 == m.get(1, 1));
+}
 /*
 // Printing complex to terminal
 #[test]

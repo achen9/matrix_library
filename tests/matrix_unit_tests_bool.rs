@@ -67,7 +67,25 @@ fn transpose_method_test() {
   assert!(false == m.get(0, 0));
   assert!(true == m.get(0, 1));
 }
-
+// Minor Method Test:
+// Check [false false false => (1, 1) minor = [false false 
+//        true  false true                     false false]
+//        false true  false]       
+#[test]
+fn minor_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<bool> = matrix(3, 3);
+  m1.set(0, 0, false); m1.set(0, 1, false); m1.set(0, 2, false);
+  m1.set(1, 0, true); m1.set(1, 1, false); m1.set(1, 2, true);
+  m1.set(2, 0, false); m1.set(2, 1, true); m1.set(2, 2, false);
+  let m = m1.minor(1, 1);
+  assert!(2 == m.rows());
+  assert!(2 == m.columns());
+  assert!(false == m.get(0, 0));
+  assert!(false == m.get(0, 1));
+  assert!(false == m.get(1, 0));
+  assert!(false == m.get(1, 1));
+}
 /*
 // Printing complex to terminal
 #[test]
