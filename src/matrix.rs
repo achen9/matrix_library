@@ -101,7 +101,12 @@ impl<T: Copy> Matrix<T> {
   }
 }
 // Matrix utility methods
-impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Div<Output=T>> Matrix<T> {
+impl<T> Matrix<T> 
+  where T: Copy + 
+           ::std::ops::Add<Output=T> + 
+           ::std::ops::Sub<Output=T> + 
+           ::std::ops::Mul<Output=T> + 
+           ::std::ops::Div<Output=T> {
   pub fn scale(&self, s: T) -> Matrix<T> {
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
@@ -111,8 +116,25 @@ impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Div<Output=T>> Matrix<T> 
     }
     m
   }
+  pub fn det(&self) -> T {
+    if (1 == self.rows()) && (1 == self.columns()) {
+      self.get(0, 0)
+    } else {
+      let mut sum = self.get(0, 0) * self.minor(0, 0).det(); 
+      let mut sign = -1;
+      for i in 1..self.columns() {
+        if 0 < sign {
+          sum = sum + self.get(0, i) * self.minor(0, i).det();
+        } else {
+          sum = sum - self.get(0, i) * self.minor(0, i).det();
+        }
+        sign *= -1;
+      }
+      sum
+    }
+    
+  }
 }
-
 // Arithmetic operations & operator overload
 impl<T: Copy + ::std::ops::Add<Output=T>> ::std::ops::Add for Matrix<T> {
   type Output = Matrix<T>;

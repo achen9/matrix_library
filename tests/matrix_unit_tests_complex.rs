@@ -237,6 +237,25 @@ fn minor_method_test() {
   assert!(m17 == m.get(1, 0));
   assert!(m19 == m.get(1, 1));
 }
+// Determinant Method Test:
+// Check determinant [5.0+0.0j 3.0+0.0j -4.0+0.0j   = 4.0+0.0j
+//                    2.0+0.0j 0.0+0.0j -2.0+0.0j                                     
+//                    2.0+0.0j 5.0+0.0j -1.0+0.0j]                 
+#[test]
+fn determinant_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::complex::{Complex, complex};
+  let mut m1: Matrix<Complex> = matrix(3, 3);
+  let m11 = complex(5.0, 0.0); let m12 = complex(3.0, 0.0); let m13 = complex(-4.0, 0.0);
+  let m14 = complex(2.0, 0.0); let m15 = complex(0.0, 0.0); let m16 = complex(-2.0, 0.0);
+  let m17 = complex(2.0, 0.0); let m18 = complex(5.0, 0.0); let m19 = complex(-1.0, 0.0);
+  m1.set(0, 0, m11); m1.set(0, 1, m12); m1.set(0, 2, m13);
+  m1.set(1, 0, m14); m1.set(1, 1, m15); m1.set(1, 2, m16);
+  m1.set(2, 0, m17); m1.set(2, 1, m18); m1.set(2, 2, m19);
+  let m = m1.det();
+  let c = complex(4.0, 0.0);
+  assert!(c == m);
+}
 /*
 // Printing complex to terminal
 #[test]

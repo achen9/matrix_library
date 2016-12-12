@@ -193,6 +193,20 @@ fn minor_method_test() {
   assert!(3 == m.get(1, 0));
   assert!(-9 == m.get(1, 1));
 }
+// Determiant Method Test:
+// Check determinant [5 3 -4  = 4
+//                    2 0 -2                                     
+//                    2 5 -1]        
+#[test]
+fn determinant_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<isize> = matrix(3, 3);
+  m1.set(0, 0, 5); m1.set(0, 1, 3); m1.set(0, 2, -4);
+  m1.set(1, 0, 2); m1.set(1, 1, 0); m1.set(1, 2, -2);
+  m1.set(2, 0, 2); m1.set(2, 1, 5); m1.set(2, 2, -1);
+  let m = m1.det();
+  assert!(4 == m);
+}
 /*
 // Printing complex to terminal
 #[test]

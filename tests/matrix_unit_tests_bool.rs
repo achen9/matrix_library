@@ -86,6 +86,7 @@ fn minor_method_test() {
   assert!(false == m.get(1, 0));
   assert!(false == m.get(1, 1));
 }
+// Determinant Method Test - N/A to boolean types
 /*
 // Printing complex to terminal
 #[test]

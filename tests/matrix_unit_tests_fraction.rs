@@ -241,6 +241,25 @@ fn minor_method_test() {
   assert!(m17 == m.get(1, 0));
   assert!(m19 == m.get(1, 1));
 }
+// Determinant Method Test:
+// Check determinant [5/1 3/1 -4/1  = 4/1
+//                    2/1 0/1 -2/1                                     
+//                    2/1 5/1 -1/1]  
+#[test]
+fn determinant_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(3, 3);
+  let m11 = fraction(5, 1); let m12 = fraction(3, 1); let m13 = fraction(-4, 1);
+  let m14 = fraction(2, 1); let m15 = fraction(0, 1); let m16 = fraction(-2, 1);
+  let m17 = fraction(2, 1); let m18 = fraction(5, 1); let m19 = fraction(-1, 1);
+  m1.set(0, 0, m11); m1.set(0, 1, m12); m1.set(0, 2, m13);
+  m1.set(1, 0, m14); m1.set(1, 1, m15); m1.set(1, 2, m16);
+  m1.set(2, 0, m17); m1.set(2, 1, m18); m1.set(2, 2, m19);
+  let m = m1.det();
+  let f = fraction(4, 1);
+  assert!(f == m);
+}
 /*
 // Printing complex to terminal
 #[test]
