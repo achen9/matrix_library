@@ -228,12 +228,13 @@ fn inverse_method_test() {
   d.set(2, 0, 2.5); d.set(2, 1, -4.75); d.set(2, 2, -1.5);
   assert!(d == m);
 }
-/*
-// Printing complex to terminal
+// Printing Matrix to Terminal
 #[test]
 fn print_test() {
-  use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(-2.011,-4.644);
-  let c2: Complex = complex(3.15,0.336);
-  println!("C1 is {}. C2 is {}.", c1, c2);
-}*/
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m: Matrix<f64> = matrix(3, 3);
+  m.set(0, 0, 1.2); m.set(0, 1, 2.6); m.set(0, 2, -2.4);
+  m.set(1, 0, 3.2); m.set(1, 1, 1.9); m.set(1, 2, -2.5);
+  m.set(2, 0, 3.6); m.set(2, 1, -2.5); m.set(2, 2, -9.7);
+  println!("M is: {}", m);
+}

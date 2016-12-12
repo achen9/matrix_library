@@ -208,12 +208,13 @@ fn determinant_method_test() {
   assert!(4 == m);
 }
 // Inverse Method Test - N/A for integer types
-/*
 // Printing complex to terminal
 #[test]
 fn print_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(-2.011,-4.644);
-  let m2: Matrix<isize> = matrix<isize>(3.15,0.336);
-  println!("C1 is {}. C2 is {}.", m1, m2);
-}*/
+  let mut m: Matrix<isize> = matrix(3, 3);
+  m.set(0, 0, 1); m.set(0, 1, 2); m.set(0, 2, -3);
+  m.set(1, 0, 6); m.set(1, 1, -9); m.set(1, 2, 8);
+  m.set(2, 0, 3); m.set(2, 1, 7); m.set(2, 2, -9);
+  println!("M is {}", m);
+}

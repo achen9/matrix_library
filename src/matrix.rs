@@ -229,10 +229,21 @@ impl<T> ::std::cmp::PartialEq for Matrix<T>
     return true
   }
 }
-/*
+
 // Print formatting
-impl ::std::fmt::Display for Matrix {
+impl<T: Copy + ::std::fmt::Display> ::std::fmt::Display for Matrix<T> {
   fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-      write!(f, "{:0.*}{:+0.*}j", 5, self.re(), 5, self.im())
+    write!(f, "\n");
+    for i in 0..self.rows() {
+      write!(f, "[");
+      for j in 0..self.columns() {
+        if self.columns() == (j + 1) {
+          write!(f, "{}]\n", self.get(i, j));
+        } else {
+          write!(f, "{}\t", self.get(i, j));
+        }
+      }
+    }
+    write!(f, "\n")
   }
-}*/
+}

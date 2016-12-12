@@ -87,12 +87,12 @@ fn minor_method_test() {
   assert!(false == m.get(1, 1));
 }
 // Determinant Method Test - N/A to boolean types
-/*
-// Printing complex to terminal
+// Printing Matrix to Terminal
 #[test]
 fn print_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(-2.011,-4.644);
-  let m2: Matrix<isize> = matrix<isize>(3.15,0.336);
-  println!("C1 is {}. C2 is {}.", m1, m2);
-}*/
+  let mut m: Matrix<bool> = matrix(2, 2);
+  m.set(0, 0, true); m.set(0, 1, true);
+  m.set(1, 0, false); m.set(1, 1, false);
+  println!("M is: {}", m);
+}

@@ -285,12 +285,17 @@ fn inverse_method_test() {
   let m = m1.inverse();
   assert!(f == m);
 }
-/*
-// Printing complex to terminal
+// Printing Matrix to Terminal
 #[test]
 fn print_test() {
   use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(-2.011,-4.644);
-  let m2: Matrix<isize> = matrix<isize>(3.15,0.336);
-  println!("C1 is {}. C2 is {}.", m1, m2);
-}*/
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m: Matrix<Fraction> = matrix(3, 3);
+  let m1 = fraction(1, 2); let m2 = fraction(1, 5); let m3 = fraction(-2, 3);
+  let m4 = fraction(2, 3); let m5 = fraction(1, 4); let m6 = fraction(-9, 4);
+  let m7 = fraction(3, 5); let m8 = fraction(-8, 9); let m9 = fraction(-9, 6);
+  m.set(0, 0, m1); m.set(0, 1, m2); m.set(0, 2, m3);
+  m.set(1, 0, m4); m.set(1, 1, m5); m.set(1, 2, m6);
+  m.set(2, 0, m7); m.set(2, 1, m8); m.set(2, 2, m9);
+  println!("M: is {}", m);
+}
