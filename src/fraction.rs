@@ -20,11 +20,8 @@
 //! alexac9@uw.edu
 //!
 
-// Derivations
-#[derive(Clone)]
-#[derive(Copy)]
-
-// Data definition
+// Data Definition
+#[derive(Clone, Copy)]
 pub struct Fraction {
   numerator: isize,
   denominator: isize,
