@@ -19,10 +19,9 @@
 //! Alex Z. Chen - 12/05/2016
 //! alexac9@uw.edu
 //!
-// Derivations
-#[derive(Clone, Copy)]
 
 // Data definition
+#[derive(Clone, Copy)]
 pub struct Complex {
   real: f64,
   imag: f64,
@@ -139,6 +138,13 @@ impl ::std::ops::Neg for Complex {
   fn neg(self) -> Complex {
     let c = Complex {real: -self.re(), imag: -self.im()};
     c.delnegzero()
+  }
+}
+
+// Comparison operator overloads
+impl ::std::cmp::PartialEq for Complex {
+  fn eq(&self, other: &Complex) -> bool {
+    (COMPLEX_TOL > (self.re() - other.re()).abs()) && (COMPLEX_TOL > (self.im() - other.im()).abs())
   }
 }
 

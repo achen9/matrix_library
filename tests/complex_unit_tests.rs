@@ -164,7 +164,6 @@ fn exp_test() {
   assert!(TOLERANCE > (c3.re() - 1.0).abs());
   assert!(TOLERANCE > (c3.im() - 0.0).abs());
 }
-
 // Printing complex to terminal
 #[test]
 fn print_test() {
@@ -172,4 +171,12 @@ fn print_test() {
   let c1: Complex = complex(-2.011,-4.644);
   let c2: Complex = complex(3.15,0.336);
   println!("C1 is {}. C2 is {}.", c1, c2);
+}
+// Comparison Operator Overload Test: Check 2.156+3.226j ~= 2.156+3.226j
+#[test]
+fn equals_test() {
+  use matrix_lib::complex::{Complex, complex};
+  let c1: Complex = complex(2.156, 3.226);
+  let c2: Complex = complex(2.156, 3.226);
+  assert!(c1 == c2);
 }
