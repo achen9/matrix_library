@@ -37,7 +37,7 @@ pub fn matrix<T>(r: usize, c: usize) -> Matrix<T> {
   let mut m = Matrix {num_rows: r, num_columns: c, values: Vec::with_capacity(r*c)};
   // Due to no "zero" equivalent for all types (fraction and complex class specifically),
   // need to allocate space in vector for number of elements in matrix. Then need to use
-  // unsafe code to explicitly set the vector length to equal the previously allocated space.
+  // unsafe code to explicitly set the vector length to equal the previously allocated space
   unsafe {
     m.values.set_len(r*c);
   }
@@ -100,13 +100,15 @@ impl<T: Copy> Matrix<T> {
     m
   }
 }
+
 // Matrix utility methods
 impl<T> Matrix<T> 
   where T: Copy + 
            ::std::ops::Add<Output=T> + 
            ::std::ops::Sub<Output=T> + 
            ::std::ops::Mul<Output=T> + 
-           ::std::ops::Div<Output=T> {
+           ::std::ops::Div<Output=T> +
+           ::std::ops::Neg<Output=T> {
   pub fn scale(&self, s: T) -> Matrix<T> {
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
@@ -132,9 +134,32 @@ impl<T> Matrix<T>
       }
       sum
     }
-    
+  }
+  pub fn inverse(&self) -> Matrix<T> {
+    if self.rows() != self.columns() {
+      panic!("Attempted to invert non-invertible matrix.");
+    }
+    let d: T = self.det();
+    let mut m: Matrix<T> = matrix(self.rows(), self.columns());
+    for i in 0..self.rows() {
+      for j in 0..self.columns() {
+        let mut sign = 0;
+        if 0 == (i + j) % 2 {
+          sign = 1;
+        } else {
+          sign = -1;
+        }
+        if 0 < sign {
+          m.set(i, j, self.minor(j, i).det() / d);
+        } else {
+          m.set(i, j, -self.minor(j, i).det() / d);
+        }
+      }
+    }
+    m
   }
 }
+
 // Arithmetic operations & operator overload
 impl<T: Copy + ::std::ops::Add<Output=T>> ::std::ops::Add for Matrix<T> {
   type Output = Matrix<T>;
@@ -186,6 +211,22 @@ impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Add<Output=T>> ::std::ops
       }
     }
     m
+  }
+}
+
+// Comparison operator overloads
+impl<T> ::std::cmp::PartialEq for Matrix<T> 
+  where T: Copy + 
+        ::std::cmp::PartialEq {
+  fn eq(&self, other: &Matrix<T>) -> bool {
+    for i in 0..self.rows() {
+      for j in 0..self.columns() {
+        if self.get(i, j) != other.get(i, j) {
+          return false
+        }
+      }
+    }
+    return true
   }
 }
 /*

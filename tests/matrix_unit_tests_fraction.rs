@@ -260,6 +260,31 @@ fn determinant_method_test() {
   let f = fraction(4, 1);
   assert!(f == m);
 }
+// Determinant Method Test:
+// Check inverse [5/1 3/1 -4/1  = [ 5/2 -17/4 -3/2
+//                2/1 0/1 -2/1     -1/2  3/4   1/2                                
+//                2/1 5/1 -1/1]     5/2 -19/4 -3/2]
+#[test]
+fn inverse_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(3, 3);
+  let m11 = fraction(5, 1); let m12 = fraction(3, 1); let m13 = fraction(-4, 1);
+  let m14 = fraction(2, 1); let m15 = fraction(0, 1); let m16 = fraction(-2, 1);
+  let m17 = fraction(2, 1); let m18 = fraction(5, 1); let m19 = fraction(-1, 1);
+  m1.set(0, 0, m11); m1.set(0, 1, m12); m1.set(0, 2, m13);
+  m1.set(1, 0, m14); m1.set(1, 1, m15); m1.set(1, 2, m16);
+  m1.set(2, 0, m17); m1.set(2, 1, m18); m1.set(2, 2, m19);
+  let mut f: Matrix<Fraction> = matrix(3, 3);
+  let f1 = fraction(5, 2); let f2 = fraction(-17, 4); let f3 = fraction(-3, 2);
+  let f4 = fraction(-1, 2); let f5 = fraction(3, 4); let f6 = fraction(1, 2);
+  let f7 = fraction(5, 2); let f8 = fraction(-19, 4); let f9 = fraction(-3, 2);
+  f.set(0, 0, f1); f.set(0, 1, f2); f.set(0, 2, f3);
+  f.set(1, 0, f4); f.set(1, 1, f5); f.set(1, 2, f6);
+  f.set(2, 0, f7); f.set(2, 1, f8); f.set(2, 2, f9);
+  let m = m1.inverse();
+  assert!(f == m);
+}
 /*
 // Printing complex to terminal
 #[test]

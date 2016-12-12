@@ -207,6 +207,7 @@ fn determinant_method_test() {
   let m = m1.det();
   assert!(4 == m);
 }
+// Inverse Method Test - N/A for integer types
 /*
 // Printing complex to terminal
 #[test]

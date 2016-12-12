@@ -210,6 +210,24 @@ fn determinant_method_test() {
   let m = m1.det();
   assert!(4.0 == m);
 }
+// Inverse Method Test:
+// Check inverse [5.0 3.0 -4.0  = [2.5 -4.25 -1.5
+//                2.0 0.0 -2.0     -0.5 0.75 0.5                                
+//                2.0 5.0 -1.0]    2.5 -4.75 -1.5]
+#[test]
+fn inverse_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(3, 3);
+  m1.set(0, 0, 5.0); m1.set(0, 1, 3.0); m1.set(0, 2, -4.0);
+  m1.set(1, 0, 2.0); m1.set(1, 1, 0.0); m1.set(1, 2, -2.0);
+  m1.set(2, 0, 2.0); m1.set(2, 1, 5.0); m1.set(2, 2, -1.0);
+  let m = m1.inverse();
+  let mut d: Matrix<f64> = matrix(3, 3);
+  d.set(0, 0, 2.5); d.set(0, 1, -4.25); d.set(0, 2, -1.5);
+  d.set(1, 0, -0.5); d.set(1, 1, 0.75); d.set(1, 2, 0.5);
+  d.set(2, 0, 2.5); d.set(2, 1, -4.75); d.set(2, 2, -1.5);
+  assert!(d == m);
+}
 /*
 // Printing complex to terminal
 #[test]
