@@ -159,6 +159,21 @@ fn scale_method_test() {
   assert!(12 == m.get(1, 0));
   assert!(-36 == m.get(1, 1));
 }
+// Transpose Method Test:
+// Check [1]T =  [1 3]
+//       [3]      
+#[test]
+fn transpose_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<isize> = matrix(2, 1);
+  m1.set(0, 0, 1); m1.set(1, 0, 3);
+  let m = m1.transpose();
+  assert!(1 == m.rows());
+  assert!(2 == m.columns());
+  assert!(1 == m.get(0, 0));
+  assert!(3 == m.get(0, 1));
+
+}
 /*
 // Printing complex to terminal
 #[test]

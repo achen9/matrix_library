@@ -163,6 +163,20 @@ fn scale_method_test() {
   assert!(TOLERANCE > (m.get(1, 0) - 9.0).abs());
   assert!(TOLERANCE > (m.get(1, 1) + 24.25).abs());
 }
+// Transpose Method Test:
+// Check [1.2]T =  [1.2 3.6]
+//       [3.6]           
+#[test]
+fn transpose_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<f64> = matrix(2, 1);
+  m1.set(0, 0, 1.2); m1.set(1, 0, 3.6);
+  let m = m1.transpose();
+  assert!(1 == m.rows());
+  assert!(2 == m.columns());
+  assert!(TOLERANCE > (m.get(0, 0) - 1.2).abs());
+  assert!(TOLERANCE > (m.get(0, 1) - 3.6).abs());
+}
 /*
 // Printing complex to terminal
 #[test]

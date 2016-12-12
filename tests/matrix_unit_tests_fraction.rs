@@ -203,6 +203,23 @@ fn scale_method_test() {
   assert!(mc == m.get(1, 0));
   assert!(md == m.get(1, 1));
 }
+// Transpose Method Test
+// Check [1/2]T = [1/2 3/5]
+//       [3/5]     
+#[test]
+fn transpose_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 1);
+  let m11 = fraction(1, 2); let m12 = fraction(3, 5);
+  m1.set(0, 0, m11); m1.set(1, 0, m12);
+  let m = m1.transpose();
+  let ma = fraction(1, 2); let mb = fraction(3, 5);
+  assert!(1 == m.rows());
+  assert!(2 == m.columns());
+  assert!(ma == m.get(0, 0));
+  assert!(mb == m.get(0, 1));
+}
 /*
 // Printing complex to terminal
 #[test]

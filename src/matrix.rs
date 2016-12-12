@@ -69,9 +69,18 @@ impl<T: Copy> Matrix<T> {
   fn in_range(&self, r: usize, c: usize) -> bool {
     (r < self.rows()) && (c < self.columns())
   }
+  pub fn transpose(&self) -> Matrix<T> {
+    let mut m: Matrix<T> = matrix(self.columns(), self.rows());
+    for i in 0..m.rows() {
+      for j in 0..m.columns() {
+        m.set(i, j, self.get(j, i));
+      }
+    }
+    m
+  }
 }
 // Matrix utility methods
-impl<T: Copy + ::std::ops::Mul<Output=T>> Matrix<T> {
+impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Div<Output=T>> Matrix<T> {
   pub fn scale(&self, s: T) -> Matrix<T> {
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {

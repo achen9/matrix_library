@@ -52,7 +52,21 @@ fn copy_constructor_test() {
   assert!(false == m1.get(1, 0));
 }
 // Arithmetic Operation Overload Tests - N/A to boolean types
-// Scale method test - N/A to boolean types
+// Scale Method Test - N/A to boolean types
+// Transpose Method Test:
+// Check [false]T = [false true] 
+//       [true]       
+#[test]
+fn transpose_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<bool> = matrix(2, 1);
+  m1.set(0, 0, false); m1.set(1, 0, true);
+  let m = m1.transpose();
+  assert!(1 == m.rows());
+  assert!(2 == m.columns());
+  assert!(false == m.get(0, 0));
+  assert!(true == m.get(0, 1));
+}
 
 /*
 // Printing complex to terminal

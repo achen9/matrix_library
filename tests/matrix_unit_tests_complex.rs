@@ -198,6 +198,22 @@ fn scale_method_test() {
   assert!(TOLERANCE > (m.get(1, 0).re() + 0.4).abs() && TOLERANCE > (m.get(1, 0).im() - 7.6).abs());
   assert!(TOLERANCE > (m.get(1, 1).re() + 15.1).abs() && TOLERANCE > (m.get(1, 1).im() + 4.3).abs());
 }
+// Transpose Method Test:
+// Check [1.2+3.1j]T = [1.2+3.1j 3.6+4.0j] 
+//        3.6+4.0j]           
+#[test]
+fn transpose_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::complex::{Complex, complex};
+  let mut m1: Matrix<Complex> = matrix(2, 1);
+  let m11 = complex(1.2, 3.1); let m12 = complex(3.6, 4.0);
+  m1.set(0, 0, m11); m1.set(1, 0, m12);
+  let m = m1.transpose();
+  assert!(1 == m.rows());
+  assert!(2 == m.columns());
+  assert!(TOLERANCE > (m.get(0, 0).re() - 1.2).abs() && TOLERANCE > (m.get(0, 0).im() - 3.1).abs());
+  assert!(TOLERANCE > (m.get(0, 1).re() - 3.6).abs() && TOLERANCE > (m.get(0, 1).im() - 4.0).abs());
+}
 /*
 // Printing complex to terminal
 #[test]
