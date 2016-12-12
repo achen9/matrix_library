@@ -179,44 +179,26 @@ fn multiplication_error_test() {
   let m = m1 * m2;
   assert!(true); // Something went wrong if this assertion passes
 }
+// Scale Method Test:
+// Check [1.2+3.1j -2.4+3.9j   * 1.0+1.0j =  [-1.9+4.3j -6.3+1.5j
+//        3.6+4.0j -9.7+5.4j]                 -0.4+7.6j -15.1-4.3j]
+#[test]
+fn scale_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::complex::{Complex, complex};
+  let mut m1: Matrix<Complex> = matrix(2, 2);
+  let m11 = complex(1.2, 3.1); let m12 = complex(-2.4, 3.9);
+  let m13 = complex(3.6, 4.0); let m14 = complex(-9.7, 5.4);
+  m1.set(0, 0, m11); m1.set(0, 1, m12);
+  m1.set(1, 0, m13); m1.set(1, 1, m14);
+  let s = complex(1.0, 1.0);
+  let m = m1.scale(s);
+  assert!(TOLERANCE > (m.get(0, 0).re() + 1.9).abs() && TOLERANCE > (m.get(0, 0).im() - 4.3).abs());
+  assert!(TOLERANCE > (m.get(0, 1).re() + 6.3).abs() && TOLERANCE > (m.get(0, 1).im() - 1.5).abs());
+  assert!(TOLERANCE > (m.get(1, 0).re() + 0.4).abs() && TOLERANCE > (m.get(1, 0).im() - 7.6).abs());
+  assert!(TOLERANCE > (m.get(1, 1).re() + 15.1).abs() && TOLERANCE > (m.get(1, 1).im() + 4.3).abs());
+}
 /*
-// Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
-#[test]
-fn negate_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.22,4.11);
-  let m = -m1;
-  assert!(TOLERANCE > (m.re() + 3.22).abs()); 
-  assert!(TOLERANCE > (m.im() + 4.11).abs());
-  assert!(TOLERANCE > (m1.re() - 3.22).abs()); // Check c1 still exists and can be used
-}
-// Raising to a Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
-#[test]
-fn power_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.0,4.0);
-  let m2: Matrix<isize> = matrix<isize>(1.0,1.0);
-  let m = m1.pow(5);
-  let m3 = m2.pow(-2);
-  assert!(TOLERANCE > (m.re() + 237.0).abs());
-  assert!(TOLERANCE > (m.im() + 3116.0).abs());
-  assert!(TOLERANCE > (m3.re() - 0.0).abs());
-  assert!(TOLERANCE > (m3.im() + 0.5).abs());
-}
-// Raising e to a Matrix<isize> Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
-#[test]
-fn exp_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(0.0,PI);
-  let m2: Matrix<isize> = matrix<isize>(0.0,0.0);
-  let m = m1.exp();
-  let m3 = m2.exp();
-  assert!(TOLERANCE > (m.re() + 1.0).abs());
-  assert!(TOLERANCE > (m.im() - 0.0).abs());
-  assert!(TOLERANCE > (m3.re() - 1.0).abs());
-  assert!(TOLERANCE > (m3.im() - 0.0).abs());
-}
-
 // Printing complex to terminal
 #[test]
 fn print_test() {

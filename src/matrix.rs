@@ -70,6 +70,18 @@ impl<T: Copy> Matrix<T> {
     (r < self.rows()) && (c < self.columns())
   }
 }
+// Matrix utility methods
+impl<T: Copy + ::std::ops::Mul<Output=T>> Matrix<T> {
+  pub fn scale(&self, s: T) -> Matrix<T> {
+    let mut m: Matrix<T> = matrix(self.rows(), self.columns());
+    for i in 0..self.rows() {
+      for j in 0..self.columns() {
+        m.set(i, j, s * self.get(i, j));
+      }
+    }
+    m
+  }
+}
 
 // Arithmetic operations & operator overload
 impl<T: Copy + ::std::ops::Add<Output=T>> ::std::ops::Add for Matrix<T> {
@@ -78,7 +90,7 @@ impl<T: Copy + ::std::ops::Add<Output=T>> ::std::ops::Add for Matrix<T> {
     if (self.rows() != other.rows()) || (self.columns() != other.columns()) {
       panic!("Attempted to add matrices with incompatible sizes.");
     }
-    let mut m:Matrix<T> = matrix(self.rows(), self.columns());
+    let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
       for j in 0..self.columns() {
         m.set(i, j, self.get(i, j) + other.get(i, j));
@@ -93,7 +105,7 @@ impl<T: Copy + ::std::ops::Sub<Output=T>> ::std::ops::Sub for Matrix<T> {
     if (self.rows() != other.rows()) || (self.columns() != other.columns()) {
       panic!("Attempted to subtract matrices with incompatible sizes.");
     }
-    let mut m:Matrix<T> = matrix(self.rows(), self.columns());
+    let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
       for j in 0..self.columns() {
         m.set(i, j, self.get(i, j) - other.get(i, j));
@@ -108,7 +120,7 @@ impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Add<Output=T>> ::std::ops
     if self.columns() != other.rows() {
       panic!("Attempted to multiply matrices with incompatible sizes.");
     }
-    let mut m:Matrix<T> = matrix(self.rows(), other.columns());
+    let mut m: Matrix<T> = matrix(self.rows(), other.columns());
     for i in 0..self.rows() {
       for j in 0..other.columns() {
         for k in 0..self.columns() {
@@ -125,15 +137,6 @@ impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Add<Output=T>> ::std::ops
   }
 }
 /*
-// Unary operator overload
-impl ::std::ops::Neg for Matrix {
-  type Output = Matrix;
-  fn neg(self) -> Matrix {
-    let c = Matrix {real: -self.re(), imag: -self.im()};
-    c.delnegzero()
-  }
-}
-
 // Print formatting
 impl ::std::fmt::Display for Matrix {
   fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {

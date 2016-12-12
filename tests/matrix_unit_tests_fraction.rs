@@ -182,44 +182,28 @@ fn multiplication_error_test() {
   let m = m1 * m2;
   assert!(true); // Something went wrong if this assertion passes
 }
+// Scale Method Test
+// Check [1/2 -2/3  * 2/5 = [1/5 -4/15
+//        3/5 -9/6]          6/25 -3/5]
+#[test]
+fn scale_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let mut m1: Matrix<Fraction> = matrix(2, 2);
+  let m11 = fraction(1, 2); let m12 = fraction(-2, 3);
+  let m13 = fraction(3, 5); let m14 = fraction(-9, 6);
+  m1.set(0, 0, m11); m1.set(0, 1, m12);
+  m1.set(1, 0, m13); m1.set(1, 1, m14);
+  let s = fraction(2, 5);
+  let m = m1.scale(s);
+  let ma = fraction(1, 5); let mb = fraction(-4, 15);
+  let mc = fraction(6, 25); let md = fraction(-3, 5);
+  assert!(ma == m.get(0, 0));
+  assert!(mb == m.get(0, 1));
+  assert!(mc == m.get(1, 0));
+  assert!(md == m.get(1, 1));
+}
 /*
-// Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
-#[test]
-fn negate_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.22,4.11);
-  let m = -m1;
-  assert!(TOLERANCE > (m.re() + 3.22).abs()); 
-  assert!(TOLERANCE > (m.im() + 4.11).abs());
-  assert!(TOLERANCE > (m1.re() - 3.22).abs()); // Check c1 still exists and can be used
-}
-// Raising to a Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
-#[test]
-fn power_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.0,4.0);
-  let m2: Matrix<isize> = matrix<isize>(1.0,1.0);
-  let m = m1.pow(5);
-  let m3 = m2.pow(-2);
-  assert!(TOLERANCE > (m.re() + 237.0).abs());
-  assert!(TOLERANCE > (m.im() + 3116.0).abs());
-  assert!(TOLERANCE > (m3.re() - 0.0).abs());
-  assert!(TOLERANCE > (m3.im() + 0.5).abs());
-}
-// Raising e to a Matrix<isize> Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
-#[test]
-fn exp_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(0.0,PI);
-  let m2: Matrix<isize> = matrix<isize>(0.0,0.0);
-  let m = m1.exp();
-  let m3 = m2.exp();
-  assert!(TOLERANCE > (m.re() + 1.0).abs());
-  assert!(TOLERANCE > (m.im() - 0.0).abs());
-  assert!(TOLERANCE > (m3.re() - 1.0).abs());
-  assert!(TOLERANCE > (m3.im() - 0.0).abs());
-}
-
 // Printing complex to terminal
 #[test]
 fn print_test() {

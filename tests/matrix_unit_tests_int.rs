@@ -143,44 +143,23 @@ fn multiplication_error_test() {
   let m = m1 * m2;
   assert!(true); // Something went wrong if this assertion passes
 }
+// Scale Method Test:
+// Check [1 -3  * 4 =  [4 -12
+//        3 -9]         12 -36]
+#[test]
+fn scale_method_test() {
+  use matrix_lib::matrix::{Matrix, matrix};
+  let mut m1: Matrix<isize> = matrix(2, 2);
+  m1.set(0, 0, 1); m1.set(0, 1, -3);
+  m1.set(1, 0, 3); m1.set(1, 1, -9);
+  let s = 4;
+  let m = m1.scale(s);
+  assert!(4 == m.get(0, 0));
+  assert!(-12 == m.get(0, 1));
+  assert!(12 == m.get(1, 0));
+  assert!(-36 == m.get(1, 1));
+}
 /*
-// Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
-#[test]
-fn negate_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.22,4.11);
-  let m = -m1;
-  assert!(TOLERANCE > (m.re() + 3.22).abs()); 
-  assert!(TOLERANCE > (m.im() + 4.11).abs());
-  assert!(TOLERANCE > (m1.re() - 3.22).abs()); // Check c1 still exists and can be used
-}
-// Raising to a Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
-#[test]
-fn power_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(3.0,4.0);
-  let m2: Matrix<isize> = matrix<isize>(1.0,1.0);
-  let m = m1.pow(5);
-  let m3 = m2.pow(-2);
-  assert!(TOLERANCE > (m.re() + 237.0).abs());
-  assert!(TOLERANCE > (m.im() + 3116.0).abs());
-  assert!(TOLERANCE > (m3.re() - 0.0).abs());
-  assert!(TOLERANCE > (m3.im() + 0.5).abs());
-}
-// Raising e to a Matrix<isize> Power Test: Check (3+4j)^5 ~= -237-3116j and (1+j)^-2 ~= -j/2
-#[test]
-fn exp_test() {
-  use matrix_lib::matrix::{Matrix, matrix};
-  let m1: Matrix<isize> = matrix<isize>(0.0,PI);
-  let m2: Matrix<isize> = matrix<isize>(0.0,0.0);
-  let m = m1.exp();
-  let m3 = m2.exp();
-  assert!(TOLERANCE > (m.re() + 1.0).abs());
-  assert!(TOLERANCE > (m.im() - 0.0).abs());
-  assert!(TOLERANCE > (m3.re() - 1.0).abs());
-  assert!(TOLERANCE > (m3.im() - 0.0).abs());
-}
-
 // Printing complex to terminal
 #[test]
 fn print_test() {
