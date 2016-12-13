@@ -108,6 +108,33 @@ fn dft_test() {
   v.set(0, 0, c1); v.set(1, 0, c2); v.set(2, 0, c3); v.set(3, 0, c4);
   let tfm: Matrix<Complex> = d.dft_tfm(v.clone());
   let v_chk: Matrix<Complex> = d.dft_inv(tfm);
-  println!("v: {} v_chk: {}", v, v_chk);
   assert!(v == v_chk);
+}
+// Unitary Matrix Test: Check unitary matrix raised to the 4th power is approximately the identity matrix
+#[test]
+fn unitary_matrix_power_test() {
+  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::DFT::{DFT, dft};
+  let mut d: DFT = dft(4);
+  let u: Matrix<Complex> = d.unitary_matrix();
+  let u4: Matrix<Complex> = u.clone() * u.clone() * u.clone() * u.clone();
+  let one = complex(1.0, 0.0);
+  let zero = complex(0.0, 0.0);
+  assert!(one == u4.get(0, 0));
+  assert!(one == u4.get(1, 1));
+  assert!(one == u4.get(2, 2));
+  assert!(one == u4.get(3, 3));
+  assert!(zero == u4.get(0, 1));
+  assert!(zero == u4.get(0, 2));
+  assert!(zero == u4.get(0, 3));
+  assert!(zero == u4.get(1, 0));
+  assert!(zero == u4.get(1, 2));
+  assert!(zero == u4.get(1, 3));
+  assert!(zero == u4.get(2, 0));
+  assert!(zero == u4.get(2, 1));
+  assert!(zero == u4.get(2, 3));
+  assert!(zero == u4.get(3, 0));
+  assert!(zero == u4.get(3, 1));
+  assert!(zero == u4.get(3, 2));
 }
