@@ -103,4 +103,16 @@ impl DFT {
       m
     }
   }
+  pub fn dft_tfm(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex> {
+    if (self.npts() != vector.rows()) || (1 != vector.columns()) {
+      panic!("Incompatible input vector provided.");
+    }
+    self.unitary_matrix() * vector
+  }
+  pub fn dft_inv(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex> {
+    if (self.npts() != vector.rows()) || (1 != vector.columns()) {
+      panic!("Incompatible input vector provided.");
+    }
+    self.inverse_matrix() * vector
+  }
 }

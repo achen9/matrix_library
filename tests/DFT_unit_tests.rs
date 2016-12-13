@@ -67,3 +67,31 @@ fn inverse_matrix_method_test() {
   assert!(c == d.inverse_matrix().get(1, 3));
   assert!(c == d.inverse_matrix().get(3, 1));
 }
+// Discrete Fourier Transform Test: Check DFT can be computed
+#[test]
+fn dft_tfm_method_test() {
+  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::DFT::{DFT, dft};
+  let mut d: DFT = dft(4);
+  let c1 = complex(0.0, -0.5); let c2 = complex(1.2, -3.2);
+  let c3 = complex(3.4, 5.6);  let c4 = complex(5.6, 9.4);
+  let mut v: Matrix<Complex> = matrix(4, 1);
+  v.set(0, 0, c1); v.set(1, 0, c2); v.set(2, 0, c3); v.set(3, 0, c4);
+  let o: Matrix<Complex> = d.dft_tfm(v);
+  println!("DFT is: {}", o);
+}
+// Inverse Discrete Fourier Transform Test: Check inverse DFT can be computed
+#[test]
+fn dft_inv_method_test() {
+  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::DFT::{DFT, dft};
+  let mut d: DFT = dft(4);
+  let c1 = complex(0.0, -0.5); let c2 = complex(1.2, -3.2);
+  let c3 = complex(3.4, 5.6);  let c4 = complex(5.6, 9.4);
+  let mut v: Matrix<Complex> = matrix(4, 1);
+  v.set(0, 0, c1); v.set(1, 0, c2); v.set(2, 0, c3); v.set(3, 0, c4);
+  let o: Matrix<Complex> = d.dft_inv(v);
+  println!("DFT inverse is: {}", o);
+}
