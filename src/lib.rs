@@ -23,3 +23,4 @@
 pub mod fraction;
 pub mod complex;
 pub mod matrix;
+pub mod DFT;
