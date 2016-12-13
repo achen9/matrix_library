@@ -40,6 +40,18 @@ pub fn dft(n: usize) -> DFT {
   DFT {num_pts: n, cache: HashMap::new()}
 }
 
+ // Utility Function
+ fn conjugate_transpose(m: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex> {
+  let t: matrix::Matrix<complex::Complex> = m.transpose();
+  let mut ct: matrix::Matrix<complex::Complex> = matrix::matrix(t.rows(), t.columns());
+  for i in 0..ct.rows() {
+    for j in 0..ct.columns() {
+      ct.set(i, j, t.get(i, j).conjugate());
+    }
+  }
+  ct
+}
+
 // Methods
 impl DFT {
   // Getters
@@ -55,6 +67,7 @@ impl DFT {
     } else {
       let exponent = complex::complex(0.0, -2.0*PI/(self.npts() as f64));
       let w = exponent.exp();
+      println!("e: {}, w: {}", exponent, w);
       let mut m: matrix::Matrix<complex::Complex> = matrix::matrix(self.npts(), self.npts());
       for i in 0..m.rows() {
         for j in 0..m.columns() {
@@ -79,6 +92,15 @@ impl DFT {
       u
     }
   }
-
-  // Utility Methods
+  pub fn inverse_matrix(&mut self) -> matrix::Matrix<complex::Complex> {
+    if self.cache.contains_key(&"Inverse Matrix".to_string()) {
+       match self.cache.get(&"Inverse Matrix".to_string()) {
+        Some(matrix) => matrix.clone(),
+        None => panic!("No inverse matrix found in DFT."),
+      }
+    } else {
+      let m: matrix::Matrix<complex::Complex> = conjugate_transpose(self.unitary_matrix());
+      m
+    }
+  }
 }

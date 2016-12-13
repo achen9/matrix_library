@@ -46,7 +46,7 @@ fn transform_matrix_method_test() {
   assert!(c == d.transform_matrix().get(2, 0));
   assert!(c == d.transform_matrix().get(0, 3));
 }
-// Unitary Matrix Method Test: Spot check unitary matrix elements are 1+0j
+// Unitary Matrix Method Test: Spot check unitary matrix elements are 0.5+0j
 #[test]
 fn unitary_matrix_method_test() {
   use matrix_lib::complex::{Complex, complex};
@@ -56,4 +56,14 @@ fn unitary_matrix_method_test() {
   assert!(c == d.unitary_matrix().get(0, 0));
   assert!(c == d.unitary_matrix().get(2, 0));
   assert!(c == d.unitary_matrix().get(0, 3));
+}
+// Inverse Matrix Method Test: Spot check inverse matrix elements are 0-0.5j
+#[test]
+fn inverse_matrix_method_test() {
+  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::DFT::{DFT, dft};
+  let mut d: DFT = dft(4);
+  let c = complex(0.0, -0.5);
+  assert!(c == d.inverse_matrix().get(1, 3));
+  assert!(c == d.inverse_matrix().get(3, 1));
 }
