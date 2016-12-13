@@ -67,7 +67,6 @@ impl DFT {
     } else {
       let exponent = complex::complex(0.0, -2.0*PI/(self.npts() as f64));
       let w = exponent.exp();
-      println!("e: {}, w: {}", exponent, w);
       let mut m: matrix::Matrix<complex::Complex> = matrix::matrix(self.npts(), self.npts());
       for i in 0..m.rows() {
         for j in 0..m.columns() {

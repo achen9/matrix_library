@@ -27,7 +27,7 @@ pub struct Complex {
   imag: f64,
 }
 
-const COMPLEX_TOL: f64 = 0.00001;
+const COMPLEX_TOL: f64 = 0.0001;
 
 // Constructors
 pub fn complex(r: f64, i: f64) -> Complex {
