@@ -34,17 +34,15 @@ fn constructor_test() {
   use matrix_lib::DFT::{DFT, dft};
   let d: DFT = dft(10);
   assert!(10 == d.npts());
-}/*
+}
 // Copy Constructor Test: Test if complex -3/4 can be copied to another variable
 #[test]
-fn copy_constructor_test() {
+fn transform_matrix_method_test() {
   use matrix_lib::complex::{Complex, complex};
-  let c1: Complex = complex(-3.95,4.12);
-  let mut c2: Complex = c1.clone();
-  assert!(TOLERANCE > (c2.re() + 3.95).abs());
-  assert!(TOLERANCE > (c2.im() - 4.12).abs());
-  c2.set_re(5.23);
-  assert!(TOLERANCE > (c2.re() - 5.23).abs());
-  assert!(TOLERANCE > (c1.re() + 3.95).abs());
-}*/
-
+  use matrix_lib::DFT::{DFT, dft};
+  let mut d: DFT = dft(4);
+  let c = complex(1.0, 0.0);
+  assert!(c == d.transform_matrix().get(0, 0));
+  assert!(c == d.transform_matrix().get(2, 0));
+  assert!(c == d.transform_matrix().get(0, 3));
+}
