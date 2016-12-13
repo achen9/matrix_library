@@ -65,6 +65,20 @@ impl DFT {
       m
     }
   }
+  pub fn unitary_matrix(&mut self) -> matrix::Matrix<complex::Complex> {
+    if self.cache.contains_key(&"Unitary Matrix".to_string()) {
+      match self.cache.get(&"Unitary Matrix".to_string()) {
+        Some(matrix) => matrix.clone(),
+        None => panic!("No unitary matrix found in DFT."),
+      }
+    } else {
+      let m: matrix::Matrix<complex::Complex> = self.transform_matrix();
+      let s = complex::complex(1.0 / (self.npts() as f64).sqrt(), 0.0);
+      let u: matrix::Matrix<complex::Complex> = m.scale(s);
+      self.cache.insert("Unitary Matrix".to_string(), u.clone());
+      u
+    }
+  }
 
   // Utility Methods
 }
