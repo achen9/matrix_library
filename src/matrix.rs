@@ -108,7 +108,8 @@ impl<T> Matrix<T>
            ::std::ops::Sub<Output=T> + 
            ::std::ops::Mul<Output=T> + 
            ::std::ops::Div<Output=T> +
-           ::std::ops::Neg<Output=T> {
+           ::std::ops::Neg<Output=T> +
+           ::std::cmp::PartialEq {
   pub fn scale(&self, s: T) -> Matrix<T> {
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
@@ -142,6 +143,10 @@ impl<T> Matrix<T>
       panic!("Attempted to invert non-invertible matrix.");
     }
     let d: T = self.det();
+    let zero_chk: T = self.get(0,0) - self.get(0,0);
+    if d == zero_chk {
+      panic!("Determinant is zero to working precision.");
+    }
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
       for j in 0..self.columns() {
