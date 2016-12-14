@@ -122,9 +122,10 @@ use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
 let f_pow: Fraction = f.pow(-2); // f_pow is 9/4
 ```
-#### 2.1.2. Fraction Class Operator overloads
-The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
-performing arithmetic operations on fractions. A new fraction instance is returned from the overloads.
+#### 2.1.2. Fraction Class Arithmetic Operator Overloads
+The '+', binary '-', unary '-', '*', and '/' arithmetic operators are overloaded to allow more natural 
+syntax for performing arithmetic operations on fractions. A new fraction instance is returned from the 
+overloads. The result is in its reduced form. Any negatives in the denominator are moved to the numerator.
 
 **Example:**
 ```rust
@@ -137,7 +138,23 @@ let f_mul: Fraction = f1 * f2; // multiplying fractions
 let f_div: Fraction = f1 / f2; // dividing fractions
 let f_neg: Fraction = -f1;     // negating fractions
 ```
-#### 2.1.3. Printing Fractions to Stdout
+#### 2.1.3. Fraction Class Comparison Operator Overloads
+The '==', '!=', '<', '<=', '>', and '>=' comparison operators are overloaded to allow for more natural 
+syntax for performing comparison operations on between fractions.
+
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f1: Fraction = fraction(4,6);
+let f2: Fraction = fraction(-2,3);
+let f_equals: bool = f1 == f2;            // false
+let f_nequals: bool = f1 != f2;           // true
+let f_lessthan: bool = f1 < f2;           // false
+let f_lessthanequals: bool = f1 <= f2;    // false
+let f_greaterthan: bool = f1 > f2;        // true
+let f_greaterthanequals: bool = f1 >= f2; // true
+```
+#### 2.1.4. Printing Fractions to Stdout
 Fractions can be printed to stdout using the println! macro.
 
 **Example:**
@@ -265,7 +282,8 @@ The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow m
 performing arithmetic operations on complex numbers.
 
 Note: operator overloads call a hidden method, "delnegzero()", which removes negative zeros from the 
-complex number. Any zero value as a result of an arithmetic operation will always be positive. 
+complex number. This is to prevent comparison errors 
+Any zero value as a result of an arithmetic operation will always be positive. 
 On systems which do not implement negative zeros, this will have no effect.
 
 **Example:**
@@ -291,7 +309,9 @@ println!("The complex c is: {}", c); // printing to stdout
 
 ### 2.3. Matrix Class Generic
 
+
 ### 2.4. Discrete Fourier Transform (DFT) Class
+
 
 ## 3. Further Improvements
 
