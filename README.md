@@ -45,46 +45,121 @@ methods included in the matrix library.
 The following sections document the data types, methods, and design decisions associated with the 
 contents of the matrix library.
 
-### 2.1. Fraction "Class"
-The fraction is a data type for representing real numbers in rational form. Data is stored in the following
-struct.
+### 2.1. Fraction Class
+The "fraction" class is a data type for representing real numbers in rational form. Data is stored in the following
+struct:
 ```rust
 struct Fraction {
   numerator: isize,
   denominator: isize,
 }
 ```
-Methods:
+#### 2.1.1. Fraction Class Methods
+In the following examples, be sure to add "extern create matrix_lib" to the source code.
 ```rust
 fn fraction(n: isize, d: isize) -> Fraction
 ```
-The fraction constructor creates an instance of a fraction. 
+The fraction constructor creates an instance of a fraction. If a 0 is specified for the denominator,
+the constructor will panic with an error message.
+
 **Example:**
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f:Fraction = fraction(2,3);
 ```
 
+```rust
+fn num(&self) -> isize
+fn den(&self) -> isize
+```
+The getters allow access to either the numerator or denominator.
 
-### To compile hw9 code
-Make sure you have navigated to the /hw9/ folder as the current directory. Make sure a "Cargo.toml" file is in there.
-* Type "cargo build" to compile all code. The compiled code will be placed in the "target" directory.
-* Type "cargo test" to run the unit tests.
-* Type "cargo run" to run the code in the main.rs file. The main.rs file contains a benchmark to test the speed of the matrix library implementation.
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f: Fraction = fraction(2,3);
+let n: isize = f.num();
+let d: isize = f.den();
+```
 
-### To run hw9 code
-Make sure you have navigated to the /hw9/ folder as the current directory.
-* If an error message pops up, try the suggested fix if one is mentioned.
-* All programs perform some basic input error checking and will recommend a fix if the input error is detected.  
-* Type "cargo run" to run the code.
+```rust
+fn set_num(&mut self, n: isize)
+fn set_den(&mut self, d: isize)
+```
+The setters allow modification of the numerator or denominator. The set_den() method will panic if 
+a 0 is input as the argument.
 
-### Test notes
-* All code has been tested on a Raspberry Pi 3 Model B running Raspbian.
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f: Fraction = fraction(2,3);
+f.set_num(3); // numerator is now 3
+f.set_den(5); // denominator is now 5
+```
+
+```rust
+fn reduce(&self) -> Fraction
+```
+The reduce method reduces a fraction. 
+
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f: Fraction = fraction(4,6);
+let f_reduced: Fraction = f.reduce(); // f_reduced is now 2/3
+```
+
+```rust
+fn pow(&self, exp: isize) -> Fraction
+```
+The pow method raises a fraction to an integer power. The result is in its reduced form.
+
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f: Fraction = fraction(4,6);
+let f_pow: Fraction = f.pow(-2); // f_pow is 9/4
+```
+
+#### 2.1.2. Fraction Class Operator overloads
+The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
+performing arithmetic operations on fractions.
+
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f1: Fraction = fraction(4,6);
+let f2: Fraction = fraction(-2,3);
+let f_add: Fraction = f1 + f2; // adding fractions
+let f_sub: Fraction = f1 - f2; // subtracting fractions
+let f_mul: Fraction = f1 * f2; // multiplying fractions
+let f_div: Fraction = f1 / f2; // dividing fractions
+let f_neg: Fraction = -f1;     // negating fractions
+```
+#### 2.1.3. Printing Fractions to Stdout
+Fractions can be printed to stdout using the println! macro.
+
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f: Fraction = fraction(4,6);
+println!("The fraction f is: {}", f); // printing to stdout
+```
+
+### 2.2. Complex Class
+
+### 2.3. Matrix Class Generic
+
+### 2.4. Discrete Fourier Transform (DFT) Class
+
+## 3. Further Improvements
+
+## 4. Test Notes
+* All code has been tested on Windows 10 Pro 64-bit.
 * rust version 1.13.0 was used to compile and test the code. 
-* cargo version 0.13.0 was used as the build system and package managers.
+* cargo version 0.13.0-nightly was used as the build system and package managers.
 
 ## Rust vs. C++
-Alex Chen, 12/15/2016
 
 ### Rust vs. C++ differences
 * Rust defaults to not allow variables to be changed. Must use "mut" keyword to allow new values to be assigned to a variable. C++ defaults to allow new values to be assigned to variable. C++ uses "const" to keep a variable constant.
