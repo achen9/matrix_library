@@ -371,7 +371,7 @@ pub struct Matrix<T> {
 ```
 The dimensions of the vector are stored in usize integers. The elements are stored in a Rust library 
 implmentation of vectors. Since the number of elements in a matrix is unknown at compile time, an array
-is cannot be used to store the values. On the other hadn, vectors can be resized and do not need to 
+is cannot be used to store the values. On the other hand, vectors can be resized and do not need to 
 have their sizes defined at compile time.
 
 #### 2.3.1. Matrix Class Methods 
