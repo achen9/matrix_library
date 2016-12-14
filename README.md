@@ -3,6 +3,27 @@ This repository contains a matrix library implementation written in Rust. A simp
 such as arithmetic operations, determinants, inverse, and discrete Fourier transforms are provided.
 
 Author: Alex Chen, alexac9@uw.edu
+## Contents
+1.     Getting Started
+1.1.   Installing the Rust Compiler and Cargo Package Manager
+1.2.   Cloning the Library from the Repository 
+1.3.   Using the Library 
+1.4.   Running Unit Tests 
+2.     Library Content Documentation 
+2.1.   Fraction Class
+2.1.1. Fraction Class Methods
+2.1.2. Fraction Class Arithmetic Operator Overloads
+2.1.3. Fraction Class Comparison Operator Overloads
+2.1.4. Printing Fractions to Stdout
+2.2.   Complex Class
+2.2.1. Complex Class Methods
+2.2.2. Complex Class Arithmetic Operator Overloads
+2.2.3. Complex Class Comparison Operator Overloads
+2.2.4. Printing Complex Numbers to Stdout 
+2.3.   Matrix Class Generic
+2.4.   Discrete Fourier Transform (DFT) Class
+3.     Further Improvements 
+4.     Test Notes
 
 ## 1. Getting Started
 * Git is required to clone the matrix library respository.
@@ -42,8 +63,8 @@ all unit tests.
 methods included in the matrix library.
 
 ## 2. Library Content Documentation
-The following sections document the data types, methods, and design decisions associated with the 
-contents of the matrix library.
+The following sections document the data types, methods, and design decisions contained in the 
+matrix library.
 
 ### 2.1. Fraction Class
 The "fraction" class is a data type for representing real numbers in rational form.
@@ -140,7 +161,7 @@ let f_neg: Fraction = -f1;     // negating fractions
 ```
 #### 2.1.3. Fraction Class Comparison Operator Overloads
 The '==', '!=', '<', '<=', '>', and '>=' comparison operators are overloaded to allow for more natural 
-syntax for performing comparison operations on between fractions.
+syntax for performing comparison operations between fractions.
 
 **Example:**
 ```rust
@@ -277,7 +298,7 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
 let c_exp: Complex = c.exp(); // c_exp is approximately 6.23-36.81j
 ```
-#### 2.1.2. Complex Class Operator overloads
+#### 2.1.2. Complex Class Arithmetic Operator overloads
 The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
 performing arithmetic operations on complex numbers.
 
@@ -297,7 +318,10 @@ let c_mul: Complex = c1 * c2; // multiplying complex numbers
 let c_div: Complex = c1 / c2; // dividing complex numbers
 let c_neg: Complex = -c1;     // negating complex numbers
 ```
-#### 2.1.3. Printing Complex Numbers to Stdout
+#### 2.1.3. Complex Class Comparison Operator Overloads
+
+
+#### 2.1.4. Printing Complex Numbers to Stdout
 Complex numbers can be printed to stdout using the println! macro.
 
 **Example:**
