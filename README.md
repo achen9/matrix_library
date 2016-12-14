@@ -1,4 +1,4 @@
-# Matrix Library Documentation
+# Matrix Library v0.1.0 Documentation
 This repository contains a matrix library implementation written in Rust. A simple set of matrix operations
 such as arithmetic operations, determinants, inverse, and discrete Fourier transforms are provided.
 
@@ -43,7 +43,21 @@ methods included in the matrix library.
 
 ## 2. Library Content Documentation
 The following sections document the data types, methods, and design decisions associated with the 
-contents of the matrix library. 
+contents of the matrix library.
+
+### 2.1. Fraction "Class"
+The fraction is a data type for representing real numbers in rational form. Data is stored in the following
+struct.
+```rust
+struct Fraction {
+  numerator: isize,
+  denominator: isize,
+}
+```
+Methods:
+```rust
+* fn fraction(n: isize, d: isize) -> Fraction
+```
 
 ### To compile hw9 code
 Make sure you have navigated to the /hw9/ folder as the current directory. Make sure a "Cargo.toml" file is in there.
