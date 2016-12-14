@@ -46,34 +46,41 @@ The following sections document the data types, methods, and design decisions as
 contents of the matrix library.
 
 ### 2.1. Fraction Class
-The "fraction" class is a data type for representing real numbers in rational form. Data is stored in the following
-struct:
+The "fraction" class is a data type for representing real numbers in rational form.
+
+Note: Rust does not have a "class" keyword. Instead, classes can be simulated by using a struct
+for storing data and using method syntax to allow function calls on the struct using the dot "." 
+notation (i.e. struct.method()). Access to the struct fields must be done using the getter and 
+setter methods. This is to prevent the possibility of  making inadvertent or invalid changes (e.g. 
+setting the denominator to 0) to the fraction.
+
+Data is stored in the following struct:
 ```rust
-struct Fraction {
+pub struct Fraction {
   numerator: isize,
   denominator: isize,
 }
 ```
 #### 2.1.1. Fraction Class Methods
 In the following examples, be sure to add "extern create matrix_lib" to the source code.
-```rust
-fn fraction(n: isize, d: isize) -> Fraction
-```
-The fraction constructor creates an instance of a fraction. If a 0 is specified for the denominator,
-the constructor will panic with an error message.
 
+The fraction constructor creates an instance of a fraction. If a 0 is specified for the denominator,
+the constructor will panic with an error message. Note, it is possible to have negative numbers in 
+the denominator. This was included to simplify constructor code. Methods which operate on fractions
+take this into account and will move the negative sign to the numerator when reducing the fraction.
+```rust
+pub fn fraction(n: isize, d: isize) -> Fraction
+```
 **Example:**
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
-let f:Fraction = fraction(2,3);
-```
-
-```rust
-fn num(&self) -> isize
-fn den(&self) -> isize
+let f:Fraction = fraction(2,3); // create fraction 2/3
 ```
 The getters allow access to either the numerator or denominator.
-
+```rust
+pub fn num(&self) -> isize
+pub fn den(&self) -> isize
+```
 **Example:**
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
@@ -81,14 +88,12 @@ let f: Fraction = fraction(2,3);
 let n: isize = f.num();
 let d: isize = f.den();
 ```
-
-```rust
-fn set_num(&mut self, n: isize)
-fn set_den(&mut self, d: isize)
-```
 The setters allow modification of the numerator or denominator. The set_den() method will panic if 
 a 0 is input as the argument.
-
+```rust
+pub fn set_num(&mut self, n: isize)
+pub fn set_den(&mut self, d: isize)
+```
 **Example:**
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
@@ -96,34 +101,30 @@ let f: Fraction = fraction(2,3);
 f.set_num(3); // numerator is now 3
 f.set_den(5); // denominator is now 5
 ```
-
+The reduce method reduces a fraction. A new fraction instance is returned from this method. 
 ```rust
-fn reduce(&self) -> Fraction
+pub fn reduce(&self) -> Fraction
 ```
-The reduce method reduces a fraction. 
-
 **Example:**
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
 let f_reduced: Fraction = f.reduce(); // f_reduced is now 2/3
 ```
-
+The pow method raises a fraction to an integer power. The result is in its reduced form. Any negatives
+in the denominator are moved to the numerator. A new fraction instance is returned from this method.
 ```rust
-fn pow(&self, exp: isize) -> Fraction
+pub fn pow(&self, exp: isize) -> Fraction
 ```
-The pow method raises a fraction to an integer power. The result is in its reduced form.
-
 **Example:**
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
 let f_pow: Fraction = f.pow(-2); // f_pow is 9/4
 ```
-
 #### 2.1.2. Fraction Class Operator overloads
 The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
-performing arithmetic operations on fractions.
+performing arithmetic operations on fractions. A new fraction instance is returned from the overloads.
 
 **Example:**
 ```rust
@@ -147,6 +148,118 @@ println!("The fraction f is: {}", f); // printing to stdout
 ```
 
 ### 2.2. Complex Class
+The "complex" class is a data type for representing complex numbers. 
+
+Note: Rust does not have a "class" keyword. Instead, classes can be simulated by using a struct
+for storing data and using method syntax to allow function calls on the struct using the dot "." 
+notation (i.e. struct.method()). Access to the struct fields must be done using the getter and 
+setter methods. This is to prevent the possibility of making inadvertent changes to the complex number.
+
+Data is stored in the following struct:
+```rust
+pub struct Complex {
+  real: f64,
+  imag: f64,
+}
+```
+Since execution speed is a lower priority than calculation accuracy, doubles precision floats are 
+used to represent the real and imaginary parts instead of single precision floats.
+
+#### 2.2.1 Complex Class Methods
+In the following examples, be sure to add "extern create matrix_lib" to the source code.
+
+The complex constructor creates an instance of a complex number. It will accept any valid double 
+precision number for both the real and imaginary parts.
+```rust
+pub fn complex(r: f64, i: f64) -> Complex
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c:Complex = complex(3.62,4.88); // create complex number 3.62+4.88j
+```
+The getters allow access to either the real part or imaginary part.
+```rust
+pub fn re(&self) -> f64
+pub fn im(&self) -> f64
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(3.62,4.88);
+let r: f64 = c.re();
+let i: f64 = c.im();
+```
+The setters allow modification of the real part or imaginary part. 
+```rust
+pub fn set_re(&mut self, r: f64)
+pub fn set_im(&mut self, i: f64)
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(3.62,4.88);
+c.set_re5.89);   // real part is now 5.89
+c.set_im(-9.81); // imaginary part is now -9.81
+```
+The conjugate method returns a new instance of a complex number which is the complex conjugate 
+(opposite sign of imaginary part) of the original complex number. 
+```rust
+pub fn conjugate(&self) -> Complex
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(3.62,4.88);      // c is 3.62+4.88j
+let c_conjugate: Complex = c.conjugate(); // c_conjugate is now 3.62-4.88j
+```
+The magnitude method returns the magnitude of a complex number. THe magnitude can be calculated
+by taking the square root of the sum of the real and imaginary parts squared. 
+($ \sqrt(real^2 + imaginary^2) $)
+```rust
+pub fn mag(&self) -> f64
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(3.62,4.88); 
+let m: f64 = c.mag(); // m is approximately 6.0761
+```
+The pow method raises a complex to an integer power. The result is in its reduced form. Any negatives
+in the imaginary part are moved to the real part.
+```rust
+pub fn pow(&self, exp: isize) -> Complex
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(4,6);
+let c_pow: Complex = c.pow(-2); // c_pow is 9/4
+```
+#### 2.1.2. Complex Class Operator overloads
+The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
+performing arithmetic operations on complex numbers.
+
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c1: Complex = complex(4,6);
+let c2: Complex = complex(-2,3);
+let c_add: Complex = c1 + c2; // adding complex numbers
+let c_sub: Complex = c1 - c2; // subtracting complex numbers
+let c_mul: Complex = c1 * c2; // multiplying complex numbers
+let c_div: Complex = c1 / c2; // dividing complex numbers
+let c_neg: Complex = -c1;     // negating complex numbers
+```
+#### 2.1.3. Printing Complex Numbers to Stdout
+Complex numbers can be printed to stdout using the println! macro.
+
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(4,6);
+println!("The complex c is: {}", c); // printing to stdout
+```
 
 ### 2.3. Matrix Class Generic
 
