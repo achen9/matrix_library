@@ -1,3 +1,23 @@
+# Matrix Library Documentation
+This repository contains a matrix library implementation written in Rust. A simple set of matrix operations
+such as arithmetic operations, determinants, inverse, and discrete Fourier transforms are provided.
+
+Author: Alex Chen, alexac9@uw.edu
+
+## 1. Prerequisites
+* Git is required to clone the matrix library respository.
+* The Rust compiler and Cargo package manager are required to compile the matrix library. See section 1.1. 
+for steps on installing the Rust compiler and Cargo package manager.
+
+### 1.1. Installing the Rust Compiler and Cargo Package Manager
+1. Download the Rust compiler and Cargo, the Rust package manager, for the latest stable release from
+https://www.rust-lang.org/en-US/ for your operating system. Be sure to install Cargo as it will be used to 
+compile the code.
+2. Once installation has finished, open a terminal or command prompt and type "rustc --V" to make sure the 
+Rust compiler was installed properly. You should see a version number (e.g. 1.13.0) of rustc listed.
+3. Type "cargo -V" to make sure Cargo was installed properly. You should see a version number 
+(e.g. 0.13.0-nightly) of Cargo listed.
+
 ### To compile hw9 code
 Make sure you have navigated to the /hw9/ folder as the current directory. Make sure a "Cargo.toml" file is in there.
 * Type "cargo build" to compile all code. The compiled code will be placed in the "target" directory.
