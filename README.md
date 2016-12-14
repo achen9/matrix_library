@@ -149,7 +149,7 @@ let f: Fraction = fraction(4,6);
 let f_pow: Fraction = f.pow(-2); // f_pow is 9/4
 ```
 #### 2.1.2. Fraction Class Arithmetic Operator Overloads
-The '+', binary '-', unary '-', '*', and '/' arithmetic operators are overloaded to allow more natural 
+The binary '+', '-', '*', '/', and unary '-' arithmetic operators are overloaded to allow more natural 
 syntax for performing arithmetic operations on fractions. A new fraction instance is returned from the 
 overloads. The result is in its reduced form. Any negatives in the denominator are moved to the numerator.
 
@@ -165,8 +165,8 @@ let f_div: Fraction = f1 / f2; // dividing fractions
 let f_neg: Fraction = -f1;     // negating fractions
 ```
 #### 2.1.3. Fraction Class Comparison Operator Overloads
-The '==', '!=', '<', '<=', '>', and '>=' comparison operators are overloaded to allow for more natural 
-syntax for performing comparison operations between fractions.
+The binary '==', '!=', '<', '<=', '>', and '>=' comparison operators are overloaded to allow for 
+more natural syntax for performing comparison operations between fractions.
 
 **Example:**
 ```rust
@@ -303,8 +303,8 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
 let c_exp: Complex = c.exp(); // c_exp is approximately 6.23-36.81j
 ```
-#### 2.1.2. Complex Class Arithmetic Operator overloads
-The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
+#### 2.2.2. Complex Class Arithmetic Operator overloads
+The binary '+', '-', '*', '/', and unary '-' are overloaded to allow more natural syntax for
 performing arithmetic operations on complex numbers.
 
 Note: operator overloads call a hidden method, "delnegzero()", which removes negative zeros from the 
@@ -323,8 +323,8 @@ let c_mul: Complex = c1 * c2; // multiplying complex numbers
 let c_div: Complex = c1 / c2; // dividing complex numbers
 let c_neg: Complex = -c1;     // negating complex numbers
 ```
-#### 2.1.3. Complex Class Comparison Operator Overloads
-The '==' and '!=' comparison operators are overloaded to allow for more natural syntax for performing 
+#### 2.2.3. Complex Class Comparison Operator Overloads
+The binary '==' and '!=' comparison operators are overloaded to allow for more natural syntax for performing 
 comparison operations between complex numbers. The '<', '<=', '>', and '>=' operators are not overloaded 
 as it does not make sense to do those comparisons between complex numbers.
 
@@ -341,7 +341,7 @@ let c2: Complex = complex(3.6221,4.8889);
 let c_equals: bool = c1 == c2;            // true - based on the default COMPLEX_TOL value of 0.0001
 let c_nequals: bool = c1 != c2;           // false
 ```
-#### 2.1.4. Printing Complex Numbers to Stdout
+#### 2.2.4. Printing Complex Numbers to Stdout
 Complex numbers can be printed to stdout using the println! macro.
 
 **Example:**
