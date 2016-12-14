@@ -213,9 +213,9 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);      // c is 3.62+4.88j
 let c_conjugate: Complex = c.conjugate(); // c_conjugate is now 3.62-4.88j
 ```
-The magnitude method returns the magnitude of a complex number. THe magnitude can be calculated
+The magnitude method returns the magnitude of a complex number. The magnitude can be calculated
 by taking the square root of the sum of the real and imaginary parts squared. 
-($ \sqrt(real^2 + imaginary^2) $)
+(sqrt(real^2 + imaginary^2))
 ```rust
 pub fn mag(&self) -> f64
 ```
@@ -225,26 +225,54 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88); 
 let m: f64 = c.mag(); // m is approximately 6.0761
 ```
-The pow method raises a complex to an integer power. The result is in its reduced form. Any negatives
-in the imaginary part are moved to the real part.
+The angle method returns the angle (radians) of a complex number. The angle can be calculated 
+by taking the inverse tangent of the imaginary part divided by the real part. 
+(atan2(imaginary/real))
 ```rust
-pub fn pow(&self, exp: isize) -> Complex
+pub fn angle(&self) -> f64
 ```
 **Example:**
 ```rust
 use matrix_lib::complex::{Complex, complex};
-let c: Complex = complex(4,6);
-let c_pow: Complex = c.pow(-2); // c_pow is 9/4
+let c: Complex = complex(3.62,4.88); 
+let a: f64 = c.angle(); // a is approximately 0.9326 radians
+```
+The pow method raises a complex number to an integer power and returns a new instance of a complex 
+number as the result.  i32 is used because the built in Rust powi() method for double precision 
+floating points requires an i32 to represent the exponent.
+```rust
+pub fn pow(&self, exp: i32) -> Complex
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(3.62,4.88);
+let c_pow: Complex = c.pow(2); // c_pow is approximately -10.71+35.33j
+```
+The exp method raises 'e' to the power of the complex number and returns a new instance of a complex 
+number as the result.
+```rust
+pub fn exp(&self) -> Complex
+```
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c: Complex = complex(3.62,4.88);
+let c_exp: Complex = c.exp(); // c_exp is approximately 6.23-36.81j
 ```
 #### 2.1.2. Complex Class Operator overloads
 The '+', binary '-', unary '-', '*', and '/' operators are overloaded to allow more natural syntax for
 performing arithmetic operations on complex numbers.
 
+Note: operator overloads call a hidden method, "delnegzero()", which removes negative zeros from the 
+complex number. Any zero value as a result of an arithmetic operation will always be positive. 
+On systems which do not implement negative zeros, this will have no effect.
+
 **Example:**
 ```rust
 use matrix_lib::complex::{Complex, complex};
-let c1: Complex = complex(4,6);
-let c2: Complex = complex(-2,3);
+let c1: Complex = complex(3.62,4.88);
+let c2: Complex = complex(-2.65,3.97);
 let c_add: Complex = c1 + c2; // adding complex numbers
 let c_sub: Complex = c1 - c2; // subtracting complex numbers
 let c_mul: Complex = c1 * c2; // multiplying complex numbers
@@ -257,7 +285,7 @@ Complex numbers can be printed to stdout using the println! macro.
 **Example:**
 ```rust
 use matrix_lib::complex::{Complex, complex};
-let c: Complex = complex(4,6);
+let c: Complex = complex(3.62,4.88);
 println!("The complex c is: {}", c); // printing to stdout
 ```
 
