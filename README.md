@@ -4,43 +4,25 @@ such as arithmetic operations, determinants, inverse, and discrete Fourier trans
 
 Author: Alex Chen, alexac9@uw.edu
 ## Contents
-1\.....Getting Started  
-1.1....Installing the Rust Compiler and Cargo Package Manager
-
-1.2....Cloning the Library from the Repository 
-
-1.3....Using the Library 
-
-1.4....Running Unit Tests 
-
-2\.....Library Content Documentation 
-
-2.1....Fraction Class
-
-2.1.1..Fraction Class Methods
-
-2.1.2..Fraction Class Arithmetic Operator Overloads
-
-2.1.3..Fraction Class Comparison Operator Overloads
-
-2.1.4..Printing Fractions to Stdout
-
-2.2....Complex Class
-
-2.2.1..Complex Class Methods
-
-2.2.2..Complex Class Arithmetic Operator Overloads
-
-2.2.3..Complex Class Comparison Operator Overloads
-
-2.2.4..Printing Complex Numbers to Stdout 
-
+1\.    Getting Started  
+1.1.   Installing the Rust Compiler and Cargo Package Manager
+1.2.   Cloning the Library from the Repository 
+1.3.   Using the Library 
+1.4.   Running Unit Tests 
+2\.    Library Content Documentation 
+2.1.   Fraction Class
+2.1.1. Fraction Class Methods
+2.1.2. Fraction Class Arithmetic Operator Overloads
+2.1.3. Fraction Class Comparison Operator Overloads
+2.1.4. Printing Fractions to Stdout
+2.2.   Complex Class
+2.2.1. Complex Class Methods
+2.2.2. Complex Class Arithmetic Operator Overloads
+2.2.3. Complex Class Comparison Operator Overloads
+2.2.4. Printing Complex Numbers to Stdout 
 2.3.   Matrix Class Generic
-
 2.4.   Discrete Fourier Transform (DFT) Class
-
 3\.    Further Improvements 
-
 4\.    Test Notes
 
 ## 1. Getting Started
