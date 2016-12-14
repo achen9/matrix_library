@@ -352,7 +352,180 @@ println!("The complex c is: {}", c); // printing to stdout
 ```
 
 ### 2.3. Matrix Class Generic
+The "Matrix" class is a data type for representing matrices. The elements are implemented as a 
+generic type \<T\>. The type is bound to data types which implement arithmetic operator overloads, 
+and the Copy trait.
 
+Note: Rust does not have a "class" keyword. Instead, classes can be simulated by using a struct
+for storing data and using method syntax to allow function calls on the struct using the dot "." 
+notation (i.e. struct.method()). Access to the struct fields must be done using the getter and 
+setter methods. This is to prevent the possibility of making inadvertent changes to the matrices.
+
+Data is stored in the following struct:
+```rust
+pub struct Matrix<T> {
+  num_rows: usize,
+  num_columns: usize,
+  values: Vec<T>,
+}
+```
+The dimensions of the vector are stored in usize integers. The elements are stored in a Rust library 
+implmentation of vectors. Since the number of elements in a matrix is unknown at compile time, an array
+is cannot be used to store the values. On the other hadn, vectors can be resized and do not need to 
+have their sizes defined at compile time.
+
+#### 2.3.1. Matrix Class Methods 
+In the following examples, be sure to add "extern crate matrix_lib" to the source code.
+
+The **Matrix constructor** creates an instance of a matrix object. If the rows or columns is zero, the 
+constructor will panic with an error message. The size of a matrix cannot be modified. After constructing
+the matrix, each element in the matrix is set to a default of 0. 
+
+Note: Matrix variables **must be mutable**, otherwise the element values cannot be changed.
+```rust
+pub fn matrix<T>(r: usize, c: usize) -> Matrix<T>
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+```
+The **getters** allow access to the dimensions of the matrix and a particular element in the matrix. 
+Element indices are zero-based (i.e. the element in the first row and first column are at indices 0,0).
+```rust
+ pub fn rows(&self) -> usize
+ pub fn columns(&self) -> usize
+ pub fn get(&self, r: usize, c: usize) -> T
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+m.set(0,0,1.0); m.set(0,1,2.0);
+m.set(1,0,3.0); m.set(1,1,4.0);
+let r: usize = m.rows();    // returns 2
+let c: usize = m.columns(); // returns 2
+let val: f64 = m.get(0,1);  // returns value of element in the 1st row, 2nd column which is 2.0
+```
+The **setters** allow modification of the elements in the matrix.
+```rust
+pub fn set(&mut self, r: usize, c: usize, x: T)
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m::Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+m.set(0,0,1.0); m.set(0,1,2.0); // Set 1st row elements to be 1.0, 2.0
+m.set(1,0,3.0); m.set(1,1,4.0); // Set 2nd row elements to be 3.0, 4.0
+```
+The **scale method** multiplies each element in the matrix by a scaling factor. The scaling factor 
+must be the same data type as the elements in the matrix. If the scaling factor is a different 
+data type, the method will panic about mismatch for multiplying between different data types.
+```rust
+pub fn scale(&self, s: T) -> Matrix<T>
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+m.set(0,0,1.0); m.set(0,1,2.0);
+m.set(1,0,3.0); m.set(1,1,4.0);
+let s: f64 = 2.0;    
+let m_scaled: matrix<f64> = m.scale(s); // multiplies each element in the matrix by 2.0
+```
+The **minor method** returns the matrix of size (n-1)x(n-1) by eliminating the row and column specified.
+The row and column indices are zero-based (i.e. the 1st row is index 0, the 1st column is index 0). A
+new instance of a matrix is returned. The method will panic if indices greater than the size of the matrix
+are input.
+```rust
+pub fn minor(&self, r: usize, c: usize) -> Matrix<T>
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m::Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+m.set(0,0,1.0); m.set(0,1,2.0);
+m.set(1,0,3.0); m.set(1,1,4.0);
+let m: Matrix<f64> = m.minor(0,0);  // returns value of element in the 1st row, 2nd column which is 2.0
+```
+The **det method** calculates the determinant of a matrix and returns a scalar of the same data type as 
+the elements in the matrix. The matrix must be square (i.e. number of rows equals the number of columns).
+```rust
+pub fn det(&self) -> T
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+m.set(0,0,1.0); m.set(0,1,2.0);
+m.set(1,0,3.0); m.set(1,1,4.0);
+let d: f64 = m.det();  // returns -2.0
+```
+The **inverse method** calculates the inverse of an nxn matrix and returns a new matrix instance as
+the inverse matrix. The matrix must be square, and its determinant must be nonzero, to be invertible.
+```rust
+pub fn inverse(&self) -> Matrix<T>
+```
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
+m.set(0,0,1.0); m.set(0,1,2.0);
+m.set(1,0,3.0); m.set(1,1,4.0);
+let m_inv: matrix<f64> = m.inverse();  // returns 2x2 inverse matrix
+```
+#### 2.3.2. Matrix Class Arithmetic Operator Overloads
+The binary '+', '-', and '*' operators are overloaded to allow more natural syntax for performing 
+arithmetic operations on matrices.
+
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let m1: Matrix<i32> = matrix(2,2);
+let m2: Matrix<i32> = matrix(2,2);
+m1.set(0,0,1); m1.set(0,1,2);
+m1.set(1,0,3); m1.set(1,1,4); // set values in m1
+m2.set(0,0,4); m2.set(0,1,3);
+m2.set(1,0,2); m2.set(1,1,1); // set values in m2
+let m_add: Matrix<i32> = m1.clone() + m2.clone(); // adding matrices
+let m_sub: Matrix<i32> = m1.clone() - m2.clone(); // subtracting matrices
+let m_mul: Matrix<i32> = m1.clone() * m2.clone(); // multiplying matrices
+```
+Note the use of the clone method for arithmetic operations. The arithmetic operators consume 
+the operands because they are pass by value. Rust's default implementation for overloading 
+arithmetic operators requires them to be pass by value.
+
+#### 2.3.3. Matrix Class Comparison Operator Overloads
+The binary '==' and '!=' comparison operators are overloaded to allow more natural syntax for performing
+comparisons between matrices. The '<', '<=', '>', and '>=' operators are not overloaded 
+as it does not make sense to do those comparisons between matrices.
+
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix}
+let m1: Matrix<i32> = matrix(2,2);
+let m2: Matrix<i32> = matrix(2,2);
+m1.set(0,0,1); m1.set(0,1,2);
+m1.set(1,0,3); m1.set(1,1,4); // set values in m1
+m2.set(0,0,4); m2.set(0,1,3);
+m2.set(1,0,2); m2.set(1,1,1); // set values in m2
+let m_equals: bool = m1 == m2; // false
+let m_nequals: bool = m1 != m2; // true
+```
+Note the omission of the clone method. The comparison operators take operands by reference instead of 
+by value. The operands are not consumed after the comparison.
+
+#### 2.3.4. Printing Matrices to Stdout
+Matrices can be printed to stdout using the println! macro.
+
+**Example:**
+```rust
+use matrix_lib::matrix::{Matrix, matrix};
+let m: Matrix<f64> = matrix(2,2);
+m.set(0,0,1.0); m.set(0,1,2.0);
+m.set(1,0,3.0); m.set(1,1,4.0);
+println!("The matrix m is : {}", m); // printing to stdout
+```
 
 ### 2.4. Discrete Fourier Transform (DFT) Class
 The "DFT" class is a data type for representing a set of matrices for computing the discrete Fourier
@@ -383,7 +556,7 @@ vector. Notice the transform matrices can only contain complex numbers defined i
 #### 2.4.1. DFT Class methods
 In the following examples, be sure to add "extern crate matrix_lib" to the source code.
 
-The **DFT constructor** creates an instance of a DFT class. If the number of points is 0, it will panic.
+The **DFT constructor** creates an instance of a DFT object. If the number of points is 0, it will panic.
 ```rust
 pub fn dft(n: usize) -> DFT
 ```
@@ -471,7 +644,7 @@ let v: matrix::Matrix<complex::Complex> = matrix(4,1);
 /* set values of the vector */
 let v_tfm: matrix::Matrix<complex::Complex> = d.dft_tfm(v); // returns DFT of the vector v
 ```
-The **dft_inv** method calculates the inverse discret Fourier transform for vector with n points and returns a 
+The **dft_inv method** calculates the inverse discret Fourier transform for vector with n points and returns a 
 vector with the same dimensions. The vector must have elements of the complex number type defined in 
 this matrix library.
 ```rust
