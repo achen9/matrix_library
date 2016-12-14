@@ -74,7 +74,7 @@ impl DFT {
         }
       }
       self.cache.insert("Transform Matrix".to_string(), m.clone());
-      m
+      m.clone()
     }
   }
   pub fn unitary_matrix(&mut self) -> matrix::Matrix<complex::Complex> {
@@ -88,7 +88,7 @@ impl DFT {
       let s = complex::complex(1.0 / (self.npts() as f64).sqrt(), 0.0);
       let u: matrix::Matrix<complex::Complex> = m.scale(s);
       self.cache.insert("Unitary Matrix".to_string(), u.clone());
-      u
+      u.clone()
     }
   }
   pub fn inverse_matrix(&mut self) -> matrix::Matrix<complex::Complex> {
@@ -99,7 +99,7 @@ impl DFT {
       }
     } else {
       let m: matrix::Matrix<complex::Complex> = conjugate_transpose(self.unitary_matrix());
-      m
+      m.clone()
     }
   }
   pub fn dft_tfm(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex> {

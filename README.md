@@ -83,7 +83,7 @@ pub struct Fraction {
 }
 ```
 #### 2.1.1. Fraction Class Methods
-In the following examples, be sure to add "extern create matrix_lib" to the source code.
+In the following examples, be sure to add "extern crate matrix_lib" to the source code.
 
 The fraction constructor creates an instance of a fraction. If a 0 is specified for the denominator,
 the constructor will panic with an error message. Note, it is possible to have negative numbers in 
@@ -204,7 +204,7 @@ Since execution speed is a lower priority than calculation accuracy, doubles pre
 used to represent the real and imaginary parts instead of single precision floats.
 
 #### 2.2.1 Complex Class Methods
-In the following examples, be sure to add "extern create matrix_lib" to the source code.
+In the following examples, be sure to add "extern crate matrix_lib" to the source code.
 
 The complex constructor creates an instance of a complex number. It will accept any valid double 
 precision number for both the real and imaginary parts.
@@ -351,7 +351,9 @@ println!("The complex c is: {}", c); // printing to stdout
 
 ### 2.4. Discrete Fourier Transform (DFT) Class
 The "DFT" class is a data type for representing a set of matrices for computing the discrete Fourier
-transform on a vector of complex numbers.
+transform on a vector of complex numbers. See 
+https://en.wikipedia.org/wiki/Discrete_Fourier_transform for more information on the discrete 
+Fourier transform, the transform, unitary, and inverse matrices.
 
 Note: Rust does not have a "class" keyword. Instead, classes can be simulated by using a struct
 for storing data and using method syntax to allow function calls on the struct using the dot "." 
@@ -361,12 +363,127 @@ matrices.
 
 Data is stored in the following struct:
 ```rust
-pub struct Complex {
-  real: f64,
-  imag: f64,
+use ::std::collections::HashMap;
+use complex;
+use matrix;
+pub struct DFT {
+  num_pts: usize,
+  cache: HashMap<String, matrix::Matrix<complex::Complex>>,
 }
 ```
+A hashmap is used to cache the computed transform matrices for reuse. The transform matrices depend on 
+the num_pts field. A new DFT must be created if there are a different number of points in the input 
+vector. Notice the transform matrices can only contain complex numbers defined in the complex class.
 
+#### 2.4.1. DFT Class methods
+In the following examples, be sure to add "extern crate matrix_lib" to the source code.
+
+The DFT constructor creates an instance of a DFT class. If the number of points is 0, it will panic.
+```rust
+pub fn dft(n: usize) -> DFT
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+let d: DFT = dft(4);
+```
+The getter allows access to the number of points to compute a DFT for.
+```rust
+pub fn npts(&self) -> usize
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+let d: DFT = dft(4);
+let n_pts: usize = dft.npts(); // returns 4
+```
+The transform_matrix method calculates the n point discrete Fourier transform matrix. If the transform 
+matrix is not in the cache, it calculates the transform matrix, stores it in the cache, and returns a clone
+of the transform matrix. If the transform matrix is in the cache, it retrieves the matrix from the cache 
+and returns a clone of the transform matrix. 
+```rust
+use complex;
+use matrix;
+pub fn transform_matrix(&mut self) -> matrix::Matrix<complex::Complex>
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+use matrix_lib::matrix::{Matrix, matrix}
+use matrix_lib::complex::{Complex, complex}
+let d: DFT = dft(4);
+let tfm_mat: matrix::Matrix<complex::Complex> = dft.transform_matrix(); // returns 4x4 matrix
+```
+The unitary_matrix method calculates the n point discrete Fourier transform unitary matrix. If the unitary 
+matrix is not in the cache, it calculates the unitary matrix, stores it in the cache, and returns a clone
+of the unitary matrix. If the unitary matrix is in the cache, it retrieves the matrix from the cache 
+and returns a clone of the unitary matrix. 
+```rust
+use complex;
+use matrix;
+pub fn unitary_matrix(&mut self) -> matrix::Matrix<complex::Complex>
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+use matrix_lib::matrix::{Matrix, matrix}
+use matrix_lib::complex::{Complex, complex}
+let d: DFT = dft(4);
+let uni_mat: matrix::Matrix<complex::Complex> = dft.unitary_matrix(); // returns 4x4 matrix
+```
+The inverse_matrix method calculates the n point discrete Fourier transform inverse matrix. If the inverse 
+matrix is not in the cache, it calculates the inverse matrix, stores it in the cache, and returns a clone
+of the inverse matrix. If the inverse matrix is in the cache, it retrieves the matrix from the cache 
+and returns a clone of the inverse matrix.
+```rust
+use complex;
+use matrix;
+pub fn inverse_matrix(&mut self) -> matrix::Matrix<complex::Complex>
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+use matrix_lib::matrix::{Matrix, matrix}
+use matrix_lib::complex::{Complex, complex}
+let d: DFT = dft(4);
+let inv_mat: matrix::Matrix<complex::Complex> = dft.inverse_matrix(); // returns 4x4 inverse matrix
+```
+The dft_tfm method calculates the discret Fourier transform for vector with n points and returns a 
+vector with the same dimensions. The vector must have elements of the complex number type defined in 
+this matrix library.
+```rust
+use complex;
+use matrix;
+pub fn dft_tfm(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex>
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+use matrix_lib::matrix::{Matrix, matrix}
+use matrix_lib::complex::{Complex, complex}
+let d: DFT = dft(4);
+let v: matrix::Matrix<complex::Complex> = matrix(4,1); 
+/* set values of the vector */
+let v_tfm: matrix::Matrix<complex::Complex> = d.dft_tfm(v); // returns DFT of the vector v
+```
+The dft_inv method calculates the inverse discret Fourier transform for vector with n points and returns a 
+vector with the same dimensions. The vector must have elements of the complex number type defined in 
+this matrix library.
+```rust
+use complex;
+use matrix;
+pub fn dft_inv(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex>
+```
+**Example:**
+```rust
+use matrix_lib::DFT::{DFT, dft};
+use matrix_lib::matrix::{Matrix, matrix}
+use matrix_lib::complex::{Complex, complex}
+let d: DFT = dft(4);
+let v: matrix::Matrix<complex::Complex> = matrix(4,1); 
+/* set values of the vector */
+let v_inv: matrix::Matrix<complex::Complex> = d.dft_inv(v); // returns inverse DFT of the vector v
+```
 ## 3. Further Improvements
 
 ## 4. Test Notes
