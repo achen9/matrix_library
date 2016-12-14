@@ -56,8 +56,15 @@ struct Fraction {
 ```
 Methods:
 ```rust
-* fn fraction(n: isize, d: isize) -> Fraction
+fn fraction(n: isize, d: isize) -> Fraction
 ```
+The fraction constructor creates an instance of a fraction. 
+**Example:**
+```rust
+use matrix_lib::fraction::{Fraction, fraction};
+let f:Fraction = fraction(2,3);
+```
+
 
 ### To compile hw9 code
 Make sure you have navigated to the /hw9/ folder as the current directory. Make sure a "Cargo.toml" file is in there.
