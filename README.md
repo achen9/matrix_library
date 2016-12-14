@@ -21,7 +21,12 @@ Author: Alex Chen, alexac9@uw.edu
 2.2.3. Complex Class Comparison Operator Overloads  
 2.2.4. Printing Complex Numbers to Stdout  
 2.3.   Matrix Class Generic  
+2.3.1. Matrix Class Methods  
+2.3.2. Matrix Class Arithmetic Operator Overloads  
+2.3.3. Matrix Class Comparison Operator Overloads  
+2.3.4. Printing Matrices to Stdout  
 2.4.   Discrete Fourier Transform (DFT) Class  
+2.4.1. DFT Class Methods  
 3\.    Further Improvements  
 4\.    Test Notes  
 
