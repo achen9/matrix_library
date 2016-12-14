@@ -60,10 +60,13 @@ Open a terminal or command prompt and navigate to the folder with the matrix lib
 ### 1.4. Running Unit Tests
 Open a terminal or command prompt and navigate to the folder with the matrix library source files. Type:
 * "cargo test" to run the built in unit tests. The source files will also be compiled if they have not 
-been previously compiled, or the compiled source code is out of date.
+been previously compiled, or the compiled source code is out of date. There will likely be many warnings 
+about unused variables. These warnings relate to unit tests which test the errors thrown by various methods 
+and have no impact on the library functionality.
 * "cargo test -- --nocapture" to see the stdout for all unit tests. By default, unit tests will only 
 print stdout to the terminal or command prompt if they fail. This option turns on stdout printing for 
-all unit tests.
+all unit tests. There will likely be many warnings about unused variables. These warnings relate to unit 
+tests which test the errors thrown by various methods and have no impact on the library functionality.
 * "cargo run" to run the included example main.rs program which performs a benchmark test of the 
 methods included in the matrix library.
 
@@ -663,6 +666,7 @@ let v: matrix::Matrix<complex::Complex> = matrix(4,1);
 let v_inv: matrix::Matrix<complex::Complex> = d.dft_inv(v); // returns inverse DFT of the vector v
 ```
 ## 3. Further Improvements
+
 
 ## 4. Test Notes
 * All code has been tested on Windows 10 Pro 64-bit.
