@@ -4,7 +4,7 @@ such as arithmetic operations, determinants, inverse, and discrete Fourier trans
 
 Author: Alex Chen, alexac9@uw.edu
 
-## 1. Prerequisites
+## 1. Getting Started
 * Git is required to clone the matrix library respository.
 * The Rust compiler and Cargo package manager are required to compile the matrix library. See section 1.1. 
 for steps on installing the Rust compiler and Cargo package manager.
@@ -17,6 +17,33 @@ compile the code.
 Rust compiler was installed properly. You should see a version number (e.g. 1.13.0) of rustc listed.
 3. Type "cargo -V" to make sure Cargo was installed properly. You should see a version number 
 (e.g. 0.13.0-nightly) of Cargo listed.
+
+### 1.2. Cloning the Library from the Repository
+1. Make sure there is at least 10MB of hard drive space available to store the source files from the repository.
+2. Check git has been installed on your system. Open a terminal or command prompt and type "git --version" to
+to check if git has been installed. You should see a version number (e.g. 2.9.2). If git is not installed
+on your system, go to https://git-scm.com/ to get the latest version of git for your system.
+3. Open a terminal or command prompt and type "git clone https://github.com/achen9/matrix_library.git" to 
+clone the source code.
+
+### 1.3. Using the Library
+Add "extern crate matrix_lib" to your source code to include the matrix library and its data types and methods.
+Open a terminal or command prompt and navigate to the folder with the matrix library source files. Type
+"cargo build" to compile the source code.
+
+### 1.4. Running Unit Tests
+Open a terminal or command prompt and navigate to the folder with the matrix library source files. Type:
+* "cargo test" to run the built in unit tests. The source files will also be compiled if they have not 
+been previously compiled, or the compiled source code is out of date.
+* "cargo test -- --nocapture" to see the stdout for all unit tests. By default, unit tests will only 
+print stdout to the terminal or command prompt if they fail. This option turns on stdout printing for 
+all unit tests.
+* "cargo run" to run the included example main.rs program which performs a benchmark test of the 
+methods included in the matrix library.
+
+## 2. Library Content Documentation
+The following sections document the data types, methods, and design decisions associated with the 
+contents of the matrix library. 
 
 ### To compile hw9 code
 Make sure you have navigated to the /hw9/ folder as the current directory. Make sure a "Cargo.toml" file is in there.
