@@ -319,8 +319,23 @@ let c_div: Complex = c1 / c2; // dividing complex numbers
 let c_neg: Complex = -c1;     // negating complex numbers
 ```
 #### 2.1.3. Complex Class Comparison Operator Overloads
+The '==' and '!=' comparison operators are overloaded to allow for more natural syntax for performing 
+comparison operations between complex numbers. The '<', '<=', '>', and '>=' operators are not overloaded 
+as it does not make sense to do those comparisons between complex numbers.
 
+Note: due to rounding errors causing a direct '==' or '!=' comparison between doubles to frequently give 
+erroneous comparison results, a value called "COMPLEX_TOL" is set to check if two double precision floats 
+are approximately equal. The "COMPLEX_TOL" is set to 0.0001 as a default and can be changed in the source 
+code.
 
+**Example:**
+```rust
+use matrix_lib::complex::{Complex, complex};
+let c1: Complex = complex(3.6222,4.8888);
+let c2: Complex = complex(3.6221,4.8889);
+let c_equals: bool = c1 == c2;            // true - based on the default COMPLEX_TOL value of 0.0001
+let c_nequals: bool = c1 != c2;           // false
+```
 #### 2.1.4. Printing Complex Numbers to Stdout
 Complex numbers can be printed to stdout using the println! macro.
 
@@ -335,7 +350,22 @@ println!("The complex c is: {}", c); // printing to stdout
 
 
 ### 2.4. Discrete Fourier Transform (DFT) Class
+The "DFT" class is a data type for representing a set of matrices for computing the discrete Fourier
+transform on a vector of complex numbers.
 
+Note: Rust does not have a "class" keyword. Instead, classes can be simulated by using a struct
+for storing data and using method syntax to allow function calls on the struct using the dot "." 
+notation (i.e. struct.method()). Access to the struct fields must be done using the getter and 
+setter methods. This is to prevent the possibility of making inadvertent changes to the transform 
+matrices.
+
+Data is stored in the following struct:
+```rust
+pub struct Complex {
+  real: f64,
+  imag: f64,
+}
+```
 
 ## 3. Further Improvements
 
