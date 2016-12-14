@@ -119,7 +119,9 @@ impl<T> Matrix<T>
     m
   }
   pub fn det(&self) -> T {
-    if (1 == self.rows()) && (1 == self.columns()) {
+    if self.rows() != self.columns() {
+      panic!("Attempted to find determinant of non-square matrix.");
+    } else if (1 == self.rows()) && (1 == self.columns()) {
       self.get(0, 0)
     } else {
       let mut sum = self.get(0, 0) * self.minor(0, 0).det(); 
