@@ -20,17 +20,10 @@
 //! alexac9@uw.edu
 //!
 extern crate matrix_lib;
-// A tolerance constant is needed when comparing doubles. Due to rounding
-// errors, doing a straight comparison of doubles may cause erroneous 
-// results. Checking the two doubles are within some tolerance is a better
-// method to check for equality.
-const TOLERANCE: f64 = 0.00001;
-const PI: f64 = 3.14159;
 
 // Constructor Test: Test if 2/3 can be assigned to a complex 
 #[test]
 fn constructor_test() {
-  use matrix_lib::complex::{Complex, complex};
   use matrix_lib::DFT::{DFT, dft};
   let d: DFT = dft(10);
   assert!(10 == d.npts());
@@ -38,7 +31,7 @@ fn constructor_test() {
 // Transform Matrix Method Test: Spot check transform matrix elements are 1+0j
 #[test]
 fn transform_matrix_method_test() {
-  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::complex::complex;
   use matrix_lib::DFT::{DFT, dft};
   let mut d: DFT = dft(4);
   let c = complex(1.0, 0.0);
@@ -49,7 +42,7 @@ fn transform_matrix_method_test() {
 // Unitary Matrix Method Test: Spot check unitary matrix elements are 0.5+0j
 #[test]
 fn unitary_matrix_method_test() {
-  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::complex::complex;
   use matrix_lib::DFT::{DFT, dft};
   let mut d: DFT = dft(4);
   let c = complex(0.5, 0.0);
@@ -60,7 +53,7 @@ fn unitary_matrix_method_test() {
 // Inverse Matrix Method Test: Spot check inverse matrix elements are 0-0.5j
 #[test]
 fn inverse_matrix_method_test() {
-  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::complex::complex;
   use matrix_lib::DFT::{DFT, dft};
   let mut d: DFT = dft(4);
   let c = complex(0.0, -0.5);
@@ -114,27 +107,11 @@ fn dft_test() {
 #[test]
 fn unitary_matrix_power_test() {
   use matrix_lib::complex::{Complex, complex};
-  use matrix_lib::matrix::{Matrix, matrix};
+  use matrix_lib::matrix::{Matrix, identity};
   use matrix_lib::DFT::{DFT, dft};
   let mut d: DFT = dft(4);
   let u: Matrix<Complex> = d.unitary_matrix();
   let u4: Matrix<Complex> = u.clone() * u.clone() * u.clone() * u.clone();
-  let one = complex(1.0, 0.0);
-  let zero = complex(0.0, 0.0);
-  assert!(one == u4.get(0, 0));
-  assert!(one == u4.get(1, 1));
-  assert!(one == u4.get(2, 2));
-  assert!(one == u4.get(3, 3));
-  assert!(zero == u4.get(0, 1));
-  assert!(zero == u4.get(0, 2));
-  assert!(zero == u4.get(0, 3));
-  assert!(zero == u4.get(1, 0));
-  assert!(zero == u4.get(1, 2));
-  assert!(zero == u4.get(1, 3));
-  assert!(zero == u4.get(2, 0));
-  assert!(zero == u4.get(2, 1));
-  assert!(zero == u4.get(2, 3));
-  assert!(zero == u4.get(3, 0));
-  assert!(zero == u4.get(3, 1));
-  assert!(zero == u4.get(3, 2));
+  let id: Matrix<Complex> = identity(4);
+  assert!(u4 == id);
 }
