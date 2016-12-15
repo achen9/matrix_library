@@ -20,6 +20,8 @@
 //! alexac9@uw.edu
 //!
 use ::std::vec::Vec;
+use fraction;
+use complex;
 
 // Data definition
 #[derive(Clone)]
@@ -29,23 +31,74 @@ pub struct Matrix<T> {
   values: Vec<T>,
 }
 
+// Whole number trait
+// This is used to create whole numbers for generic types. This enables setting the 
+// elements in a newly constructed matrix to zero, and making named constructors such 
+// as identity(), or ones().
+pub trait WholeNum<T> {
+  fn whole_num(val: isize) -> T;
+}
+impl WholeNum<isize> for isize {
+  fn whole_num(val: isize) -> isize {
+    val
+  }
+}
+impl WholeNum<i32> for i32 {
+  fn whole_num(val: isize) -> i32 {
+    val as i32
+  }
+}
+impl WholeNum<f64> for f64 {
+  fn whole_num(val: isize) -> f64 {
+    val as f64
+  }
+}
+impl WholeNum<fraction::Fraction> for fraction::Fraction {
+  fn whole_num(val: isize) -> fraction::Fraction {
+    fraction::fraction(val, 1)
+  }
+}
+impl WholeNum<complex::Complex> for complex::Complex {
+  fn whole_num(val: isize) -> complex::Complex {
+    complex::complex(val as f64, 0.0)
+  }
+}
+impl WholeNum<bool> for bool {
+  fn whole_num(val: isize) -> bool {
+    if 0 != val {
+      true
+    } else {
+      false
+    }
+  }
+}
+
 // Constructor
-pub fn matrix<T>(r: usize, c: usize) -> Matrix<T> {
-  if (0 >= r) || (0 >= c) {
+pub fn matrix<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T> {
+  if (0 == r) || (0 == c) {
     panic!("Attempted to initialize a matrix with non-positive number of rows and/or columns.");
   }
   let mut m = Matrix {num_rows: r, num_columns: c, values: Vec::with_capacity(r*c)};
-  // Due to no "zero" equivalent for all types (fraction and complex class specifically),
-  // need to allocate space in vector for number of elements in matrix. Then need to use
-  // unsafe code to explicitly set the vector length to equal the previously allocated space
-  unsafe {
-    m.values.set_len(r*c);
+  let default: T = T::whole_num(0);
+  for i in 0..(r*c) {
+    m.values.push(default);
+  }
+  m
+}
+pub fn identity<T: Copy + WholeNum<T>>(n: usize) -> Matrix<T> {
+  if 0 == n {
+    panic!("Attempted to initizalize an identity matrix with non-positive number of rows & columns.");
+  }
+  let mut m = matrix(n, n);
+  let one: T = T::whole_num(1);
+  for i in 0..n {
+      m.set(i, i, one);
   }
   m
 }
 
 // Methods
-impl<T: Copy> Matrix<T> {
+impl<T: Copy + WholeNum<T>> Matrix<T> {
   // Getters
   pub fn rows(&self) -> usize { self.num_rows }
   pub fn columns(&self) -> usize { self.num_columns }
@@ -109,7 +162,8 @@ impl<T> Matrix<T>
            ::std::ops::Mul<Output=T> + 
            ::std::ops::Div<Output=T> +
            ::std::ops::Neg<Output=T> +
-           ::std::cmp::PartialEq {
+           ::std::cmp::PartialEq +
+           WholeNum<T> {
   pub fn scale(&self, s: T) -> Matrix<T> {
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
@@ -143,8 +197,7 @@ impl<T> Matrix<T>
       panic!("Attempted to invert non-invertible matrix.");
     }
     let d: T = self.det();
-    let zero_chk: T = self.get(0,0) - self.get(0,0);
-    if d == zero_chk {
+    if d == T::whole_num(0) {
       panic!("Determinant is zero to working precision.");
     }
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
@@ -168,7 +221,7 @@ impl<T> Matrix<T>
 }
 
 // Arithmetic operations & operator overload
-impl<T: Copy + ::std::ops::Add<Output=T>> ::std::ops::Add for Matrix<T> {
+impl<T: Copy + ::std::ops::Add<Output=T> + WholeNum<T>> ::std::ops::Add for Matrix<T> {
   type Output = Matrix<T>;
   fn add(self, other: Matrix<T>) -> Matrix<T> {
     if (self.rows() != other.rows()) || (self.columns() != other.columns()) {
@@ -183,7 +236,7 @@ impl<T: Copy + ::std::ops::Add<Output=T>> ::std::ops::Add for Matrix<T> {
     m
   }
 }
-impl<T: Copy + ::std::ops::Sub<Output=T>> ::std::ops::Sub for Matrix<T> {
+impl<T: Copy + ::std::ops::Sub<Output=T> + WholeNum<T>> ::std::ops::Sub for Matrix<T> {
   type Output = Matrix<T>;
   fn sub(self, other: Matrix<T>) -> Matrix<T> {
     if (self.rows() != other.rows()) || (self.columns() != other.columns()) {
@@ -198,7 +251,7 @@ impl<T: Copy + ::std::ops::Sub<Output=T>> ::std::ops::Sub for Matrix<T> {
     m
   }
 }
-impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Add<Output=T>> ::std::ops::Mul for Matrix<T> {
+impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Add<Output=T> + WholeNum<T>> ::std::ops::Mul for Matrix<T> {
   type Output = Matrix<T>;
   fn mul(self, other:Matrix<T>) -> Matrix<T> {
     if self.columns() != other.rows() {
@@ -222,7 +275,7 @@ impl<T: Copy + ::std::ops::Mul<Output=T> + ::std::ops::Add<Output=T>> ::std::ops
 }
 
 // Comparison operator overloads
-impl<T> ::std::cmp::PartialEq for Matrix<T> 
+impl<T: WholeNum<T>> ::std::cmp::PartialEq for Matrix<T> 
   where T: Copy + 
         ::std::cmp::PartialEq {
   fn eq(&self, other: &Matrix<T>) -> bool {
@@ -238,7 +291,7 @@ impl<T> ::std::cmp::PartialEq for Matrix<T>
 }
 
 // Print formatting
-impl<T: Copy + ::std::fmt::Display> ::std::fmt::Display for Matrix<T> {
+impl<T: Copy + ::std::fmt::Display + WholeNum<T>> ::std::fmt::Display for Matrix<T> {
   fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
     write!(f, "\n");
     for i in 0..self.rows() {
