@@ -24,6 +24,7 @@ extern crate rand;
 use ::std::vec::Vec;
 use fraction;
 use complex;
+use self::rand::{thread_rng, Rng};
 
 // Data definition
 #[derive(Clone)]
@@ -43,11 +44,6 @@ pub trait WholeNum<T> {
 impl WholeNum<isize> for isize {
   fn whole_num(val: isize) -> isize {
     val
-  }
-}
-impl WholeNum<i32> for i32 {
-  fn whole_num(val: isize) -> i32 {
-    val as i32
   }
 }
 impl WholeNum<f64> for f64 {
@@ -110,20 +106,21 @@ pub fn ones<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T> {
     }
   }
   m
-}/*
+}
 pub fn random<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T> {
    if (0 == r) && (0 == c) {
     panic!("Attempted to initizalize a ones matrix with non-positive number of rows & columns.");
   }
   let mut m = matrix(r, c);
-  let one: T = T::whole_num(1);
+  let mut rng = thread_rng();
   for i in 0..r {
     for j in 0..c {
-      m.set(i, j, one);
+      let random: u32 = rng.gen();
+      m.set(i, j, T::whole_num((random % 20) as isize - 10));
     }
   }
   m
-}*/
+}
 
 // Methods
 impl<T: Copy + WholeNum<T>> Matrix<T> {
@@ -165,7 +162,7 @@ impl<T: Copy + WholeNum<T>> Matrix<T> {
     }
     let mut m: Matrix<T> = matrix(self.rows() - 1, self.columns() - 1);
     let mut I = 0;
-    let mut J = 0;
+    let mut J;
     for i in 0..self.rows() {
       J = 0;
       for j in 0..self.columns() {
@@ -231,7 +228,7 @@ impl<T> Matrix<T>
     let mut m: Matrix<T> = matrix(self.rows(), self.columns());
     for i in 0..self.rows() {
       for j in 0..self.columns() {
-        let mut sign = 0;
+        let mut sign;
         if 0 == (i + j) % 2 {
           sign = 1;
         } else {
