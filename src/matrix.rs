@@ -19,6 +19,8 @@
 //! Alex Z. Chen - 12/05/2016
 //! alexac9@uw.edu
 //!
+extern crate rand;
+
 use ::std::vec::Vec;
 use fraction;
 use complex;
@@ -87,7 +89,7 @@ pub fn matrix<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T> {
 }
 pub fn identity<T: Copy + WholeNum<T>>(n: usize) -> Matrix<T> {
   if 0 == n {
-    panic!("Attempted to initizalize an identity matrix with non-positive number of rows & columns.");
+    panic!("Attempted to initizalize a ones matrix with non-positive number of rows and/or columns.");
   }
   let mut m = matrix(n, n);
   let one: T = T::whole_num(1);
@@ -96,6 +98,32 @@ pub fn identity<T: Copy + WholeNum<T>>(n: usize) -> Matrix<T> {
   }
   m
 }
+pub fn ones<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T> {
+  if (0 == r) && (0 == c) {
+    panic!("Attempted to initizalize a ones matrix with non-positive number of rows & columns.");
+  }
+  let mut m = matrix(r, c);
+  let one: T = T::whole_num(1);
+  for i in 0..r {
+    for j in 0..c {
+      m.set(i, j, one);
+    }
+  }
+  m
+}/*
+pub fn random<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T> {
+   if (0 == r) && (0 == c) {
+    panic!("Attempted to initizalize a ones matrix with non-positive number of rows & columns.");
+  }
+  let mut m = matrix(r, c);
+  let one: T = T::whole_num(1);
+  for i in 0..r {
+    for j in 0..c {
+      m.set(i, j, one);
+    }
+  }
+  m
+}*/
 
 // Methods
 impl<T: Copy + WholeNum<T>> Matrix<T> {
