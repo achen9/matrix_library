@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,12 +21,12 @@
 //!
 extern crate matrix_lib;
 // A tolerance constant is needed when comparing doubles. Due to rounding
-// errors, doing a straight comparison of doubles may cause erroneous 
+// errors, doing a straight comparison of doubles may cause erroneous
 // results. Checking the two doubles are within some tolerance is a better
 // method to check for equality.
 const TOLERANCE: f64 = 0.00001;
 
-// Constructor Test: Test if 2x2 matrix can be created and values assigned 
+// Constructor Test: Test if 2x2 matrix can be created and values assigned
 #[test]
 fn constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -40,6 +40,19 @@ fn constructor_test() {
   assert!(TOLERANCE > (m.get(0, 1).re() - c2.re()).abs() && TOLERANCE > (m.get(0, 1).im() - c2.im()).abs());
   assert!(TOLERANCE > (m.get(1, 0).re() - c3.re()).abs() && TOLERANCE > (m.get(1, 0).im() - c3.im()).abs());
   assert!(TOLERANCE > (m.get(1, 1).re() - c4.re()).abs() && TOLERANCE > (m.get(1, 1).im() - c4.im()).abs());
+}
+// Identity Method Test: Check a 2x2 identity matrix can be created
+#[test]
+fn identity_method_test() {
+  use matrix_lib::matrix::{Matrix, identity};
+  use matrix_lib::complex::{Complex, complex};
+  let m: Matrix<Complex> = identity(2);
+  let one: Complex = complex(1.0, 0.0);
+  let zero: Complex = complex(0.0, 0.0);
+  assert!(TOLERANCE > (m.get(0, 0).re() - one.re()).abs() && TOLERANCE > (m.get(0, 0).im() - one.im()).abs());
+  assert!(TOLERANCE > (m.get(0, 1).re() - zero.re()).abs() && TOLERANCE > (m.get(0, 1).im() - zero.im()).abs());
+  assert!(TOLERANCE > (m.get(1, 0).re() - zero.re()).abs() && TOLERANCE > (m.get(1, 0).im() - zero.im()).abs());
+  assert!(TOLERANCE > (m.get(1, 1).re() - one.re()).abs() && TOLERANCE > (m.get(1, 1).im() - one.im()).abs());
 }
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
@@ -96,9 +109,9 @@ fn addition_error_test() {
   m1.set(0, 0, m11); m1.set(0, 1, m12);
   m1.set(1, 0, m13); m1.set(1, 1, m14);
   let mut m2: Matrix<Complex> = matrix(2, 3);
-  let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8); let m23 = complex(3.5, 3.9); 
+  let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8); let m23 = complex(3.5, 3.9);
   let m24 = complex(-9.6, 5.3); let m25 = complex(2.1, 1.2); let m26 = complex(3.3, 4.5);
-  m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23); 
+  m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
   m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
   let m = m1 + m2;
   assert!(true); // Something went wrong if this assertion passes
@@ -138,9 +151,9 @@ fn subtraction_error_test() {
   m1.set(0, 0, m11); m1.set(0, 1, m12);
   m1.set(1, 0, m13); m1.set(1, 1, m14);
   let mut m2: Matrix<Complex> = matrix(2, 3);
-  let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8); let m23 = complex(3.5, 3.9); 
+  let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8); let m23 = complex(3.5, 3.9);
   let m24 = complex(-9.6, 5.3); let m25 = complex(2.1, 1.2); let m26 = complex(3.3, 4.5);
-  m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23); 
+  m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
   m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
   let m = m1 - m2;
   assert!(true); // Something went wrong if this assertion passes
@@ -171,11 +184,11 @@ fn multiplication_error_test() {
   use matrix_lib::matrix::{Matrix, matrix};
   use matrix_lib::complex::{Complex, complex};
   let mut m1: Matrix<Complex> = matrix(2, 1);
-  let m11 = complex(1.2, 3.1); let m12 = complex(3.6, 4.0); 
+  let m11 = complex(1.2, 3.1); let m12 = complex(3.6, 4.0);
   m1.set(0, 0, m11); m1.set(1, 0, m12);
   let mut m2: Matrix<Complex> = matrix(2, 1);
-  let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8);  
-  m2.set(0, 0, m21); m2.set(1, 0, m22); 
+  let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8);
+  m2.set(0, 0, m21); m2.set(1, 0, m22);
   let m = m1 * m2;
   assert!(true); // Something went wrong if this assertion passes
 }
@@ -199,8 +212,8 @@ fn scale_method_test() {
   assert!(TOLERANCE > (m.get(1, 1).re() + 15.1).abs() && TOLERANCE > (m.get(1, 1).im() + 4.3).abs());
 }
 // Transpose Method Test:
-// Check [1.2+3.1j]T = [1.2+3.1j 3.6+4.0j] 
-//        3.6+4.0j]           
+// Check [1.2+3.1j]T = [1.2+3.1j 3.6+4.0j]
+//        3.6+4.0j]
 #[test]
 fn transpose_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -216,8 +229,8 @@ fn transpose_method_test() {
 }
 // Minor Method Test:
 // Check [1.2+3.1j 1.3-6.5j -2.4+3.9j  => (1, 1) minor => [1.2+3.1j -2.4+3.9j
-//        2.6+9.5j 2.1-5.1j 3.1+1.5j                       3.6+4.0j -9.7+5.4j]                   
-//        3.6+4.0j 3.2+5.9j -9.7+5.4j]                 
+//        2.6+9.5j 2.1-5.1j 3.1+1.5j                       3.6+4.0j -9.7+5.4j]
+//        3.6+4.0j 3.2+5.9j -9.7+5.4j]
 #[test]
 fn minor_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -239,8 +252,8 @@ fn minor_method_test() {
 }
 // Determinant Method Test:
 // Check determinant [5.0+0.0j 3.0+0.0j -4.0+0.0j   = 4.0+0.0j
-//                    2.0+0.0j 0.0+0.0j -2.0+0.0j                                     
-//                    2.0+0.0j 5.0+0.0j -1.0+0.0j]                 
+//                    2.0+0.0j 0.0+0.0j -2.0+0.0j
+//                    2.0+0.0j 5.0+0.0j -1.0+0.0j]
 #[test]
 fn determinant_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -258,8 +271,8 @@ fn determinant_method_test() {
 }
 // Inverse Method Test:
 // Check inverse [5.0+0.0j 3.0+0.0j -4.0+0.0j  = [2.5+0.0j -4.25+0.0j -1.5+0.0j
-//                2.0+0.0j 0.0+0.0j -2.0+0.0j     -0.5+0.0j 0.75+0.0j 0.5+0.0j                                 
-//                2.0+0.0j 5.0+0.0j -1.0+0.0j]    2.5+0.0j -4.75+0.0j -1.5+0.0j]             
+//                2.0+0.0j 0.0+0.0j -2.0+0.0j     -0.5+0.0j 0.75+0.0j 0.5+0.0j
+//                2.0+0.0j 5.0+0.0j -1.0+0.0j]    2.5+0.0j -4.75+0.0j -1.5+0.0j]
 #[test]
 fn inverse_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};

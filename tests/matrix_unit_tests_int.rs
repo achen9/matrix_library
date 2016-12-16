@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,7 +21,7 @@
 //!
 extern crate matrix_lib;
 
-// Constructor Test: Test if 2x2 matrix can be created and values assigned 
+// Constructor Test: Test if 2x2 matrix can be created and values assigned
 #[test]
 fn constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -34,6 +34,16 @@ fn constructor_test() {
   assert!(2 == m.get(0, 1));
   assert!(3 == m.get(1, 0));
   assert!(4 == m.get(1, 1));
+}
+// Identity Method Test: Check a 2x2 identity matrix can be created
+#[test]
+fn identity_method_test() {
+  use matrix_lib::matrix::{Matrix, identity};
+  let mut m: Matrix<isize> = identity(2);
+  assert!(1 == m.get(0, 0));
+  assert!(0 == m.get(0, 1));
+  assert!(0 == m.get(1, 0));
+  assert!(1 == m.get(1, 1));
 }
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
@@ -51,7 +61,7 @@ fn copy_constructor_test() {
   assert!(5 == m.get(1, 0));
   assert!(3 == m1.get(1, 0));
 }
-// Arithmetic Operation Overload Test 1: 
+// Arithmetic Operation Overload Test 1:
 // Check [1 -2  + [1 -2   =  [2 -4
 //        3 -9]   3 -9]      6 -18]
 #[test]
@@ -115,7 +125,7 @@ fn subtraction_error_test() {
   let m = m1 - m2;
   assert!(true); // Something went wrong if this assertion passes
 }
-// Arithmetic Operation Overload Test 5: 
+// Arithmetic Operation Overload Test 5:
 // Check [1  * [1 -2]   =  [1 -2
 //        3]                3 -6]
 #[test]
@@ -161,7 +171,7 @@ fn scale_method_test() {
 }
 // Transpose Method Test:
 // Check [1]T =  [1 3]
-//       [3]      
+//       [3]
 #[test]
 fn transpose_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -177,7 +187,7 @@ fn transpose_method_test() {
 // Minor Method Test:
 // Check [1 2 -3  => (1, 1) minor =>  [1 -3
 //        6 -9 8                       3 -9]
-//        3 7 -9]        
+//        3 7 -9]
 #[test]
 fn minor_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -195,8 +205,8 @@ fn minor_method_test() {
 }
 // Determiant Method Test:
 // Check determinant [5 3 -4  = 4
-//                    2 0 -2                                     
-//                    2 5 -1]        
+//                    2 0 -2
+//                    2 5 -1]
 #[test]
 fn determinant_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};

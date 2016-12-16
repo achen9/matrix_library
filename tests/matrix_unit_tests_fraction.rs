@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -37,6 +37,19 @@ fn constructor_test() {
   assert!(f2 == m.get(0, 1));
   assert!(f3 == m.get(1, 0));
   assert!(f4 == m.get(1, 1));
+}
+// Identity Method Test: Check a 2x2 identity matrix can be created
+#[test]
+fn identity_method_test() {
+  use matrix_lib::matrix::{Matrix, identity};
+  use matrix_lib::fraction::{Fraction, fraction};
+  let m: Matrix<Fraction> = identity(2);
+  let one = fraction(1, 1);
+  let zero = fraction(0, 1);
+  assert!(one == m.get(0, 0));
+  assert!(zero == m.get(0, 1));
+  assert!(zero == m.get(1, 0));
+  assert!(one == m.get(1, 1));
 }
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
@@ -102,7 +115,7 @@ fn addition_error_test() {
   let m = m1 + m2;
   assert!(true); // Something went wrong if this assertion passes
 }
-// Arithmetic Operation Overload Test 3: 
+// Arithmetic Operation Overload Test 3:
 // Check [1/2 -2/3  - [1/3 -2/5   =  [1/6 -4/15
 //        3/5 -9/6]    3/9 -9/3]      4/15 3/2]
 #[test]
@@ -205,7 +218,7 @@ fn scale_method_test() {
 }
 // Transpose Method Test
 // Check [1/2]T = [1/2 3/5]
-//       [3/5]     
+//       [3/5]
 #[test]
 fn transpose_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -223,7 +236,7 @@ fn transpose_method_test() {
 // Minor Method Test
 // Check [1/2 1/5  -2/3  => (1, 1) minor => [1/2 -2/3
 //        2/3 1/4  -9/4                      3/5 -9/6]
-//        3/5 -8/9 -9/6]          
+//        3/5 -8/9 -9/6]
 #[test]
 fn minor_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -243,8 +256,8 @@ fn minor_method_test() {
 }
 // Determinant Method Test:
 // Check determinant [5/1 3/1 -4/1  = 4/1
-//                    2/1 0/1 -2/1                                     
-//                    2/1 5/1 -1/1]  
+//                    2/1 0/1 -2/1
+//                    2/1 5/1 -1/1]
 #[test]
 fn determinant_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -262,7 +275,7 @@ fn determinant_method_test() {
 }
 // Determinant Method Test:
 // Check inverse [5/1 3/1 -4/1  = [ 5/2 -17/4 -3/2
-//                2/1 0/1 -2/1     -1/2  3/4   1/2                                
+//                2/1 0/1 -2/1     -1/2  3/4   1/2
 //                2/1 5/1 -1/1]     5/2 -19/4 -3/2]
 #[test]
 fn inverse_method_test() {

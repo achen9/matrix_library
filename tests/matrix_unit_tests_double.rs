@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,7 +21,7 @@
 //!
 extern crate matrix_lib;
 // A tolerance constant is needed when comparing doubles. Due to rounding
-// errors, doing a straight comparison of doubles may cause erroneous 
+// errors, doing a straight comparison of doubles may cause erroneous
 // results. Checking the two doubles are within some tolerance is a better
 // method to check for equality.
 const TOLERANCE: f64 = 0.00001;
@@ -40,6 +40,16 @@ fn constructor_test() {
   assert!(TOLERANCE > (m.get(1, 0) - 3.2).abs());
   assert!(TOLERANCE > (m.get(1, 1) - 4.1).abs());
 }
+// Identity Method Test: Check a 2x2 identity matrix can be created
+#[test]
+fn identity_method_test() {
+  use matrix_lib::matrix::{Matrix, identity};
+  let mut m: Matrix<f64> = identity(2);
+  assert!(TOLERANCE > (m.get(0, 0) - 1.0).abs());
+  assert!(TOLERANCE > (m.get(0, 1) - 0.0).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 0.0).abs());
+  assert!(TOLERANCE > (m.get(1, 1) - 1.0).abs());
+}
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
@@ -56,7 +66,7 @@ fn copy_constructor_test() {
   assert!(TOLERANCE > (m.get(1, 0) - 5.23).abs());
   assert!(TOLERANCE > (m1.get(1, 0) - 3.2).abs());
 }
-// Arithmetic Operation Overload Test 1: 
+// Arithmetic Operation Overload Test 1:
 // Check [1.2 -2.4 + [1.3 -2.4   =  [2.5 -4.8
 //        3.6 -9.7]   3.5 -9.6]      7.1 -19.3]
 #[test]
@@ -88,7 +98,7 @@ fn addition_error_test() {
   let m = m1 + m2;
   assert!(true); // Something went wrong if this assertion passes
 }
-// Arithmetic Operation Overload Test 3: 
+// Arithmetic Operation Overload Test 3:
 // Check [1.2 -2.4 - [1.3 -2.4   =  [-0.1 0.0
 //        3.6 -9.7]   3.5 -9.6]      0.1 -0.1]
 #[test]
@@ -165,7 +175,7 @@ fn scale_method_test() {
 }
 // Transpose Method Test:
 // Check [1.2]T =  [1.2 3.6]
-//       [3.6]           
+//       [3.6]
 #[test]
 fn transpose_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -180,7 +190,7 @@ fn transpose_method_test() {
 // Minor Method Test:
 // Check [1.2 2.6  -2.4  => (1, 1) minor =>  [1.2 -2.4
 //        3.2 1.9  -2.5                       3.6 -9.7]
-//        3.6 -2.5 -9.7]           
+//        3.6 -2.5 -9.7]
 #[test]
 fn minor_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -198,8 +208,8 @@ fn minor_method_test() {
 }
 // Determinant Method Test:
 // Check determinant [5.0 3.0 -4.0  = 4.0
-//                    2.0 0.0 -2.0                                     
-//                    2.0 5.0 -1.0]  
+//                    2.0 0.0 -2.0
+//                    2.0 5.0 -1.0]
 #[test]
 fn determinant_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -212,7 +222,7 @@ fn determinant_method_test() {
 }
 // Inverse Method Test:
 // Check inverse [5.0 3.0 -4.0  = [2.5 -4.25 -1.5
-//                2.0 0.0 -2.0     -0.5 0.75 0.5                                
+//                2.0 0.0 -2.0     -0.5 0.75 0.5
 //                2.0 5.0 -1.0]    2.5 -4.75 -1.5]
 #[test]
 fn inverse_method_test() {

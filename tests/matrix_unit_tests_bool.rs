@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,7 +21,7 @@
 //!
 extern crate matrix_lib;
 
-// Constructor Test: Test if 2x2 matrix can be created and values assigned 
+// Constructor Test: Test if 2x2 matrix can be created and values assigned
 #[test]
 fn constructor_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -34,6 +34,16 @@ fn constructor_test() {
   assert!(true == m.get(0, 1));
   assert!(false == m.get(1, 0));
   assert!(false == m.get(1, 1));
+}
+// Identity Method Test: Check a 2x2 identity matrix can be created
+#[test]
+fn identity_method_test() {
+  use matrix_lib::matrix::{Matrix, identity};
+  let m: Matrix<bool> = identity(2);
+  assert!(true == m.get(0,0));
+  assert!(false == m.get(0,1));
+  assert!(false == m.get(1,0));
+  assert!(true == m.get(1,1));
 }
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
@@ -54,8 +64,8 @@ fn copy_constructor_test() {
 // Arithmetic Operation Overload Tests - N/A to boolean types
 // Scale Method Test - N/A to boolean types
 // Transpose Method Test:
-// Check [false]T = [false true] 
-//       [true]       
+// Check [false]T = [false true]
+//       [true]
 #[test]
 fn transpose_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
@@ -68,9 +78,9 @@ fn transpose_method_test() {
   assert!(true == m.get(0, 1));
 }
 // Minor Method Test:
-// Check [false false false => (1, 1) minor = [false false 
+// Check [false false false => (1, 1) minor = [false false
 //        true  false true                     false false]
-//        false true  false]       
+//        false true  false]
 #[test]
 fn minor_method_test() {
   use matrix_lib::matrix::{Matrix, matrix};
