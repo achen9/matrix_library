@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,7 +21,7 @@
 //!
 extern crate matrix_lib;
 
-// Constructor Test: Test if 2/3 can be assigned to a complex 
+// Constructor Test: Test if 2/3 can be assigned to a complex
 #[test]
 fn constructor_test() {
   use matrix_lib::DFT::{DFT, dft};
@@ -106,7 +106,7 @@ fn dft_test() {
 // Unitary Matrix Test: Check unitary matrix raised to the 4th power is approximately the identity matrix
 #[test]
 fn unitary_matrix_power_test() {
-  use matrix_lib::complex::{Complex, complex};
+  use matrix_lib::complex::{Complex};
   use matrix_lib::matrix::{Matrix, identity};
   use matrix_lib::DFT::{DFT, dft};
   let mut d: DFT = dft(4);

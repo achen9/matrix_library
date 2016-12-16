@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,13 +21,13 @@
 //!
 extern crate matrix_lib;
 // A tolerance constant is needed when comparing doubles. Due to rounding
-// errors, doing a straight comparison of doubles may cause erroneous 
+// errors, doing a straight comparison of doubles may cause erroneous
 // results. Checking the two doubles are within some tolerance is a better
 // method to check for equality.
 const TOLERANCE: f64 = 0.00001;
 const PI: f64 = 3.14159;
 
-// Constructor Test: Test if 2/3 can be assigned to a complex 
+// Constructor Test: Test if 2/3 can be assigned to a complex
 #[test]
 fn constructor_test() {
   use matrix_lib::complex::{Complex, complex};
@@ -108,7 +108,7 @@ fn division_test2() {
   let c1: Complex = complex(2.5,3.5);
   let c2: Complex = complex(-0.0,-0.0);
   let c = c1 / c2;
-  assert!(true); // If assertion passes, something went wrong
+  assert!(c == c); // If assertion passes, something went wrong
 }
 // Unary Negate Operator Overload Test : Check -(3.22+4.11j) ~= -3.22-4.11j
 #[test]
@@ -116,7 +116,7 @@ fn negate_test() {
   use matrix_lib::complex::{Complex, complex};
   let c1: Complex = complex(3.22,4.11);
   let c = -c1;
-  assert!(TOLERANCE > (c.re() + 3.22).abs()); 
+  assert!(TOLERANCE > (c.re() + 3.22).abs());
   assert!(TOLERANCE > (c.im() + 4.11).abs());
   assert!(TOLERANCE > (c1.re() - 3.22).abs()); // Check c1 still exists and can be used
 }
