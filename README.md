@@ -586,7 +586,7 @@ vector. Notice the transform matrices can only contain complex numbers defined i
 
 #### 2.4.1. DFT Class methods
 In the following examples, be sure to add "extern crate matrix_lib" to the source code.
-##### DFT Constructor
+#### DFT Constructor
 The DFT constructor creates an instance of a DFT object. If the number of points is 0, it will panic.
 ```rust
 pub fn dft(n: usize) -> DFT
@@ -596,7 +596,8 @@ Example:
 use matrix_lib::DFT::{DFT, dft};
 let d: DFT = dft(4);
 ```
-The **getter** allows access to the number of points to compute a DFT for.
+#### DFT Getter
+The getter allows access to the number of points to compute a DFT for.
 ```rust
 pub fn npts(&self) -> usize
 ```
