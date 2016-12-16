@@ -101,7 +101,7 @@ take this into account and will move the negative sign to the numerator when red
 ```rust
 pub fn fraction(n: isize, d: isize) -> Fraction
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f:Fraction = fraction(2,3); // create fraction 2/3
@@ -112,7 +112,7 @@ The getters allow access to either the numerator or denominator.
 pub fn num(&self) -> isize
 pub fn den(&self) -> isize
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(2,3);
@@ -126,7 +126,7 @@ a 0 is input as the argument.
 pub fn set_num(&mut self, n: isize)
 pub fn set_den(&mut self, d: isize)
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(2,3);
@@ -138,7 +138,7 @@ The reduce method reduces a fraction. A new fraction instance is returned from t
 ```rust
 pub fn reduce(&self) -> Fraction
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
@@ -150,7 +150,7 @@ in the denominator are moved to the numerator. A new fraction instance is return
 ```rust
 pub fn pow(&self, exp: isize) -> Fraction
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
@@ -161,7 +161,7 @@ The binary '+', '-', '*', '/', and unary '-' arithmetic operators are overloaded
 syntax for performing arithmetic operations on fractions. A new fraction instance is returned from the
 overloads. The result is in its reduced form. Any negatives in the denominator are moved to the numerator.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f1: Fraction = fraction(4,6);
@@ -176,7 +176,7 @@ let f_neg: Fraction = -f1;     // negating fractions
 The binary '==', '!=', '<', '<=', '>', and '>=' comparison operators are overloaded to allow for
 more natural syntax for performing comparison operations between fractions.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f1: Fraction = fraction(4,6);
@@ -191,7 +191,7 @@ let f_greaterthanequals: bool = f1 >= f2; // true
 #### 2.1.4. Printing Fractions to Stdout
 Fractions can be printed to stdout using the println! macro.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
@@ -224,7 +224,7 @@ precision number for both the real and imaginary parts.
 ```rust
 pub fn complex(r: f64, i: f64) -> Complex
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c:Complex = complex(3.62,4.88); // create complex number 3.62+4.88j
@@ -235,7 +235,7 @@ The getters allow access to either the real part or imaginary part.
 pub fn re(&self) -> f64
 pub fn im(&self) -> f64
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -248,7 +248,7 @@ The setters allow modification of the real part or imaginary part.
 pub fn set_re(&mut self, r: f64)
 pub fn set_im(&mut self, i: f64)
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -261,7 +261,7 @@ The conjugate method returns a new instance of a complex number which is the com
 ```rust
 pub fn conjugate(&self) -> Complex
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);      // c is 3.62+4.88j
@@ -274,7 +274,7 @@ by taking the square root of the sum of the real and imaginary parts squared.
 ```rust
 pub fn mag(&self) -> f64
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -287,7 +287,7 @@ by taking the inverse tangent of the imaginary part divided by the real part.
 ```rust
 pub fn angle(&self) -> f64
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -300,7 +300,7 @@ floating points requires an i32 to represent the exponent.
 ```rust
 pub fn pow(&self, exp: i32) -> Complex
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -312,7 +312,7 @@ number as the result.
 ```rust
 pub fn exp(&self) -> Complex
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -327,7 +327,7 @@ complex number. This is to prevent comparison errors
 Any zero value as a result of an arithmetic operation will always be positive.
 On systems which do not implement negative zeros, this will have no effect.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c1: Complex = complex(3.62,4.88);
@@ -348,7 +348,7 @@ erroneous comparison results, a value called "COMPLEX_TOL" is set to check if tw
 are approximately equal. The "COMPLEX_TOL" is set to 0.0001 as a default and can be changed in the source
 code.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c1: Complex = complex(3.6222,4.8888);
@@ -359,7 +359,7 @@ let c_nequals: bool = c1 != c2;           // false
 #### 2.2.4. Printing Complex Numbers to Stdout
 Complex numbers can be printed to stdout using the println! macro.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
@@ -400,7 +400,7 @@ Note: Matrix variables **must be mutable**, otherwise the element values cannot 
 ```rust
 pub fn matrix<T>(r: usize, c: usize) -> Matrix<T>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
@@ -415,7 +415,8 @@ pub fn random<T: Copy + WholeNum<T>>(r: usize, c: usize) -> Matrix<T>
 The "identity" constructor creates an identity matrix. The "ones" constructor creates a matrix
 with all elements set to one. The "random" constructor creates a matrix with random integer
 values between -10 and 10 by default.
-**Example:**
+
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, identity, ones, random};
 let i: Matrix<f64> = identity(2); // create a 2x2 identity matrix
@@ -430,7 +431,7 @@ Element indices are zero-based (i.e. the element in the first row and first colu
  pub fn columns(&self) -> usize
  pub fn get(&self, r: usize, c: usize) -> T
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
@@ -445,7 +446,7 @@ The setters allow modification of the elements in the matrix.
 ```rust
 pub fn set(&mut self, r: usize, c: usize, x: T)
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m::Matrix<f64> = matrix(2,2); // create a 2x2 matrix
@@ -459,7 +460,7 @@ data type, the method will panic about mismatch for multiplying between differen
 ```rust
 pub fn scale(&self, s: T) -> Matrix<T>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, random};
 let mut m: Matrix<f64> = random(2,2); // create a 2x2 matrix
@@ -474,7 +475,7 @@ are input.
 ```rust
 pub fn minor(&self, r: usize, c: usize) -> Matrix<T>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m::Matrix<f64> = matrix(2,2); // create a 2x2 matrix
@@ -488,7 +489,7 @@ the elements in the matrix. The matrix must be square (i.e. number of rows equal
 ```rust
 pub fn det(&self) -> T
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
@@ -502,7 +503,7 @@ the inverse matrix. The matrix must be square, and its determinant must be nonze
 ```rust
 pub fn inverse(&self) -> Matrix<T>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
@@ -514,7 +515,7 @@ let m_inv: matrix<f64> = m.inverse();  // returns 2x2 inverse matrix
 The binary '+', '-', and '*' operators are overloaded to allow more natural syntax for performing
 arithmetic operations on matrices.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, random};
 let m1: Matrix<i32> = random(2,2);
@@ -532,7 +533,7 @@ The binary '==' and '!=' comparison operators are overloaded to allow more natur
 comparisons between matrices. The '<', '<=', '>', and '>=' operators are not overloaded
 as it does not make sense to do those comparisons between matrices.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, matrix};
 let m1: Matrix<i32> = matrix(2,2);
@@ -550,7 +551,7 @@ by value. The operands are not consumed after the comparison.
 #### 2.3.4. Printing Matrices to Stdout
 Matrices can be printed to stdout using the println! macro.
 
-**Example:**
+Example:
 ```rust
 use matrix_lib::matrix::{Matrix, random};
 let m: Matrix<f64> = random(2,2);
@@ -590,7 +591,7 @@ The DFT constructor creates an instance of a DFT object. If the number of points
 ```rust
 pub fn dft(n: usize) -> DFT
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 let d: DFT = dft(4);
@@ -599,7 +600,7 @@ The **getter** allows access to the number of points to compute a DFT for.
 ```rust
 pub fn npts(&self) -> usize
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 let d: DFT = dft(4);
@@ -615,7 +616,7 @@ use complex;
 use matrix;
 pub fn transform_matrix(&mut self) -> matrix::Matrix<complex::Complex>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 use matrix_lib::matrix::{Matrix, matrix}
@@ -633,7 +634,7 @@ use complex;
 use matrix;
 pub fn unitary_matrix(&mut self) -> matrix::Matrix<complex::Complex>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 use matrix_lib::matrix::{Matrix, matrix}
@@ -651,7 +652,7 @@ use complex;
 use matrix;
 pub fn inverse_matrix(&mut self) -> matrix::Matrix<complex::Complex>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 use matrix_lib::matrix::{Matrix, matrix}
@@ -668,7 +669,7 @@ use complex;
 use matrix;
 pub fn dft_tfm(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 use matrix_lib::matrix::{Matrix, matrix}
@@ -687,7 +688,7 @@ use complex;
 use matrix;
 pub fn dft_inv(&mut self, vector: matrix::Matrix<complex::Complex>) -> matrix::Matrix<complex::Complex>
 ```
-**Example:**
+Example:
 ```rust
 use matrix_lib::DFT::{DFT, dft};
 use matrix_lib::matrix::{Matrix, matrix}
