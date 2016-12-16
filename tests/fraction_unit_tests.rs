@@ -9,7 +9,7 @@
 //!
 //! RETURN
 //!  See specific method
-//! 
+//!
 //! EXAMPLE
 //!  See specific method
 //!
@@ -21,14 +21,14 @@
 //!
 extern crate matrix_lib;
 
-// Constructor Test 1: Test if 2/3 can be assigned to a fraction 
+// Constructor Test 1: Test if 2/3 can be assigned to a fraction
 #[test]
 fn constructor_test1() {
   use matrix_lib::fraction::{Fraction, fraction};
   let f: Fraction = fraction(2,3);
   assert!(2 == f.num());
   assert!(3 == f.den());
-  
+
 }
 // Constructor Test 2: Test if setting denominator to 0 will cause panic
 #[test]
@@ -111,7 +111,7 @@ fn division_test2() {
   let f1: Fraction = fraction(-5,7);
   let f2: Fraction = fraction(0,2);
   let f = f1 / f2;
-  assert!(true); // If assertion passes, something went wrong
+  assert!(f == f); // If assertion passes, something went wrong
 }
 // Unary Negate Operator Overload Test : Test if -(-5/-7) = -5/7
 #[test]
@@ -119,7 +119,7 @@ fn negate_test() {
   use matrix_lib::fraction::{Fraction, fraction};
   let f1: Fraction = fraction(-5,-7);
   let f = -f1;
-  assert!(-5 == f.num()); 
+  assert!(-5 == f.num());
   assert!(7 == f.den());
   assert!(-5 == f1.num()); // Check f1 still exists and can be used
 }
