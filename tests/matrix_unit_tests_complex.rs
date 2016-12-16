@@ -64,7 +64,14 @@ fn ones_method_test() {
   assert!(TOLERANCE > (m.get(0, 0).re() - one.re()).abs() && TOLERANCE > (m.get(0, 0).im() - one.im()).abs());
   assert!(TOLERANCE > (m.get(1, 0).re() - one.re()).abs() && TOLERANCE > (m.get(1, 0).im() - one.im()).abs());
 }
-
+// Random Method Test: Check a 2x2 random matrix can be created
+#[test]
+fn random_method_test() {
+  use matrix_lib::matrix::{Matrix, random};
+  use matrix_lib::complex::{Complex};
+  let m: Matrix<Complex> = random(2, 2);
+  println!("Random matrix m is: {}", m);
+}
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {

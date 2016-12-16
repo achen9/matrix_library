@@ -53,6 +53,13 @@ fn ones_method_test() {
   assert!(true == m.get(0,0));
   assert!(true == m.get(1,0));
 }
+// Random Method Test: Check a 2x2 random matrix can be created
+#[test]
+fn random_method_test() {
+  use matrix_lib::matrix::{Matrix, random};
+  let m: Matrix<bool> = random(2, 2);
+  println!("Random matrix m is: {}", m);
+}
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
