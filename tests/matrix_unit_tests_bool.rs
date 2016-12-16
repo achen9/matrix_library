@@ -45,6 +45,14 @@ fn identity_method_test() {
   assert!(false == m.get(1,0));
   assert!(true == m.get(1,1));
 }
+// Ones Method Test: Check a 2x1 ones matrix can be created
+#[test]
+fn ones_method_test() {
+  use matrix_lib::matrix::{Matrix, ones};
+  let m: Matrix<bool> = ones(2, 1);
+  assert!(true == m.get(0,0));
+  assert!(true == m.get(1,0));
+}
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {

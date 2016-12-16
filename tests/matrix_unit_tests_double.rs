@@ -44,11 +44,19 @@ fn constructor_test() {
 #[test]
 fn identity_method_test() {
   use matrix_lib::matrix::{Matrix, identity};
-  let mut m: Matrix<f64> = identity(2);
+  let m: Matrix<f64> = identity(2);
   assert!(TOLERANCE > (m.get(0, 0) - 1.0).abs());
   assert!(TOLERANCE > (m.get(0, 1) - 0.0).abs());
   assert!(TOLERANCE > (m.get(1, 0) - 0.0).abs());
   assert!(TOLERANCE > (m.get(1, 1) - 1.0).abs());
+}
+// Ones Method Test: Check a 2x1 ones matrix can be created
+#[test]
+fn ones_method_test() {
+  use matrix_lib::matrix::{Matrix, ones};
+  let m: Matrix<f64> = ones(2, 1);
+  assert!(TOLERANCE > (m.get(0, 0) - 1.0).abs());
+  assert!(TOLERANCE > (m.get(1, 0) - 1.0).abs());
 }
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]

@@ -54,6 +54,17 @@ fn identity_method_test() {
   assert!(TOLERANCE > (m.get(1, 0).re() - zero.re()).abs() && TOLERANCE > (m.get(1, 0).im() - zero.im()).abs());
   assert!(TOLERANCE > (m.get(1, 1).re() - one.re()).abs() && TOLERANCE > (m.get(1, 1).im() - one.im()).abs());
 }
+// Ones Method Test: Check a 2x1 ones matrix can be created
+#[test]
+fn ones_method_test() {
+  use matrix_lib::matrix::{Matrix, ones};
+  use matrix_lib::complex::{Complex, complex};
+  let m: Matrix<Complex> = ones(2, 1);
+  let one: Complex = complex(1.0, 0.0);
+  assert!(TOLERANCE > (m.get(0, 0).re() - one.re()).abs() && TOLERANCE > (m.get(0, 0).im() - one.im()).abs());
+  assert!(TOLERANCE > (m.get(1, 0).re() - one.re()).abs() && TOLERANCE > (m.get(1, 0).im() - one.im()).abs());
+}
+
 // Copy Constructor Test: Test if 2x2 matrix can be copied
 #[test]
 fn copy_constructor_test() {
