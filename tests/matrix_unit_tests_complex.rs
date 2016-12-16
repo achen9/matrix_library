@@ -125,7 +125,7 @@ fn addition_error_test() {
   m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
   m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
   let m = m1 + m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Arithmetic Operation Overload Test 3
 // Check [1.2+3.1j -2.4+3.9j  - [1.3+3.0j -2.4+3.8j   =  [-0.1+0.1j 0.0+0.1j
@@ -167,7 +167,7 @@ fn subtraction_error_test() {
   m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
   m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
   let m = m1 - m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Arithmetic Operation Overload Test 5:
 // Check [1.2+3.1j  * [1.3+3.0j -2.4+3.8j]   =  [-7.74+7.63j -14.66-2.88j
@@ -201,7 +201,7 @@ fn multiplication_error_test() {
   let m21 = complex(1.3, 3.0); let m22 = complex(-2.4, 3.8);
   m2.set(0, 0, m21); m2.set(1, 0, m22);
   let m = m1 * m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Scale Method Test:
 // Check [1.2+3.1j -2.4+3.9j   * 1.0+1.0j =  [-1.9+4.3j -6.3+1.5j

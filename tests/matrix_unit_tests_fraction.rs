@@ -123,7 +123,7 @@ fn addition_error_test() {
   m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
   m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
   let m = m1 + m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Arithmetic Operation Overload Test 3:
 // Check [1/2 -2/3  - [1/3 -2/5   =  [1/6 -4/15
@@ -167,7 +167,7 @@ fn subtraction_error_test() {
   m2.set(0, 0, m21); m2.set(0, 1, m22); m2.set(0, 2, m23);
   m2.set(1, 0, m24); m2.set(1, 1, m25); m2.set(1, 2, m26);
   let m = m1 - m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Arithmetic Operation Overload Test 5:
 // Check [1/2  - [1/3 -2/5]   =  [1/6 -1/5
@@ -203,7 +203,7 @@ fn multiplication_error_test() {
   let m21 = fraction(1, 3); let m22 = fraction(-2, 5);
   m2.set(0, 0, m21); m2.set(1, 0, m22);
   let m = m1 * m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Scale Method Test
 // Check [1/2 -2/3  * 2/5 = [1/5 -4/15

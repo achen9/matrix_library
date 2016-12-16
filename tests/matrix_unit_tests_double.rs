@@ -104,7 +104,7 @@ fn addition_error_test() {
   m2.set(0, 0, 1.3); m2.set(0, 1, -2.4); m2.set(0, 2, 5.6);
   m2.set(1, 0, 3.5); m2.set(1, 1, -9.6); m2.set(1, 2, -4.5);
   let m = m1 + m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Arithmetic Operation Overload Test 3:
 // Check [1.2 -2.4 - [1.3 -2.4   =  [-0.1 0.0
@@ -136,7 +136,7 @@ fn subtraction_error_test() {
   m2.set(0, 0, 1.3); m2.set(0, 1, -2.4); m2.set(0, 2, 5.6);
   m2.set(1, 0, 3.5); m2.set(1, 1, -9.6); m2.set(1, 2, -4.5);
   let m = m1 - m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Arithmetic Operation Overload Test 5:
 // Check [1.2  * [1.3 -2.4]   =  [1.56 -2.88
@@ -164,7 +164,7 @@ fn multiplication_error_test() {
   let mut m2: Matrix<f64> = matrix(2, 1);
   m2.set(0, 0, 1.3); m2.set(1, 0, -2.4);
   let m = m1 * m2;
-  assert!(true); // Something went wrong if this assertion passes
+  assert!(m == m); // Something went wrong if this assertion passes
 }
 // Scale Method Test:
 // Check [1.2 -2.4   * 2.5 =  [3.0 -6.0
