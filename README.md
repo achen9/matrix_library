@@ -27,8 +27,9 @@ Author: Alex Chen, alexac9@uw.edu
 2.3.4. Printing Matrices to Stdout  
 2.4.   Discrete Fourier Transform (DFT) Class  
 2.4.1. DFT Class Methods  
-3\.    Further Improvements  
-4\.    Test Notes  
+3\.    Library Performance Review  
+4\.    Further Improvements  
+5\.    Test Notes  
 
 ## 1. Getting Started
 * Git is required to clone the matrix library respository.
@@ -662,7 +663,7 @@ let d: DFT = dft(4);
 let inv_mat: matrix::Matrix<complex::Complex> = dft.inverse_matrix(); // returns 4x4 inverse matrix
 ```
 #### Dft_tfm Method
-The dft_tfm method calculates the discret Fourier transform for vector with n points and returns a
+The dft_tfm method calculates the discrete Fourier transform for vector with n points and returns a
 vector with the same dimensions. The vector must have elements of the complex number type defined in
 this matrix library.
 ```rust
@@ -681,7 +682,7 @@ let v: matrix::Matrix<complex::Complex> = matrix(4,1);
 let v_tfm: matrix::Matrix<complex::Complex> = d.dft_tfm(v); // returns DFT of the vector v
 ```
 #### Dft_inv Method
-The dft_inv method calculates the inverse discret Fourier transform for vector with n points and returns a
+The dft_inv method calculates the inverse discrete Fourier transform for vector with n points and returns a
 vector with the same dimensions. The vector must have elements of the complex number type defined in
 this matrix library.
 ```rust
@@ -699,26 +700,18 @@ let v: matrix::Matrix<complex::Complex> = matrix(4,1);
 /* set values of the vector */
 let v_inv: matrix::Matrix<complex::Complex> = d.dft_inv(v); // returns inverse DFT of the vector v
 ```
-## 3. Further Improvements
+## 3. Library Performance Review
+Overall, the library performs as expected. All methods work as intended. Rust's memory safety
+philosophy prevents any segmentation faults from occurring. Execution speed is reasonably fast.
 
+## 4. Further Improvements
+* Implement matrix arithmetic operators which take operands passed by reference instead of
+operands passed by value helps remove confusion related to when the clone method should be
+used.
+* The determinant and inverse matrix methods make use of excessive "if" statements. These
+methods need to be refactored to use less conditionals for possible speed improvements.
 
-## 4. Test Notes
+## 5. Test Notes
 * All code has been tested on Windows 10 Pro 64-bit.
 * rust version 1.13.0 was used to compile and test the code.
 * cargo version 0.13.0-nightly was used as the build system and package managers.
-
-## Rust vs. C++
-
-### Rust vs. C++ differences
-* Rust defaults to not allow variables to be changed. Must use "mut" keyword to allow new values to be assigned to a variable. C++ defaults to allow new values to be assigned to variable. C++ uses "const" to keep a variable constant.
-* Rust defaults to private properties/methods in a module definition. C++ defaults to public properties/methods in a class definition.
-
-### Rust and C++ similarities
-* Rust uses "cargo" similar to a C++ "makefile" for easier management of code compilation. "Cargo" also includes package managemnet features.
-
-### Rust quirks
-* Cannot overload the '=' operator in Rust
-* Overloading functions is hard and tedious. Also, "overloaded" functions cannot accept different number of input arguments.
-
-### Rust testing/debugging
-* cargo test -- --nocapture shows stdout for all tests (even ones that pass)
