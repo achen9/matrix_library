@@ -93,7 +93,7 @@ pub struct Fraction {
 #### 2.1.1. Fraction Class Methods
 In the following examples, be sure to add "extern crate matrix_lib" to the source code.
 
-##### Fraction Constructor
+#### Fraction Constructor
 The fraction constructor creates an instance of a fraction. If a 0 is specified for the denominator,
 the constructor will panic with an error message. Note, it is possible to have negative numbers in
 the denominator. This was included to simplify constructor code. Methods which operate on fractions
@@ -106,7 +106,7 @@ Example:
 use matrix_lib::fraction::{Fraction, fraction};
 let f:Fraction = fraction(2,3); // create fraction 2/3
 ```
-##### Fraction Getters
+#### Fraction Getters
 The getters allow access to either the numerator or denominator.
 ```rust
 pub fn num(&self) -> isize
@@ -119,7 +119,7 @@ let f: Fraction = fraction(2,3);
 let n: isize = f.num();
 let d: isize = f.den();
 ```
-##### Fraction Setters
+#### Fraction Setters
 The setters allow modification of the numerator or denominator. The set_den() method will panic if
 a 0 is input as the argument.
 ```rust
@@ -133,7 +133,7 @@ let f: Fraction = fraction(2,3);
 f.set_num(3); // numerator is now 3
 f.set_den(5); // denominator is now 5
 ```
-##### Reduce Method
+#### Reduce Method
 The reduce method reduces a fraction. A new fraction instance is returned from this method.
 ```rust
 pub fn reduce(&self) -> Fraction
@@ -144,7 +144,7 @@ use matrix_lib::fraction::{Fraction, fraction};
 let f: Fraction = fraction(4,6);
 let f_reduced: Fraction = f.reduce(); // f_reduced is now 2/3
 ```
-##### Pow Method
+#### Pow Method
 The pow method raises a fraction to an integer power. The result is in its reduced form. Any negatives
 in the denominator are moved to the numerator. A new fraction instance is returned from this method.
 ```rust
@@ -218,7 +218,7 @@ used to represent the real and imaginary parts instead of single precision float
 
 #### 2.2.1 Complex Class Methods
 In the following examples, be sure to add "extern crate matrix_lib" to the source code.
-##### Complex Constructor
+#### Complex Constructor
 The complex constructor creates an instance of a complex number. It will accept any valid double
 precision number for both the real and imaginary parts.
 ```rust
@@ -229,7 +229,7 @@ Example:
 use matrix_lib::complex::{Complex, complex};
 let c:Complex = complex(3.62,4.88); // create complex number 3.62+4.88j
 ```
-##### Complex Getters
+#### Complex Getters
 The getters allow access to either the real part or imaginary part.
 ```rust
 pub fn re(&self) -> f64
@@ -242,7 +242,7 @@ let c: Complex = complex(3.62,4.88);
 let r: f64 = c.re();
 let i: f64 = c.im();
 ```
-##### Complex Setters
+#### Complex Setters
 The setters allow modification of the real part or imaginary part.
 ```rust
 pub fn set_re(&mut self, r: f64)
@@ -255,7 +255,7 @@ let c: Complex = complex(3.62,4.88);
 c.set_re5.89);   // real part is now 5.89
 c.set_im(-9.81); // imaginary part is now -9.81
 ```
-##### Conjugate Method
+#### Conjugate Method
 The conjugate method returns a new instance of a complex number which is the complex conjugate
 (opposite sign of imaginary part) of the original complex number.
 ```rust
@@ -267,7 +267,7 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);      // c is 3.62+4.88j
 let c_conjugate: Complex = c.conjugate(); // c_conjugate is now 3.62-4.88j
 ```
-##### Magnitude Method
+#### Magnitude Method
 The magnitude method returns the magnitude of a complex number. The magnitude can be calculated
 by taking the square root of the sum of the real and imaginary parts squared.
 (sqrt(real^2 + imaginary^2))
@@ -280,7 +280,7 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
 let m: f64 = c.mag(); // m is approximately 6.0761
 ```
-##### Angle Method
+#### Angle Method
 The angle method returns the angle (radians) of a complex number. The angle can be calculated
 by taking the inverse tangent of the imaginary part divided by the real part.
 (atan2(imaginary/real))
@@ -293,7 +293,7 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
 let a: f64 = c.angle(); // a is approximately 0.9326 radians
 ```
-##### Pow Method
+#### Pow Method
 The pow method raises a complex number to an integer power and returns a new instance of a complex
 number as the result.  i32 is used because the built in Rust powi() method for double precision
 floating points requires an i32 to represent the exponent.
@@ -306,7 +306,7 @@ use matrix_lib::complex::{Complex, complex};
 let c: Complex = complex(3.62,4.88);
 let c_pow: Complex = c.pow(2); // c_pow is approximately -10.71+35.33j
 ```
-##### Exp Method
+#### Exp Method
 The exp method raises 'e' to the power of the complex number and returns a new instance of a complex
 number as the result.
 ```rust
@@ -391,7 +391,7 @@ have their sizes defined at compile time.
 
 #### 2.3.1. Matrix Class Methods
 In the following examples, be sure to add "extern crate matrix_lib" to the source code.
-##### Matrix Constructor
+#### Matrix Constructor
 The Matrix constructor creates an instance of a matrix object. If the rows or columns is zero, the
 constructor will panic with an error message. The size of a matrix cannot be modified. After constructing
 the matrix, each element in the matrix is set to a default of 0.
@@ -405,7 +405,7 @@ Example:
 use matrix_lib::matrix::{Matrix, matrix};
 let mut m: Matrix<f64> = matrix(2,2); // create a 2x2 matrix
 ```
-##### Matrix Named Constructors
+#### Matrix Named Constructors
 Named constructors are provided to create commonly used matrices.
 ```rust
 pub fn identity<T: Copy + WholeNum<T>>(n: usize) -> Matrix<T>
@@ -423,7 +423,7 @@ let i: Matrix<f64> = identity(2); // create a 2x2 identity matrix
 let o: Matrix<f64> = ones(2, 3); // create a 2x3 ones matrix
 let r: Matrix<f64> = random(2, 4); // create a 2x4 random matrix
 ```
-##### Matrix Getters
+#### Matrix Getters
 The getters allow access to the dimensions of the matrix and a particular element in the matrix.
 Element indices are zero-based (i.e. the element in the first row and first column are at indices 0,0).
 ```rust
@@ -441,7 +441,7 @@ let r: usize = m.rows();    // returns 2
 let c: usize = m.columns(); // returns 2
 let val: f64 = m.get(0,1);  // returns value of element in the 1st row, 2nd column which is 2.0
 ```
-##### Matrix Setters
+#### Matrix Setters
 The setters allow modification of the elements in the matrix.
 ```rust
 pub fn set(&mut self, r: usize, c: usize, x: T)
@@ -453,7 +453,7 @@ let mut m::Matrix<f64> = matrix(2,2); // create a 2x2 matrix
 m.set(0,0,1.0); m.set(0,1,2.0); // Set 1st row elements to be 1.0, 2.0
 m.set(1,0,3.0); m.set(1,1,4.0); // Set 2nd row elements to be 3.0, 4.0
 ```
-##### Scale Method
+#### Scale Method
 The scale method multiplies each element in the matrix by a scaling factor. The scaling factor
 must be the same data type as the elements in the matrix. If the scaling factor is a different
 data type, the method will panic about mismatch for multiplying between different data types.
@@ -467,7 +467,7 @@ let mut m: Matrix<f64> = random(2,2); // create a 2x2 matrix
 let s: f64 = 2.0;    
 let m_scaled: matrix<f64> = m.scale(s); // multiplies each element in the matrix by 2.0
 ```
-##### Minor Method
+#### Minor Method
 The minor method returns the matrix of size (n-1)x(n-1) by eliminating the row and column specified.
 The row and column indices are zero-based (i.e. the 1st row is index 0, the 1st column is index 0). A
 new instance of a matrix is returned. The method will panic if indices greater than the size of the matrix
@@ -483,7 +483,7 @@ m.set(0,0,1.0); m.set(0,1,2.0);
 m.set(1,0,3.0); m.set(1,1,4.0);
 let m: Matrix<f64> = m.minor(0,0);  // returns value of element in the 1st row, 2nd column which is 2.0
 ```
-##### Det Method
+#### Det Method
 The det method calculates the determinant of a matrix and returns a scalar of the same data type as
 the elements in the matrix. The matrix must be square (i.e. number of rows equals the number of columns).
 ```rust
@@ -497,7 +497,7 @@ m.set(0,0,1.0); m.set(0,1,2.0);
 m.set(1,0,3.0); m.set(1,1,4.0);
 let d: f64 = m.det();  // returns -2.0
 ```
-##### Inverse Method
+#### Inverse Method
 The inverse method calculates the inverse of an nxn matrix and returns a new matrix instance as
 the inverse matrix. The matrix must be square, and its determinant must be nonzero, to be invertible.
 ```rust
@@ -606,7 +606,7 @@ use matrix_lib::DFT::{DFT, dft};
 let d: DFT = dft(4);
 let n_pts: usize = dft.npts(); // returns 4
 ```
-##### Transform_matrix Method
+#### Transform_matrix Method
 The transform_matrix method calculates the n point discrete Fourier transform matrix. If the transform
 matrix is not in the cache, it calculates the transform matrix, stores it in the cache, and returns a clone
 of the transform matrix. If the transform matrix is in the cache, it retrieves the matrix from the cache
@@ -624,7 +624,7 @@ use matrix_lib::complex::{Complex, complex}
 let d: DFT = dft(4);
 let tfm_mat: matrix::Matrix<complex::Complex> = dft.transform_matrix(); // returns 4x4 matrix
 ```
-##### Unitary_matrix Method
+#### Unitary_matrix Method
 The unitary_matrix method calculates the n point discrete Fourier transform unitary matrix. If the unitary
 matrix is not in the cache, it calculates the unitary matrix, stores it in the cache, and returns a clone
 of the unitary matrix. If the unitary matrix is in the cache, it retrieves the matrix from the cache
@@ -642,7 +642,7 @@ use matrix_lib::complex::{Complex, complex}
 let d: DFT = dft(4);
 let uni_mat: matrix::Matrix<complex::Complex> = dft.unitary_matrix(); // returns 4x4 matrix
 ```
-##### Inverse_matrix Method
+#### Inverse_matrix Method
 The inverse_matrix method calculates the n point discrete Fourier transform inverse matrix. If the inverse
 matrix is not in the cache, it calculates the inverse matrix, stores it in the cache, and returns a clone
 of the inverse matrix. If the inverse matrix is in the cache, it retrieves the matrix from the cache
@@ -660,7 +660,7 @@ use matrix_lib::complex::{Complex, complex}
 let d: DFT = dft(4);
 let inv_mat: matrix::Matrix<complex::Complex> = dft.inverse_matrix(); // returns 4x4 inverse matrix
 ```
-##### Dft_tfm Method
+#### Dft_tfm Method
 The dft_tfm method calculates the discret Fourier transform for vector with n points and returns a
 vector with the same dimensions. The vector must have elements of the complex number type defined in
 this matrix library.
@@ -679,7 +679,7 @@ let v: matrix::Matrix<complex::Complex> = matrix(4,1);
 /* set values of the vector */
 let v_tfm: matrix::Matrix<complex::Complex> = d.dft_tfm(v); // returns DFT of the vector v
 ```
-##### Dft_inv Method
+#### Dft_inv Method
 The dft_inv method calculates the inverse discret Fourier transform for vector with n points and returns a
 vector with the same dimensions. The vector must have elements of the complex number type defined in
 this matrix library.
