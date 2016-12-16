@@ -35,6 +35,8 @@ Author: Alex Chen, alexac9@uw.edu
 * Git is required to clone the matrix library respository.
 * The Rust compiler and Cargo package manager are required to compile the matrix library. See section 1.1.
 for steps on installing the Rust compiler and Cargo package manager.
+* The "Time" crate and "Rand" crate are required to run the benchmark test and to use the matrix named
+constructor.
 
 ### 1.1. Installing the Rust Compiler and Cargo Package Manager
 1. Download the Rust compiler and Cargo, the Rust package manager, for the latest stable release from
@@ -56,8 +58,13 @@ clone the source code.
 ### 1.3. Using the Library
 Add "extern crate matrix_lib" to your source code to include the matrix library and its data types and methods.
 Open a terminal or command prompt and navigate to the folder with the matrix library source files. Type
-"cargo build" to compile the source code.
-
+"cargo build" to compile the source code. The "Time" and "Rand" crates should be automatically found and
+compiled as well. If not, modify the cargo.toml file and add the following in the dependencies:
+```rust
+[dependencies]
+rand = "*"
+time = "*"
+```
 ### 1.4. Running Unit Tests
 Open a terminal or command prompt and navigate to the folder with the matrix library source files. Type:
 * "cargo test" to run the built in unit tests. The source files will also be compiled if they have not
@@ -68,7 +75,7 @@ and have no impact on the library functionality.
 print stdout to the terminal or command prompt if they fail. This option turns on stdout printing for
 all unit tests. There will likely be many warnings about unused variables. These warnings relate to unit
 tests which test the errors thrown by various methods and have no impact on the library functionality.
-* "cargo run" to run the included example main.rs program which performs a benchmark test of the
+* "cargo run" to run the included example main.rs program which performs a benchmark test of some of the
 methods included in the matrix library.
 
 ## 2. Library Content Documentation

@@ -4,5 +4,5 @@ version = "0.1.0"
 authors = ["Alex Chen <alexac9@u.washington.edu>"]
 
 [dependencies]
-rand = "0.3"
+rand = "*"
 time = "*"
